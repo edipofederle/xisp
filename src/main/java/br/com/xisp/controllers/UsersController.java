@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.UserRepository;
 
@@ -78,5 +79,10 @@ public class UsersController {
 		result.redirectTo(this).index();
 	}
 	
+	@Path("/users/{user.id}/edita")
+	@Get
+	public User edita(User user) {
+		return repository.load(user);
+	}
 	
 }

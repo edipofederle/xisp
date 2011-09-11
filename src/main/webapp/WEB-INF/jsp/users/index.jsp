@@ -21,7 +21,8 @@
 			<th class="header">#</th>
 			<th>Nome</th>
 			<th>Email</th>
-			<td>Acoes</td>
+			<td>Remover</td>
+			<td>Editar</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,13 +31,21 @@
 				<td>${user.id }</td>
 				<td>${user.name }</td>
 				<td>${user.email }</td>
-				<td><form action="${pageContext.request.contextPath}/users/${user.id}" method="post">
-				<input type="hidden" name="_method" value="delete"/>
-				<button type="submit"  onclick="return confirm('Are you sure?')">Remover</button>
-			</form></td> | <a href="#"><b>Editar</b></a></td>
+				<td>
+					<form action="${pageContext.request.contextPath}/users/${user.id}" method="post">
+						<input type="hidden" name="_method" value="delete"/>
+						<button class="btn small" type="submit"  onclick="return confirm('Are you sure?')">Remover</button>
+					</form>
+				</td>
+				<td>
+					<form action="${pageContext.request.contextPath}/users/${user.id}/edita" method="get">
+						<button class="btn small" type="submit">Editar</button>
+					</form>
+				</td>
+				
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
 <br />
-<a href="/xisp/users/newUser" class="btn large"><fmt:message key="user.novo"/></a>
+<a href="/xisp/users/newUser" class="btn small primary"><fmt:message key="user.novo"/></a>
