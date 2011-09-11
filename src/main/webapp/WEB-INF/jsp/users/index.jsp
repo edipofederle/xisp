@@ -30,7 +30,10 @@
 				<td>${user.id }</td>
 				<td>${user.name }</td>
 				<td>${user.email }</td>
-				<td><a href="#"><b>Remover</b></a> | <a href="#"><b>Editar</b></a></td>
+				<td><form action="${pageContext.request.contextPath}/users/${user.id}" method="post">
+				<input type="hidden" name="_method" value="delete"/>
+				<button type="submit"  onclick="return confirm('Are you sure?')">Remover</button>
+			</form></td> | <a href="#"><b>Editar</b></a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

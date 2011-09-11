@@ -69,7 +69,7 @@ public class UsersController {
 		result.redirectTo(this).index();
 	}
 	
-	@Path("/users/{uer.id}")
+	@Path("/users/{user.id}")
 	@Delete
 	public void remove(User user) {
 		repository.remove(user);
