@@ -9,7 +9,6 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
-import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.UserRepository;
 

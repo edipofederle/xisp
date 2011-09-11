@@ -157,8 +157,39 @@ public class ProjectsControllerTest {
 	public void shouldShowAProject(){
 		Project project = givenValidProject();
 		willShowAProject(project);
+		controller.index();
 	}
 	
+	@Test
+	public void mustReturnAllProjectsInAGivenUser(){
+		User user = givenAValidUser();
+		willReturnAllProejctsBelongsToUser(user);
+	}
+	
+	@Test
+	public void shouldLoadProjectForEdit(){
+		Project project = givenValidProject();
+		willLoadProject(project);
+		controller.edita(project);
+	}
+	
+
+	private void willLoadProject(final Project project) {
+		mockery.checking(new Expectations() {
+			{
+				one(repo).load(project);
+			}
+		});
+	}
+
+	private void willReturnAllProejctsBelongsToUser(final User user) {
+		mockery.checking(new Expectations() {
+			{
+				one(repo).showAll(user);
+			}
+		});
+	}
+
 	private void willShowAProject(final Project project) {
 		mockery.checking(new Expectations() {
 			{
@@ -200,4 +231,13 @@ public class ProjectsControllerTest {
 		project.setDescription("Minha descricao do meu projeto");
 		return project;
 	}
+	
+	private User givenAValidUser() {
+		User user = new User();
+		user.setName("Fulano");
+		user.setEmail("edipo@gmail.com");
+		user.setPassword("edipo");
+		return user;
+	}
+
 }

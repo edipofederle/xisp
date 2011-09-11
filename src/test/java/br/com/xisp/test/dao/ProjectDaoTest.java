@@ -82,7 +82,7 @@ public class ProjectDaoTest {
 			project.setOwner(user);
 			dao.add(project);
 		}
-		//Assert.assertEquals(5,dao.listarTudo(user).size());
+		//Assert.assertEquals(5,dao.showAll(user).size());
 	}
 	
 	@Test
@@ -92,6 +92,15 @@ public class ProjectDaoTest {
 		dao.remove(project);
 		Project notFound = foundAProject(project);
 		Assert.assertNull(notFound);
+	}
+	
+	@Test
+	public void shouldReturnAllProjectsGivenAUser(){
+		Project project = givenAProject();
+		User owner = givenAUser();
+		project.setOwner(owner);
+		dao.add(project);
+		Assert.assertEquals("edipo2", dao.get(project.getId()).getOwner().getName());
 	}
 
 	/*private void clearDataBase() {
