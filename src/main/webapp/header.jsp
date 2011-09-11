@@ -22,9 +22,7 @@
    	<script type="text/javascript" src="<c:url value="/js/jquery-1.6.2.min.js"/>"></script>
 	<script type="text/javascript" src="<c:url value="../js/jquery.validate.js"/>"></script>
 	<script type="text/javascript" src="<c:url value="/js/jquery.validate.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="../js/application.js"/>"></script>
      <script type="text/javascript" src="<c:url value="/js/application.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="../js/jquery.tablesorter.min.js"/>"></script>
 	<script type="text/javascript" src="<c:url value="/js/jquery.tablesorter.min.js"/>"></script>
 
     <!-- Le fav and touch icons -->

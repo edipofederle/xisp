@@ -1988,3 +1988,10 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
 .popover .content p, .popover .content ul, .popover .content ol {
   margin-bottom: 0;
 }
+
+
+
+
+#formNewUser{
+	display: none;
+}

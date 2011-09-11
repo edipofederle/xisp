@@ -49,7 +49,6 @@ public class ProjectsController {
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
 		project.setOwner(this.currentUser);
 		repository.add(project);
-		//project.save();
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto criado com sucesso.");
 		result.redirectTo(this).index();
@@ -106,6 +105,5 @@ public class ProjectsController {
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
 		result.redirectTo(ProjectsController.class).index();
-
 	}
 }

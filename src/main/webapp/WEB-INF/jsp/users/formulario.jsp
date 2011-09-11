@@ -4,13 +4,12 @@
 		
 	});
 </script>
-
-<c:forEach items="${errors}" var="error">
-	<div class="alert-message error">
-  	   	<a href="#" class="close">×</a>
-		<b class="error">${error.category } - ${error.message }</b><br />
-	</div>
-</c:forEach>
+		<c:forEach items="${errors}" var="error">
+			<div class="alert-message error">
+		  	   	<a href="#" class="close">×</a>
+				<b class="error">${error.category } - ${error.message }</b><br />
+			</div>
+		</c:forEach>
 
 		<form action="${pageContext.request.contextPath}/users" method="post" class="form-stacked" id="formUsers"> 
 			<label><fmt:message key="user.form.name"/></label>
@@ -34,6 +33,5 @@
 				<input type="submit" name="submit" class="btn primary" value="${criar}"/>
 				<a href="${pageContext.request.contextPath}/users/index">Cancelar</a>
 			</div>
+			
 		</form>
-	</div>
-</div>

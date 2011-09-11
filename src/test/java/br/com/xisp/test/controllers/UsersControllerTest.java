@@ -76,11 +76,51 @@ public class UsersControllerTest {
 		     Assert.assertEquals("Esse usuario ja existe", errors.get(0).getMessage());
 		 }
 	}
+	
+	@Test
+	public void shouldUpdateAUser(){
+		User user = givenAValidUser();
+		user.setName("Novo Nome");
+		willUpdateTheUser(user);
+		controller.update(user);
+	}
+	
+	@Test
+	public void shouldRemoveAUser(){
+		User user = givenAValidUser();
+		willAddUser(user);
+		willValidateDuplicationAndReturnFalse(user);
+		controller.add(user);
+		willRemoveAUser(user);
+		controller.remove(user);
+		Assert.assertNull(dao.load(user));
+	}
+
+	private void willRemoveAUser(final User user) {
+		mockery.checking(new Expectations() {{
+			one(dao).remove(user);
+			allowing(anything());
+		}});
+	}
+
+	private void willUpdateTheUser(final User user) {
+		mockery.checking(new Expectations() {{
+			one(dao).update(user);
+		}});
+		
+	}
 
 	private void willValidateDuplicationAndReturnTrue(final User sameUser) {
 		mockery.checking(new Expectations() {{
 		    one (dao).isDuplicate(sameUser.getName());
 		    will(returnValue(true));
+		}});
+	}
+	
+	private void willValidateDuplicationAndReturnFalse(final User sameUser) {
+		mockery.checking(new Expectations() {{
+		    one (dao).isDuplicate(sameUser.getName());
+		    will(returnValue(false));
 		}});
 	}
 
@@ -101,7 +141,7 @@ public class UsersControllerTest {
 
 	private void willAddUser(final User user) {
 		mockery.checking(new Expectations() {
-			{one(dao).add(user);}
+			{one(dao).add(user); }
 		});
 		
 	}

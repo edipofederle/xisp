@@ -1,8 +1,10 @@
 package br.com.xisp.controllers;
 
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
@@ -54,6 +56,26 @@ public class UsersController {
 	private boolean isUserDuplicate(User user){
 		boolean isDuplicate = repository.isDuplicate(user.getName());
 		return isDuplicate;
+	}
+	
+	@Path("/users")
+	@Put
+	public void update(final User user) {
+		//validator.onErrorUsePageOf(UserController.class).newProject();
+		result.include("user", user);
+		repository.update(user);
+		result.include("success", true);
+		result.include("message", "<strong>Sucesso!</strong> Usuario alterado com sucesso.");
+		result.redirectTo(this).index();
+	}
+	
+	@Path("/users/{uer.id}")
+	@Delete
+	public void remove(User user) {
+		repository.remove(user);
+		result.include("success", true);
+		result.include("message", "<strong>Sucesso!</strong> Usuario deletado com sucesso.");
+		result.redirectTo(this).index();
 	}
 	
 	

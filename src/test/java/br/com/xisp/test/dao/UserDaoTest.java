@@ -31,6 +31,16 @@ public class UserDaoTest {
 		User user = givenAUser();
 		assertThat(dao.find("edipo2"), is(user));
 	}
+	
+	@Test
+	public void shouldUpdateAUser(){
+		User user = givenAUser();
+		dao.add(user);
+		user.setName("Novo Nome");
+		dao.update(user);
+		User userFound = foundAUser(user);
+		Assert.assertEquals("Novo Nome", userFound.getName());
+	}
 
 	private User givenAUser() {
 		User user = new User();
@@ -62,6 +72,20 @@ public class UserDaoTest {
 		User aUser = dao.login("elf@gmail.com", "edipo");
 		Assert.assertNull(aUser);
 	}
+	
+	@Test
+	public void shouldRemoveAUser(){
+		User user = givenAUser();
+		dao.add(user);
+		dao.remove(user);
+		User notFound = foundAUser(user);
+		Assert.assertNull(notFound);
+	}
 
+	
+	private User foundAUser(User user) {
+		User userFound = dao.load(user);
+		return userFound;
+	}
 	
 }

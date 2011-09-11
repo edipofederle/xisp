@@ -5,8 +5,14 @@
 <c:if test="${success }">
 	<div class="alert-message success">
       		<a href="#" class="close">×</a>
-     			 <p> ${message }</p>
-   		</div>
+     		<p> ${message }</p>
+   	</div>
+</c:if>
+<c:if test="${fail }">
+	<div class="alert-message fail">
+      		<a href="#" class="close">×</a>
+     		<p> ${messageFail }</p>
+   	</div>
 </c:if>
 
 <table class="zebra-striped" id="tableUsers">
