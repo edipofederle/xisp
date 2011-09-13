@@ -18,6 +18,8 @@
 				<input type="hidden" name="user.id" value="${user.id}" />
 				<input type="hidden" name="_method" value="put"/>
 			</c:if>
+			<input type="hidden" name="user.password" id="password" value="${user.password }"/>
+			
 			<label><fmt:message key="user.form.name"/></label>
 			<input type="text" name="user.name" id="name" class="required xlarge" value="${user.name }"/>
 			<br /><br/>

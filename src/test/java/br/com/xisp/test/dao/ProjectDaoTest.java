@@ -7,7 +7,6 @@ import junit.framework.Assert;
 
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,17 +28,11 @@ public class ProjectDaoTest {
 		dao = new ProjectDao(session);
 	}
 	
-	@After
-	public void tearDown(){
-		//clearDataBase();
-	}
 	
 	@Test
 	public void shouldFindUserGivenAName(){
-
 		Project project = givenAProject();
 		dao.add(project);
-		
 		assertThat(dao.find("Project 2"), is(project));
 		assertThat(dao.find("Project nao existente"), is(nullValue()));
 	}

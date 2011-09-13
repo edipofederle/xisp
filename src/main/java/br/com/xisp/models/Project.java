@@ -22,6 +22,9 @@ public class Project implements Serializable {
 
 	@ManyToOne
     private User owner;
+	
+	@ManyToOne
+    private Client client;
 
 	@ManyToMany
     private List<User> users;
@@ -60,5 +63,12 @@ public class Project implements Serializable {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
 }
 

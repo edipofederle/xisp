@@ -53,9 +53,9 @@
             	<a href="${pageContext.request.contextPath}/projects/index">Projects</a>
             </li>
             <li><a href="${pageContext.request.contextPath}/users/index">Users</a></li>
+            <li><a href="${pageContext.request.contextPath}/clients/index">Clients</a></li>
             <li><a href="#about">Stories</a></li>
             <li><a href="#about">Iterations</a></li>
-            <li><a href="#about">Users</a></li>
             <li><a href="#about">Teams</a></li>
             <li><a href="#about">Release</a></li>
             <li><a href="#contact">About</a></li>
