@@ -18,6 +18,7 @@ public class ClientsController {
 	private final Validator validator;
 	private final Result result;
 	
+	
 	public ClientsController(ClientRepository repo, Validator validator, Result result){
 		this.repo = repo;
 		this.validator = validator;
@@ -65,11 +66,20 @@ public class ClientsController {
 	
 	@Path("/clients/{client.id}")
 	@Delete
-	public void remove(Client client) {
-		repo.remove(client);
-		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> Cliente deletado com sucesso.");
-		result.redirectTo(this).index();
+	public void remove(Client client) throws Exception{
+		boolean error = false;
+		try{
+			repo.remove(client);
+		}catch (Exception e) {
+			error = true;
+			result.include("erroDeleteClient","Erro ao deletar cliente, este cliente esta ligado ao um projeto logo nao Ž possivel remover o mesmo. Se realmente quizer fazer isso, primeiro remova o projeto.");
+			result.forwardTo(ErrorsController.class).index();
+		}
+		if(!error){
+			result.include("success", true);
+			result.include("message", "<strong>Sucesso!</strong> Cliente deletado com sucesso.");
+			result.redirectTo(this).index();
+		}
 	}
 	
 	

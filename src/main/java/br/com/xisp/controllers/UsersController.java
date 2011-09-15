@@ -1,5 +1,7 @@
 package br.com.xisp.controllers;
 
+import java.sql.SQLException;
+
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -71,7 +73,7 @@ public class UsersController {
 	
 	@Path("/users/{user.id}")
 	@Delete
-	public void remove(User user) {
+	public void remove(User user) throws Exception {
 		repository.remove(user);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Usuario deletado com sucesso.");

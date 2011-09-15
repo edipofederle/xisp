@@ -86,7 +86,7 @@ public class UsersControllerTest {
 	}
 	
 	@Test
-	public void shouldRemoveAUser(){
+	public void shouldRemoveAUser() throws Exception{
 		User user = givenAValidUser();
 		willAddUser(user);
 		willValidateDuplicationAndReturnFalse(user);
@@ -96,7 +96,7 @@ public class UsersControllerTest {
 		Assert.assertNull(dao.load(user));
 	}
 
-	private void willRemoveAUser(final User user) {
+	private void willRemoveAUser(final User user) throws Exception {
 		mockery.checking(new Expectations() {{
 			one(dao).remove(user);
 			allowing(anything());

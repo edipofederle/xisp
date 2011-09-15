@@ -36,10 +36,15 @@ public class ClientDao implements ClientRepository {
 		this.session.update(t);
 	}
 
-	public void remove(Client t) {
-		this.session.delete(t);
-	}
-
+	public void remove(Client t) throws Exception{
+		 try{
+		  this.session.delete(t);
+		  this.session.flush();
+		 }catch (Exception e) {
+		  throw e;
+		 }
+		}
+	
 	public Client load(Client client) {
 		return (Client) session.get(Client.class, client.getId());
 	}

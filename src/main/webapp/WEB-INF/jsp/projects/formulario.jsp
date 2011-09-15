@@ -10,6 +10,7 @@
 <c:forEach items="${errors}" var="error">
 	<b class="error">${error.category } - ${error.message }</b><br />
 </c:forEach>
+
 		<form action="${pageContext.request.contextPath}/projects" method="post" class="form-stacked" id="formProject"> 
 			<c:if test="${not empty project.id}">
 				<input type="hidden" name="project.id" value="${project.id}" />
@@ -18,6 +19,19 @@
 			<label><fmt:message key="project.form.name"/></label>
 			<input type="text" name="project.name" id="name" class="required xlarge" value="${project.name }"/>
 			<br /><br/>
+			
+			<select name="project.client.id" id="project.client.id">
+				<c:if test="${empty project.listaClients }">
+					<c:forEach items="${clients }" var="client">
+							<option value="${client.id}">${client.name }</option>
+					</c:forEach>
+				</c:if>
+				<c:forEach items="${project.listaClients }" var="client">
+						<option value="${client.id}">${client.name }</option>
+				</c:forEach>
+			</select>
+	
+			
 			<label><fmt:message key="project.form.description"/></label>
 			<textarea name="project.description" class="required xxlarge"  id="description" rows="4">${project.description }</textarea>
 			<br />

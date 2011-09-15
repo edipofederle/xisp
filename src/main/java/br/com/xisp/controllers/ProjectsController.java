@@ -1,5 +1,6 @@
 package br.com.xisp.controllers;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import br.com.caelum.vraptor.Delete;
@@ -13,6 +14,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
+import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.session.UserSession;
 
@@ -27,9 +29,11 @@ public class ProjectsController {
 	private final ProjectRepository repository;
 	private final Result result;
 	private final User currentUser;
+	private final ClientRepository clientRepository;
 
-	public ProjectsController(ProjectRepository repository, Validator validator, Result result, UserSession user) {
+	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, Validator validator, Result result, UserSession user) {
 		this.repository = repository;
+		this.clientRepository = clientRespository;
 		this.validator = validator;
 		this.result = result;
 		this.currentUser = user.getUser();
@@ -58,12 +62,16 @@ public class ProjectsController {
 		return repository.showAll(currentUser);
 	}
 
-	public void newProject() {}
+	public void newProject() {
+		result.include("clients", clientRepository.showAll());
+	}
 	
 	@Path("/projects/{project.id}/edita")
 	@Get
 	public Project edita(Project project) {
-		return repository.load(project);
+		Project p = repository.load(project);
+		p.setListaClients(clientRepository.showAll());
+		return p;
 	}
 	
 	@Path("/projects/{project.id}")
@@ -100,7 +108,7 @@ public class ProjectsController {
 
 	@Path("/projects/{project.id}")
 	@Delete
-	public void remove(Project project) {
+	public void remove(Project project) throws Exception {
 		repository.remove(project);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");

@@ -42,7 +42,7 @@ public class ClientDaoTest {
 	}
 	
 	@Test
-	public void shouldRemoveAClient(){
+	public void shouldRemoveAClient() throws Exception{
 		Client client = givenAClient();
 		dao.add(client);
 		dao.remove(client);
