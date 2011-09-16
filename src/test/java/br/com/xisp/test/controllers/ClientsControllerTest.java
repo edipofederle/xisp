@@ -70,12 +70,6 @@ public class ClientsControllerTest {
 		controller.add(client);
 	}
 
-	private Client givenAClient() {
-		Client client = new Client();
-		client.setName("Robert");
-		client.setEndereco("New York - Main Street");
-		return client;
-	}
 	
 	@Test
 	public void shouldListAllClients(){
@@ -105,7 +99,7 @@ public class ClientsControllerTest {
 		controller.add(client);
 		willRemoveACliente(client);
 		controller.remove(client);
-		//Assert.assertNull(repo.load(client));
+		Assert.assertNull(repo.load(client));
 	}
 	
 
@@ -114,6 +108,7 @@ public class ClientsControllerTest {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).remove(client);
+				one(repo).load(client);
 			}
 		});
 	}
@@ -123,6 +118,7 @@ public class ClientsControllerTest {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).add(client);
+				one(repo).load(client);
 			}
 		});
 	}
@@ -157,20 +153,14 @@ public class ClientsControllerTest {
 				one(repo).add(client);
 			}
 		});
-		
 	}
 	
-	private Project givenValidProject() {
-		final Project project = new Project();
-		project.setName("Meu Projeto");
-		project.setDescription("Minha descricao do meu projeto");
-		mockery.checking(new Expectations() {
-			{
-				one(repoP).add(project);
-			}
-		});
-		repoP.add(project);
-		return project;
+
+	private Client givenAClient() {
+		Client client = new Client();
+		client.setName("Robert");
+		client.setEndereco("New York - Main Street");
+		return client;
 	}
 	
 }
