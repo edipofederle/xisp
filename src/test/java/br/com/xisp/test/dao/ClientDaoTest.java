@@ -1,5 +1,7 @@
 package br.com.xisp.test.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.Assert;
@@ -50,6 +52,16 @@ public class ClientDaoTest {
 		Assert.assertNull(notFound);
 	}
 	
+	@Test
+	public void shouldReturnAllClients() throws Exception{
+		for(int i = 0; i < 10; i++){
+			Client c = new Client();
+			c.setName("Joao " + i);
+			c.setEndereco("Endereco " + i);
+			dao.add(c);
+		}
+		Assert.assertEquals(12, dao.showAll().size());
+	}
 
 	private Client foundAClient(Client client) {
 		Client clientFound = dao.load(client);

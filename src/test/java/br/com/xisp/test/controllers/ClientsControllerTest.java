@@ -12,7 +12,6 @@ import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.xisp.controllers.ClientsController;
 import br.com.xisp.models.Client;
-import br.com.xisp.models.Project;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
 
@@ -21,6 +20,7 @@ public class ClientsControllerTest {
 	private Mockery mockery;
 	private MockResult result;
 	private ClientRepository repo;
+	@SuppressWarnings("unused")
 	private ProjectRepository repoP;
 	
 	private ClientsController controller;
@@ -46,7 +46,6 @@ public class ClientsControllerTest {
 	       Assert.assertEquals("O campo nome deve ser preenchido", errors.get(0).getMessage());
 	    }
 	}
-	
 	
 	private void willNotAddClient(final Client client) {
 		mockery.checking(new Expectations() {
