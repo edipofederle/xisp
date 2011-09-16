@@ -61,15 +61,6 @@ public class ProjectsControllerTest {
 	}
 	
 	@Test
-	public void shouldLoadAProejctEdit(){
-		Project project = givenAProject();
-		willLoadAProjectToEdit(project);
-		controller.edita(project);
-		//Assert.assertNotNull(p.getListaClients());
-		//TODO CORRIR ESTE TESTE URGENTE !!!
-	}
-	
-	@Test
 	public void shouldLoadAProjectShow(){
 		Project project = givenAProject();
 		willLoadAProjectToEdit(project);
@@ -80,8 +71,16 @@ public class ProjectsControllerTest {
 		mockery.checking(new Expectations() {
 			{
 				one(clientRepostiroy).showAll();
-				allowing(repo).load(project);
-				
+				allowing(repo).load(with(any(Project.class)));
+			}
+		});
+	}
+	
+	private void willReturnAProject(){
+		mockery.checking(new Expectations() {
+			{
+				repo.load(with(any(Project.class)));
+				will(returnValue(with(any(Project.class))));
 			}
 		});
 	}

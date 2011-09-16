@@ -95,6 +95,19 @@ public class UsersControllerTest {
 		controller.remove(user);
 		Assert.assertNull(dao.load(user));
 	}
+	
+	@Test
+	public void shouldLoadAUserToEdit(){
+		User user = givenAValidUser();
+		willLoadAUser(user);
+		controller.edita(user);
+	}
+
+	private void willLoadAUser(final User user) {
+		mockery.checking(new Expectations() {{
+			one(dao).load(user);
+		}});
+	}
 
 	private void willRemoveAUser(final User user) throws Exception {
 		mockery.checking(new Expectations() {{

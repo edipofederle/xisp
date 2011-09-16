@@ -19,17 +19,31 @@
 			<label><fmt:message key="project.form.name"/></label>
 			<input type="text" name="project.name" id="name" class="required xlarge" value="${project.name }"/>
 			<br /><br/>
-			
-			<select name="project.client.id" id="project.client.id">
-				<c:if test="${empty project.listaClients }">
-					<c:forEach items="${clients }" var="client">
-							<option value="${client.id}">${client.name }</option>
+				<select name="project.client.id" id="project.client.id">
+					<c:if test="${empty project.listaClients }">
+						<c:forEach items="${clients }" var="client">
+							 <c:choose>
+								<c:when test="${client.name == nameClient}">
+								  <option selected="selected" value="${client.id}">${client.name }</option>
+								</c:when>
+								<c:otherwise>
+									<option  value="${client.id}">${client.name }</option>
+								 </c:otherwise>
+							 </c:choose>
+						</c:forEach>
+					</c:if>
+					<c:forEach items="${project.listaClients }" var="client">
+							 <c:choose>
+								<c:when test="${client.name == nameClient}">
+								  <option selected="selected" value="${client.id}">${client.name }</option>
+								</c:when>
+								<c:otherwise>
+									<option  value="${client.id}">${client.name }</option>
+								 </c:otherwise>
+							 </c:choose>
 					</c:forEach>
-				</c:if>
-				<c:forEach items="${project.listaClients }" var="client">
-						<option value="${client.id}">${client.name }</option>
-				</c:forEach>
-			</select>
+				</select>
+
 	
 			
 			<label><fmt:message key="project.form.description"/></label>

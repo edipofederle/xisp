@@ -1,8 +1,5 @@
 package br.com.xisp.controllers;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -58,10 +55,6 @@ public class ProjectsController {
 		result.redirectTo(this).index();
 	}
 
-	public List<Project> lista() {
-		return repository.showAll(currentUser);
-	}
-
 	public void newProject() {
 		result.include("clients", clientRepository.showAll());
 	}
@@ -71,6 +64,7 @@ public class ProjectsController {
 	public Project edita(Project project) {
 		Project p = repository.load(project);
 		p.setListaClients(clientRepository.showAll());
+		result.include("nameClient", p.getClient().getName());
 		return p;
 	}
 	
