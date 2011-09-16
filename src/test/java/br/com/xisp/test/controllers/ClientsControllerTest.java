@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
+import br.com.caelum.vraptor.validator.Message;
+import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.xisp.controllers.ClientsController;
 import br.com.xisp.models.Client;
 import br.com.xisp.models.Project;
@@ -32,6 +34,35 @@ public class ClientsControllerTest {
 		repoP = mockery.mock(ProjectRepository.class);
 	}
 	
+	@Test
+	public void shoulNotAddInvalidClient(){
+		Client client = givenInvalidClient();
+		willNotAddClient(client);
+	    try {
+	       controller.add(client);
+	       Assert.fail();
+	    } catch (ValidationException e) {
+	       java.util.List<Message> errors = e.getErrors();
+	       Assert.assertEquals("O campo nome deve ser preenchido", errors.get(0).getMessage());
+	    }
+	}
+	
+	
+	private void willNotAddClient(final Client client) {
+		mockery.checking(new Expectations() {
+			{
+				never(repo).add(client);
+			}
+		});
+	}
+
+	private Client givenInvalidClient() {
+		Client client = new Client();
+		client.setName("");
+		client.setEndereco("");
+		return client;
+	}
+
 	@Test
 	public void shouldAddNewClient(){
 		Client client = givenAClient();

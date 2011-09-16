@@ -76,15 +76,6 @@ public class ProjectsControllerTest {
 		});
 	}
 	
-	private void willReturnAProject(){
-		mockery.checking(new Expectations() {
-			{
-				repo.load(with(any(Project.class)));
-				will(returnValue(with(any(Project.class))));
-			}
-		});
-	}
-
 	private void willListAllProjects() {
 		mockery.checking(new Expectations() {
 			{

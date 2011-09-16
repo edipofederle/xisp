@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.validator.Validations;
 import br.com.xisp.models.Client;
 import br.com.xisp.repository.ClientRepository;
 
@@ -37,14 +38,27 @@ public class ClientsController {
 	@Path("/clients")
 	@Post
 	public void add(final Client client) {
-		//validateProject(project);
-		//validator.onErrorUsePageOf(ProjectsController.class).newProject();
+		validateClient(client);
+		validator.onErrorUsePageOf(ClientsController.class).neww();
 		repo.add(client);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Cliente criado com sucesso.");
 		result.redirectTo(this).index();
 	}
 	
+	private void validateClient(final Client client) {
+		validator.checking(new Validations() {
+			{
+				that(!client.getName().isEmpty(), "erro",
+						"validacao.client.name");
+				that(!client.getEndereco().isEmpty(), "erro",
+						"validacao.client.endereco");
+			}
+		});
+		
+	}
+
+
 	@Path("/clients/{client.id}/edita")
 	@Get
 	public Client edita(Client client) {
