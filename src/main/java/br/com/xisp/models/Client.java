@@ -1,11 +1,16 @@
 package br.com.xisp.models;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Client implements Serializable{
@@ -20,6 +25,9 @@ public class Client implements Serializable{
 	
 	private String name;
 	private String endereco;
+	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Project> projects;
 	
 	public Long getId() {
 		return id;
@@ -39,6 +47,13 @@ public class Client implements Serializable{
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
+	public List<Project> getProjects() {
+		return projects;
+	}
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+	
+	
 
 }

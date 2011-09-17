@@ -17,7 +17,6 @@
 
     <!-- Le styles -->
     <link href="${pageContext.request.contextPath}/bootstrap-1.1.1.css" rel="stylesheet">
-    
    	<script type="text/javascript" src="<c:url value="../js/jquery-1.6.2.min.js"/>"></script>
    	<script type="text/javascript" src="<c:url value="/js/jquery-1.6.2.min.js"/>"></script>
 	<script type="text/javascript" src="<c:url value="../js/jquery.validate.js"/>"></script>

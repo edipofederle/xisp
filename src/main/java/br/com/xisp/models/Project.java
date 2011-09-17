@@ -26,8 +26,9 @@ public class Project implements Serializable {
 	@ManyToOne
     private User owner;
 	
+
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn
+    @JoinColumn(name = "client_id_pk")
     private Client client;
 
 	@ManyToMany
