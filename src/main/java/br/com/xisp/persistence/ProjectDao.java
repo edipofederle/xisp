@@ -43,7 +43,7 @@ public class ProjectDao implements ProjectRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Project> showAll(User user) {
-		return this.session.createQuery("from Project p where p.owner = :user")
+		return this.session.createQuery("from Project p where p.owner = :user or :user in elements(p.users)")
                 .setParameter("user", user).list();
 	}
 	

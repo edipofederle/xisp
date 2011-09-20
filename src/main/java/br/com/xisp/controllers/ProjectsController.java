@@ -16,9 +16,6 @@ import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.UserSession;
 import static br.com.caelum.vraptor.view.Results.logic;
-/**
- * @author edipo Classe controladora responsavel pelos projetos
- */
 
 @Resource
 public class ProjectsController {
