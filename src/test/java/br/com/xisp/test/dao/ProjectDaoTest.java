@@ -95,6 +95,17 @@ public class ProjectDaoTest {
 		dao.add(project);
 		Assert.assertEquals("edipo2", dao.get(project.getId()).getOwner().getName());
 	}
+	
+	@Test
+	public void shouldGetAllUsersFromProject(){
+		Project project = givenAProject();
+		dao.add(project);
+		Project ap = dao.load(project);
+		User user = givenAUser();
+		project.getUsers().add(user);
+		Assert.assertEquals(1, ap.getUsers().size());
+		Assert.assertEquals("edipo2", ap.getUsers().get(0).getName());
+	}
 
 	/*private void clearDataBase() {
 		List<Project> projects = dao.listarTudo();
