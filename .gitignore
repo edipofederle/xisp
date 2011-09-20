@@ -2,3 +2,4 @@ target/**
 .euml2
 .umlproject
 .settings/**
+doc/
