@@ -22,7 +22,6 @@ public class ProjectDao implements ProjectRepository {
 		this.session = session;
 	}
 
-
 	public Project find(String name) {
 		String sql = "from Project u where u.name = :name";
 		Query query = this.session.createQuery(sql).setParameter("name", name);
@@ -51,8 +50,6 @@ public class ProjectDao implements ProjectRepository {
 	public List<Project> showAll() {
 		return this.session.createQuery("from Project").list();
 	}
-
-
 
 	public Project load(Project project) {
 		return (Project) session.get(Project.class, project.getId());

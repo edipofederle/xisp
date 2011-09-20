@@ -17,6 +17,14 @@ import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.UserSession;
 import static br.com.caelum.vraptor.view.Results.logic;
 
+/**
+ * O resource <code>ProjectsController</code> manipula todas as operaçoes
+ * com Projects, coisas como adicionar, remover editar Projeto.
+ * 
+ * Este controller tende a ser REST.
+ * @author edipo
+ *
+ */
 @Resource
 public class ProjectsController {
 
@@ -26,7 +34,17 @@ public class ProjectsController {
 	private final User currentUser;
 	private final ClientRepository clientRepository;
 	private final UserRepository userRepository;
-
+	
+	
+	/**
+	 * Recebe todas as dependencias atraves do construtor.
+	 * @param ProjectRepository repository.
+	 * @param ClientRepository  clientRespository.
+	 * @param UserRepository userRepository
+	 * @param validator VRaptor validator.
+	 * @param result VRaptor result handler.
+	 * @param UserSession session para o usuario corrente.
+	 */
 	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, Validator validator, Result result, UserSession user) {
 		this.repository = repository;
 		this.clientRepository = clientRespository;
@@ -42,7 +60,14 @@ public class ProjectsController {
 		result.include("projects", repository.showAll(currentUser));
 
 	}
-
+	
+	/**
+	 * 
+	 * VIEW: Redireciona para index page projects em caso de sucesso e para newProject em caso
+	 * de falha.
+	 * Este metodo adiciona um projeto.
+	 * @param project
+	 */
 	@Path("/projects")
 	@Post
 	public void add(final Project project) {
@@ -54,11 +79,22 @@ public class ProjectsController {
 		result.include("message", "<strong>Sucesso!</strong> Projeto criado com sucesso.");
 		result.redirectTo(this).index();
 	}
-
+	
+	/**
+	 * Este metodo apenas redireciona para o jsp newProject.jsp
+	 */
 	public void newProject() {
 		result.include("clients", clientRepository.showAll());
 	}
 	
+	/**
+	 * 
+	 * Este metodo eh responsavel por devolver um objeto Project populado para a view edita.
+	 * 
+	 * VIEW: /projets/1/edita
+	 * @param project
+	 * @return Project
+	 */
 	@Path("/projects/{project.id}/edita")
 	@Get
 	public Project edita(Project project) {
@@ -67,7 +103,14 @@ public class ProjectsController {
 		result.include("nameClient", p.getClient().getName());
 		return p;
 	}
-	
+	/**
+	 * 
+	 * Este metodo eh responsavel por exibir um projeto
+	 * 
+	 * VIEW: /proejcts/1
+	 * @param project
+	 * @return project
+	 */
 	@Path("/projects/{project.id}")
 	@Get
 	public Project show(Project project){
@@ -75,6 +118,11 @@ public class ProjectsController {
 		return repository.load(project);
 	}
 
+	/**
+	 * 
+	 * Este metodo é responsável por realizar as alteraçoes em um projeto.
+	 * @param project
+	 */
 	@Path("/projects")
 	@Put
 	public void alterar(final Project project) {
@@ -88,20 +136,16 @@ public class ProjectsController {
 		result.include("message", "<strong>Sucesso!</strong> Projeto alterado com sucesso.");
 		result.redirectTo(this).index();
 	}
-
-	private void validateProject(final Project project) {
-		validator.checking(new Validations() {
-			{
-				that(!project.getName().isEmpty(), "erro",
-						"validacao.project.name");
-				that(!project.getDescription().isEmpty(), "erro",
-						"validacao.project.description");
-				that(!(project.getDescription().length() > 244), "erro",
-						"validacao.project.maior");
-			}
-		});
-	}
-
+	
+	/**
+	 * Aceita request HTTP DELETE
+	 * VIEW: /proejcts/1
+	 * 
+	 * Metodo que remove um <code>Project</code>
+	 * 
+	 * @param project
+	 * @throws Exception
+	 */
 	@Path("/projects/{project.id}")
 	@Delete
 	public void remove(Project project) throws Exception {
@@ -111,7 +155,15 @@ public class ProjectsController {
 		result.use(logic()).redirectTo(ProjectsController.class).show(project);
 	}
 	
-
+	/**
+	 * ACEITA request HTTP POST<br />
+	 * 
+	 * VIEW: /projects/1/participantes/
+	 * 
+	 * Este metodo é responsavel por adicionar um participante(<code>User</code>) a um <code>Project</code><Br/>
+	 * @param project
+	 * @param participante
+	 */
     @Path("/projects/{project.id}/participantes/") @Post
     public void addColaborator(Project project, User participante) {
     	User _participante = loadUser(participante);
@@ -121,7 +173,15 @@ public class ProjectsController {
         result.redirectTo(ProjectsController.class).show(project);
     }
 
-    
+	/**
+	 * ACEITA request HTTP POST<br />
+	 * 
+	 * VIEW: /projects/1/removeParticipantes
+	 * 
+	 * Este metodo é responsavel por remover um participante(<code>User</code>) a um <code>Project</code>
+	 * @param project
+	 * @param participante
+	 */
     @Path("/projects/{project.id}/removeParticipantes/") @Post
 	public void removeColaborator(Project project, User participante) {
     	User _participante = loadUser(participante);
@@ -139,5 +199,18 @@ public class ProjectsController {
 	private User loadUser(User participante) {
 		User _participante = userRepository.load(participante);
 		return _participante;
+	}
+	
+	private void validateProject(final Project project) {
+		validator.checking(new Validations() {
+			{
+				that(!project.getName().isEmpty(), "erro",
+						"validacao.project.name");
+				that(!project.getDescription().isEmpty(), "erro",
+						"validacao.project.description");
+				that(!(project.getDescription().length() > 244), "erro",
+						"validacao.project.maior");
+			}
+		});
 	}
 }
