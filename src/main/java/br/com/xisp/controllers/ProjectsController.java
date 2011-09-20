@@ -74,7 +74,7 @@ public class ProjectsController {
 	@Path("/projects/{project.id}")
 	@Get
 	public Project show(Project project){
-		result.include("users", userRepository.showAll());
+		result.include("users", userRepository.usersWithoutProjects(project));
 		return repository.load(project);
 	}
 

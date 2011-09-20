@@ -106,6 +106,7 @@ public class ProjectDaoTest {
 		Assert.assertEquals(1, ap.getUsers().size());
 		Assert.assertEquals("edipo2", ap.getUsers().get(0).getName());
 	}
+	
 
 	/*private void clearDataBase() {
 		List<Project> projects = dao.listarTudo();

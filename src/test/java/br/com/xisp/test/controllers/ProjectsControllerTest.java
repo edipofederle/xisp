@@ -66,14 +66,14 @@ public class ProjectsControllerTest {
 	public void shouldLoadAProjectShow(){
 		Project project = givenAProject();
 		willLoadAProjectToEdit(project);
-		willLoadAllUsers();
+		willLoadAllUsers(project);
 		controller.show(project);
 	}
 
-	private void willLoadAllUsers() {
+	private void willLoadAllUsers(final Project project) {
 		mockery.checking(new Expectations() {
 			{
-				one(userRepository).showAll();
+				one(userRepository).usersWithoutProjects(project);
 			}
 		});
 		

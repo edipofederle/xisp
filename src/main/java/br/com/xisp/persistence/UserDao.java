@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import br.com.caelum.vraptor.ioc.Component;
+import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.UserRepository;
 
@@ -74,5 +75,15 @@ public class UserDao  implements UserRepository{
 			throw new Exception("N‹o foi poss’vel acessar o sistema!", e);
 		}
 
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<User> usersWithoutProjects(Project project) {
+		String hql = "select u from User u, Project p where p = :project " +
+				"and u != p.owner and u not in elements (p.users)";
+		Query query = session.createQuery(hql);
+		query.setParameter("project", project);
+		return query.list();
 	}
 }

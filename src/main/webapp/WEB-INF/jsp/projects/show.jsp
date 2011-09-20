@@ -10,9 +10,6 @@
 </c:forEach>
 
 
-
-
-
 <h2>${project.name }</h2><br />
 
 <a href="${pageContext.request.contextPath}/projects/${project.id}/edita" >Editar</a>
@@ -22,8 +19,12 @@
 	<button type="submit" class="btn small" onclick="return confirm('Are you sure?')">Remover</button>
 </form>
 
-
-  <form id="user" name="addParticipante" action="<c:url value="/projects/${project.id}/participantes/"/>" method="post">
+<c:choose>
+	<c:when test="${empty users}">
+		<b>Nao existem mais usuarios disponiveis para ser adicionados como participantes do projeto.</b>
+	</c:when>
+	<c:otherwise>
+		  <form id="user" name="addParticipante" action="<c:url value="/projects/${project.id}/participantes/"/>" method="post">
 	<select name="participante.id">
       <c:forEach items="${users}" var="user">
         <option value="${user.id}">${user.name}</option>
@@ -31,3 +32,5 @@
     </select>
     <input type="submit" value="Add"/>
   </form>
+	</c:otherwise>
+</c:choose>

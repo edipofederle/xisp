@@ -1,7 +1,13 @@
 package br.com.xisp.test.dao;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
+
+import java.util.Arrays;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.hibernate.Session;
@@ -9,12 +15,15 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
+import br.com.xisp.persistence.ProjectDao;
 import br.com.xisp.persistence.UserDao;
 
 public class UserDaoTest {
 	
 	private UserDao dao;
+	private ProjectDao pdao;
 	private Session session;
 
 	@Before
@@ -24,6 +33,7 @@ public class UserDaoTest {
 		session = cfg.buildSessionFactory().openSession();
 		session.beginTransaction();
 		dao = new UserDao(session);
+		pdao = new ProjectDao(session);
 	}
 	
 	@Test
@@ -81,11 +91,57 @@ public class UserDaoTest {
 		User notFound = foundAUser(user);
 		Assert.assertNull(notFound);
 	}
+	
+	@Test
+	public void shouldReturnUsersWithoutProjects(){
+		Project project = givenAProject();
+		pdao.add(project);
+		User owner = givenAnUserOwnerOf(project);
+		User participant = givenAnUserParticipanteOf(project);
+		User user = givenAUserWihtoutProject("pedro");
 
+		List<User> users = dao.usersWithoutProjects(project);
+
+		assertThat(users, hasItem(user));
+		assertThat(users, not(hasItem(owner)));
+		assertThat(users, not(hasItem(participant)));
+	}
+	
+	private Project givenAProject() {
+		Project project = new Project();
+		project.setId(1L);
+		project.setName("Project 2");
+		project.setDescription("Description of Test Project");
+		return project;
+	}
+	
+	private User givenAnUserParticipanteOf(Project project) {
+		User user = givenAUserWihtoutProject("Diego");
+		project.setUsers(Arrays.asList(user));
+		this.session.flush();
+		return user;
+	}
 	
 	private User foundAUser(User user) {
 		User userFound = dao.load(user);
 		return userFound;
+	}
+	
+	private User givenAnUserOwnerOf(Project project) {
+		User user = givenAUserWihtoutProject("Robson");
+		project.setOwner(user);
+		this.session.flush();
+		return user;
+	}
+
+	private User givenAUserWihtoutProject(String name) {
+		User user = new User();
+		user.setName(name);
+		user.setEmail(name+"@gmail.com");
+		user.setPassword("secret");
+		dao.add(user);
+		this.session.flush();
+		return user;
 	}
 	
 }
