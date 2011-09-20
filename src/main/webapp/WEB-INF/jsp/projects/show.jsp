@@ -15,19 +15,13 @@
 		<p>Nenhum usuario foi adicionado a esse projeto ainda. Faça isso agora.]</p>
 	</c:when>
 	<c:otherwise>
-		<table>
 		<c:forEach items="${project.users }" var="user">
-			<tr>
-				<td><b>${user.name }</b></td>
-	        	<td>
-	        		<form id="user" name="addParticipante" action="<c:url value="/projects/${project.id}/removeParticipantes/"/>" method="post">
-						<input type="hidden" name="participante.id" value="${user.id}">
-						<button type="submit" class="btn small">remover</button>
-					</form>
-	        	</td>
-			</tr>
+			<b><a href="${pageContext.request.contextPath}/users/${ user.id }">${user.name } - ${user.email }</a></b>
+       		<form id="user" name="addParticipante" action="<c:url value="/projects/${project.id}/removeParticipantes/"/>" method="post">
+				<input type="hidden" name="participante.id" value="${user.id}">
+				<button type="submit" class="btn small">remover</button>
+			</form>
 		</c:forEach>
-	</table>
 	</c:otherwise>
 </c:choose>
 

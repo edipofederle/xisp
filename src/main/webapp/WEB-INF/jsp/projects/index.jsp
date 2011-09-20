@@ -31,6 +31,17 @@
 			<a href="#">Iteracoes</a> |
 			<a href="#">Participantes</a> |
 			<a href="#">Gerenciar</a>
+			<b style="float: right;">
+				<c:choose>
+					<c:when test="${currentUser.name == project.owner.name }">
+						Voce
+					</c:when>
+					<c:otherwise>
+						${project.owner.name }
+					</c:otherwise>
+				</c:choose>
+				
+			</b>
 		</span>
 			<br /><br />
 		</c:forEach>
