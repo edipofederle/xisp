@@ -70,33 +70,6 @@ public class ProjectsControllerTest {
 		controller.show(project);
 	}
 
-	private void willLoadAllUsers(final Project project) {
-		mockery.checking(new Expectations() {
-			{
-				one(userRepository).usersWithoutProjects(project);
-			}
-		});
-		
-	}
-
-	private void willLoadAProjectToEdit(final Project project) {
-		mockery.checking(new Expectations() {
-			{
-				one(clientRepostiroy).showAll();
-				allowing(repo).load(with(any(Project.class)));
-			}
-		});
-	}
-	
-	private void willListAllProjects() {
-		mockery.checking(new Expectations() {
-			{
-				one(repo).showAll(with(any(User.class)));
-				allowing(anything());
-			}
-		});
-	}
-
 	@Test
 	public void shouldAddAValidProject(){
 		Project project = givenAProject();
@@ -183,6 +156,21 @@ public class ProjectsControllerTest {
 	public void shouldAddAUserHasParticipante(){
 		final Project p = givenAProject();
 		final User user = givenAValidUser();
+		willLoadProjectAndLoadUser(p, user);
+		controller.addColaborator(p,user);
+	}
+	
+	@Test
+	public void shouldRemoveAUserHasParticipant(){
+		final Project p = givenAProject();
+		final User user = givenAValidUser();
+		willLoadProjectAndLoadUser(p, user);
+		controller.addColaborator(p,user);
+		willLoadProjectAndLoadUser(p, user);
+		controller.removeColaborator(p,user);
+	}
+
+	private void willLoadProjectAndLoadUser(final Project p, final User user) {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).load(p);
@@ -192,7 +180,6 @@ public class ProjectsControllerTest {
 				
 			}
 		});
-		controller.addColaborator(p,user);
 	}
 
 	private void willReturnAllProejctsBelongsToUser(final User user) {
@@ -257,16 +244,6 @@ public class ProjectsControllerTest {
 	}
 	
 	
-	private void willaddAUser(final User user) {
-		mockery.checking(new Expectations() {
-			{
-				one(userRepository).add(user);
-			}
-		});
-		
-	}
-
-	
 	private Project givenValidProject() {
 		Project project = new Project();
 		project.setName("Meu Projeto");
@@ -291,6 +268,32 @@ public class ProjectsControllerTest {
 		project.setName("Test Project");
 		project.setDescription("Description of Test Project");
 		return project;
+	}
+	
+	private void willLoadAllUsers(final Project project) {
+		mockery.checking(new Expectations() {
+			{
+				one(userRepository).usersWithoutProjects(project);
+			}
+		});
+	}
+
+	private void willLoadAProjectToEdit(final Project project) {
+		mockery.checking(new Expectations() {
+			{
+				one(clientRepostiroy).showAll();
+				allowing(repo).load(with(any(Project.class)));
+			}
+		});
+	}
+	
+	private void willListAllProjects() {
+		mockery.checking(new Expectations() {
+			{
+				one(repo).showAll(with(any(User.class)));
+				allowing(anything());
+			}
+		});
 	}
 
 }

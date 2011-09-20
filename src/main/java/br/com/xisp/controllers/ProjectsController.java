@@ -65,7 +65,7 @@ public class ProjectsController {
 	@Path("/projects/{project.id}/edita")
 	@Get
 	public Project edita(Project project) {
-		Project p = repository.load(project);
+		Project p = loadProject(project);
 		p.setListaClients(clientRepository.showAll());
 		result.include("nameClient", p.getClient().getName());
 		return p;
@@ -110,16 +110,36 @@ public class ProjectsController {
 		repository.remove(project);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
-		 result.use(logic()).redirectTo(ProjectsController.class).show(project);
+		result.use(logic()).redirectTo(ProjectsController.class).show(project);
 	}
 	
 
     @Path("/projects/{project.id}/participantes/") @Post
     public void addColaborator(Project project, User participante) {
-    	User _participante = userRepository.load(participante);
-        Project lproject = repository.load(project);
+    	User _participante = loadUser(participante);
+        Project lproject = loadProject(project);
         lproject.getUsers().add(_participante);
         validator.onErrorUsePageOf(ProjectsController.class).show(project);
         result.redirectTo(ProjectsController.class).show(project);
     }
+
+    
+    @Path("/projects/{project.id}/removeParticipantes/") @Post
+	public void removeColaborator(Project project, User participante) {
+    	User _participante = loadUser(participante);
+        Project lproject = loadProject(project);
+        lproject.getUsers().remove(_participante);
+        validator.onErrorUsePageOf(ProjectsController.class).show(project);
+        result.redirectTo(ProjectsController.class).show(project);		
+	}
+    
+	private Project loadProject(Project project) {
+		Project lproject = repository.load(project);
+		return lproject;
+	}
+
+	private User loadUser(User participante) {
+		User _participante = userRepository.load(participante);
+		return _participante;
+	}
 }
