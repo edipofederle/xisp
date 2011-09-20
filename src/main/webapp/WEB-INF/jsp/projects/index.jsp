@@ -2,7 +2,7 @@
 
 		<c:if test="${success }">
 			<div class="alert-message success">
-        		<a href="#" class="close">×</a>
+        		<a href="#" class="close"> X </a>
        			 <p> ${message }</p>
      		</div>
 		</c:if>

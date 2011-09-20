@@ -152,7 +152,7 @@ public class ProjectsController {
 		repository.remove(project);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
-		result.use(logic()).redirectTo(ProjectsController.class).show(project);
+		result.use(logic()).redirectTo(ProjectsController.class).index();
 	}
 	
 	/**
