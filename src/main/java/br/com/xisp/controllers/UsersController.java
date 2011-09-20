@@ -1,7 +1,5 @@
 package br.com.xisp.controllers;
 
-import java.sql.SQLException;
-
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -21,7 +19,7 @@ public class UsersController {
 	private final Validator validator;
 	private final UserRepository repository;
 	private final Result result;
-
+	
 	public UsersController(UserRepository repostiory, Validator validator, Result result) {
 		this.repository = repostiory;
 		this.validator = validator;
@@ -54,6 +52,13 @@ public class UsersController {
 	}
 	
 	public void newUser() {}
+	
+	
+	@Path("/users/{user.id}")
+	@Get
+	public User show(User user){
+		return repository.load(user);
+	}
 	
 	private boolean isUserDuplicate(User user){
 		boolean isDuplicate = repository.isDuplicate(user.getName());

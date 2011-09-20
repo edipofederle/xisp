@@ -18,6 +18,7 @@ import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
+import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.UserSession;
 
 public class ProjectsControllerTest {
@@ -29,12 +30,14 @@ public class ProjectsControllerTest {
 	private ProjectsController controller;
 	private UserSession sessionUser;
 	private ClientRepository clientRepostiroy;
+	private UserRepository userRepository;
 
 	@Before
 	public void setUp() throws Exception {
 		mockery = new Mockery();
 		repo = mockery.mock(ProjectRepository.class);
 		clientRepostiroy = mockery.mock(ClientRepository.class);
+		userRepository = mockery.mock(UserRepository.class);
 		result = new MockResult();
 		sessionUser = mockery.mock(UserSession.class);
 		mockery.checking(new Expectations() {
@@ -42,8 +45,7 @@ public class ProjectsControllerTest {
 				allowing(sessionUser);
 			}
 		});
-		controller = new ProjectsController(repo, clientRepostiroy, new MockValidator(), result, sessionUser);
-
+		controller = new ProjectsController( repo, clientRepostiroy, userRepository,  new MockValidator(), result, sessionUser);
 	}
 	
 	@Test
@@ -64,7 +66,17 @@ public class ProjectsControllerTest {
 	public void shouldLoadAProjectShow(){
 		Project project = givenAProject();
 		willLoadAProjectToEdit(project);
+		willLoadAllUsers();
 		controller.show(project);
+	}
+
+	private void willLoadAllUsers() {
+		mockery.checking(new Expectations() {
+			{
+				one(userRepository).showAll();
+			}
+		});
+		
 	}
 
 	private void willLoadAProjectToEdit(final Project project) {
@@ -93,15 +105,6 @@ public class ProjectsControllerTest {
 		controller.add(project);
 	}
 
-	private Project givenAProject() {
-		Project project = new Project();
-		project.setName("Test Project");
-		project.setDescription("Description of Test Project");
-		willAddTheProject(project);
-		repo.add(project);
-		return project;
-	}
-	
 	@Test
 	public void shouldUpdateAProject(){
 		Project project = givenAProject();
@@ -175,21 +178,37 @@ public class ProjectsControllerTest {
 		User user = givenAValidUser();
 		willReturnAllProejctsBelongsToUser(user);
 	}
-
-	@SuppressWarnings("unused")
-	private void willLoadProject(final Project project) {
+	
+	@Test
+	public void shouldAddAUserHasParticipante(){
+		final Project p = givenAProject();
+		final User user = givenAValidUser();
 		mockery.checking(new Expectations() {
 			{
-				one(repo).load(project);
-				one(clientRepostiroy).showAll();
+				one(repo).load(p);
+				will(returnValue(p));
+				one(userRepository).load(user);
+				will(returnValue(user));
+				
 			}
 		});
+		controller.addColaborator(p,user);
 	}
 
 	private void willReturnAllProejctsBelongsToUser(final User user) {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).showAll(user);
+			}
+		});
+	}
+	
+
+	@SuppressWarnings("unused")
+	private void willLoadProject(final Project project) {
+		mockery.checking(new Expectations() {
+			{
+				one(repo).load(project);				
 			}
 		});
 	}
@@ -237,6 +256,17 @@ public class ProjectsControllerTest {
 		});
 	}
 	
+	
+	private void willaddAUser(final User user) {
+		mockery.checking(new Expectations() {
+			{
+				one(userRepository).add(user);
+			}
+		});
+		
+	}
+
+	
 	private Project givenValidProject() {
 		Project project = new Project();
 		project.setName("Meu Projeto");
@@ -248,10 +278,19 @@ public class ProjectsControllerTest {
 	
 	private User givenAValidUser() {
 		User user = new User();
+		user.setId(1L);
 		user.setName("Fulano");
 		user.setEmail("edipo@gmail.com");
 		user.setPassword("edipo");
 		return user;
+	}
+
+	private Project givenAProject() {
+		Project project = new Project();
+		project.setId(1L);
+		project.setName("Test Project");
+		project.setDescription("Description of Test Project");
+		return project;
 	}
 
 }

@@ -9,4 +9,5 @@ public interface ProjectRepository extends BaseRepository<Project> {
 	Project load(Project project);
 	Project get(Long id);
 	List<Project> showAll(User user);
+	List<Project> showAll();
 }

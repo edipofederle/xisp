@@ -29,7 +29,7 @@
 		<c:forEach items="${users}" var="user">
 			<tr>
 				<td>${user.id }</td>
-				<td>${user.name }</td>
+				<td><a href="${pageContext.request.contextPath}/users/${ user.id }">${user.name }</a></td>
 				<td>${user.email }</td>
 				<td>
 					<form action="${pageContext.request.contextPath}/users/${user.id}" method="post">

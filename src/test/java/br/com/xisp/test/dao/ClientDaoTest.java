@@ -1,7 +1,5 @@
 package br.com.xisp.test.dao;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.Assert;
@@ -9,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.xisp.models.Client;
-import br.com.xisp.models.Project;
 import br.com.xisp.persistence.ClientDao;
 
 public class ClientDaoTest {
@@ -64,17 +61,6 @@ public class ClientDaoTest {
 		Assert.assertEquals(12, dao.showAll().size());
 	}
 	
-	@Test
-	public void testOne(){
-		Client c = givenAClient();
-		Project p1 = new Project();
-		p1.setClient(c);
-		Project p2 = new Project();
-		p2.setClient(c);
-		Assert.assertNotNull(p1.getClient().getProjects().get(0).getName());
-		
-		
-	}
 
 	private Client foundAClient(Client client) {
 		Client clientFound = dao.load(client);

@@ -1,6 +1,7 @@
 package br.com.xisp.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -67,7 +68,11 @@ public class Project implements Serializable {
 		this.owner = owner;
 	}
 	public List<User> getUsers() {
-		return users;
+    	if (users == null) {
+			users = new ArrayList<User>();
+		}
+
+        return users;
 	}
 	public void setUsers(List<User> users) {
 		this.users = users;

@@ -46,6 +46,12 @@ public class ProjectDao implements ProjectRepository {
 		return this.session.createQuery("from Project p where p.owner = :user")
                 .setParameter("user", user).list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Project> showAll() {
+		return this.session.createQuery("from Project").list();
+	}
+
 
 
 	public Project load(Project project) {

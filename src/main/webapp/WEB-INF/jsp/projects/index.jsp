@@ -29,7 +29,8 @@
 		<span id="actions">
 			<a href="#">User Stories</a> |
 			<a href="#">Iteracoes</a> |
-			<a href="#">Participantes</a>
+			<a href="#">Participantes</a> |
+			<a href="#">Gerenciar</a>
 		</span>
 			<br /><br />
 		</c:forEach>

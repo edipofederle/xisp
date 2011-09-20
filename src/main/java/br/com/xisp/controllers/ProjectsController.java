@@ -13,8 +13,9 @@ import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
+import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.UserSession;
-
+import static br.com.caelum.vraptor.view.Results.logic;
 /**
  * @author edipo Classe controladora responsavel pelos projetos
  */
@@ -27,10 +28,12 @@ public class ProjectsController {
 	private final Result result;
 	private final User currentUser;
 	private final ClientRepository clientRepository;
+	private final UserRepository userRepository;
 
-	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, Validator validator, Result result, UserSession user) {
+	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, Validator validator, Result result, UserSession user) {
 		this.repository = repository;
 		this.clientRepository = clientRespository;
+		this.userRepository = userRepository;
 		this.validator = validator;
 		this.result = result;
 		this.currentUser = user.getUser();
@@ -71,6 +74,7 @@ public class ProjectsController {
 	@Path("/projects/{project.id}")
 	@Get
 	public Project show(Project project){
+		result.include("users", userRepository.showAll());
 		return repository.load(project);
 	}
 
@@ -106,6 +110,16 @@ public class ProjectsController {
 		repository.remove(project);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
-		result.redirectTo(ProjectsController.class).index();
+		 result.use(logic()).redirectTo(ProjectsController.class).show(project);
 	}
+	
+
+    @Path("/projects/{project.id}/participantes/") @Post
+    public void addColaborator(Project project, User participante) {
+    	User _participante = userRepository.load(participante);
+        Project lproject = repository.load(project);
+        lproject.getUsers().add(_participante);
+        validator.onErrorUsePageOf(ProjectsController.class).show(project);
+        result.redirectTo(ProjectsController.class).show(project);
+    }
 }
