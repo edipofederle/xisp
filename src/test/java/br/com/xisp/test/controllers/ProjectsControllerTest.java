@@ -7,6 +7,7 @@ import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.support.DaoSupport;
 
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
@@ -222,7 +223,10 @@ public class ProjectsControllerTest {
 	private void willUpdateTheProject(final Project project){
 		mockery.checking(new Expectations() {
 			{
+				one(repo).load(project);
+				will(returnValue(project));
 				one(repo).update(project);
+				
 			}
 		});
 	}

@@ -81,11 +81,12 @@ public class ProjectsController {
 	@Path("/projects")
 	@Put
 	public void alterar(final Project project) {
+		Project p = loadProject(project);
 		validateProject(project);
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
-		result.include("project", project);
+		result.include("project", p);
 		project.setOwner(this.currentUser);
-		repository.update(project);
+		repository.update(p);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto alterado com sucesso.");
 		result.redirectTo(this).index();
