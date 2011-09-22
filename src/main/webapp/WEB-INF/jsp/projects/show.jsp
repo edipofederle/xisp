@@ -9,10 +9,10 @@
 <small><b>Cliente: </b>${project.client.name }</small><br/>
 <a href="${pageContext.request.contextPath}/projects/${project.id}/edita" >Editar ${project.name }</a><br />
 
-<h4>Participantes desse Projeto</h4>
+<h4><fmt:message key="project.show.participantes"/></h4>
 <c:choose>
 	<c:when test="${empty project.users }">
-		<p>Nenhum usuario foi adicionado a esse projeto ainda. Faça isso agora.]</p>
+		<p><fmt:message key="project.show.semusuario"></fmt:message></p>
 	</c:when>
 	<c:otherwise>
 		<c:forEach items="${project.users }" var="user">
@@ -27,7 +27,7 @@
 
 <c:choose>
 	<c:when test="${empty users}">
-		<b>Nao existem mais usuarios disponiveis para ser adicionados como participantes do projeto.</b>
+		<b><fmt:message key="project.show.naousuarios"/></b>
 	</c:when>
 	<c:otherwise>
 		<form id="user" name="addParticipante" action="<c:url value="/projects/${project.id}/participantes/"/>" method="post">
