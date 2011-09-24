@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,9 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Immutable;
 
 @Entity
 public class Project implements Serializable {
@@ -36,6 +36,9 @@ public class Project implements Serializable {
 
 	@ManyToMany
     private List<User> users;
+	
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Interaction> iterations;
 
 	@Column
 	private String name;
@@ -91,8 +94,12 @@ public class Project implements Serializable {
 	public void setListaClients(List<Client> listaClients) {
 		this.listaClients = listaClients;
 	}
-	
-	
+	public List<Interaction> getIterations() {
+		return iterations;
+	}
+	public void setIterations(List<Interaction> iterations) {
+		this.iterations = iterations;
+	}
 	
 }
 

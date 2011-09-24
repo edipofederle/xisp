@@ -58,7 +58,7 @@ public class ClientDaoTest {
 			c.setEndereco("Endereco " + i);
 			dao.add(c);
 		}
-		Assert.assertEquals(12, dao.showAll().size());
+		Assert.assertEquals(10, dao.showAll().size());
 	}
 	
 
