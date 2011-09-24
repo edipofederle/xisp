@@ -59,6 +59,9 @@ public class Story {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+	public void markAsCompleted() {
+		this.status = Status.FINISHED;
+	}
 	
 	
 }

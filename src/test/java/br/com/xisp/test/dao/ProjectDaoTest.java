@@ -30,7 +30,7 @@ public class ProjectDaoTest {
 	
 	
 	@Test
-	public void shouldFindUserGivenAName(){
+	public void shouldFindProjectGivenAName(){
 		Project project = givenAProject();
 		dao.add(project);
 		assertThat(dao.find("Project 2"), is(project));
@@ -39,14 +39,13 @@ public class ProjectDaoTest {
 
 	private Project givenAProject() {
 		Project project = new Project();
-		project.setId(1L);
 		project.setName("Project 2");
 		project.setDescription("Description of Test Project");
 		return project;
 	}
 	
 	@Test
-	public void shouldFindUserGivenAID(){
+	public void shouldFindProjectGivenAID(){
 		Project project = givenAProject();
 		dao.add(project);
 		Project projectFound = foundAProject(project);
