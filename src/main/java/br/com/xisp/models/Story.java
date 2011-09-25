@@ -1,6 +1,8 @@
 package br.com.xisp.models;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,8 @@ public class Story {
 	
 	private String name;
 	private String description;
+	
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@ManyToOne
