@@ -19,6 +19,7 @@ import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
 public class ProjectsControllerTest {
@@ -31,6 +32,7 @@ public class ProjectsControllerTest {
 	private UserSession sessionUser;
 	private ClientRepository clientRepostiroy;
 	private UserRepository userRepository;
+	private ProjectSession sessionProject;
 
 	@Before
 	public void setUp() throws Exception {
@@ -40,12 +42,13 @@ public class ProjectsControllerTest {
 		userRepository = mockery.mock(UserRepository.class);
 		result = new MockResult();
 		sessionUser = mockery.mock(UserSession.class);
+		sessionProject = mockery.mock(ProjectSession.class);
 		mockery.checking(new Expectations() {
 			{
 				allowing(sessionUser);
 			}
 		});
-		controller = new ProjectsController( repo, clientRepostiroy, userRepository,  new MockValidator(), result, sessionUser);
+		controller = new ProjectsController( repo, clientRepostiroy, userRepository,  new MockValidator(), result, sessionUser, sessionProject);
 	}
 	
 	@Test
@@ -67,7 +70,10 @@ public class ProjectsControllerTest {
 		Project project = givenAProject();
 		willLoadAProjectToEdit(project);
 		willLoadAllUsers(project);
+		willSetProjectSession(project);
 		controller.show(project);
+		Project p = sessionProject.getProject();
+		Assert.assertEquals("Test Project", p.getName());
 	}
 
 	@Test
@@ -295,6 +301,16 @@ public class ProjectsControllerTest {
 			{
 				one(repo).showAll(with(any(User.class)));
 				allowing(anything());
+			}
+		});
+	}
+	
+	private void willSetProjectSession(final Project project) {
+		mockery.checking(new Expectations() {
+			{
+				one(sessionProject).setProject(project);
+				one(sessionProject).getProject();
+				will(returnValue(project));
 			}
 		});
 	}

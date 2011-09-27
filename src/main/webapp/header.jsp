@@ -39,6 +39,10 @@
   		color:white;
   		margin-top:10px;
   	}
+  	
+  	b.sessionProject{
+  		color:white;
+  	}
   </style>
 
   <body>
@@ -46,19 +50,7 @@
 	<div class="topbar">
       <div class="fill">
         <div class="container">
-          <h3><a href="#">xisp</a></h3>
-          <ul>
-            <li class="active">
-            	<a href="${pageContext.request.contextPath}/projects/index">Projects</a>
-            </li>
-            <li><a href="${pageContext.request.contextPath}/users/index">Users</a></li>
-            <li><a href="${pageContext.request.contextPath}/clients/index">Clients</a></li>
-            <li><a href="#about">Stories</a></li>
-            <li><a href="#about">Iterations</a></li>
-            <li><a href="#about">Teams</a></li>
-            <li><a href="#about">Release</a></li>
-            <li><a href="#contact">About</a></li>
-          </ul>
+          <h3><a href="${pageContext.request.contextPath}/projects/index">XISP ${currentProject.name } </a></h3>
           <span class="userSession">${currentUser.name } <a href="${pageContext.request.contextPath}/login/logout"><b class="userSession">Sair</b></a></span>
         </div>
       </div>

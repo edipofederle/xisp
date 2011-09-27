@@ -24,13 +24,16 @@
 		<div id="proj">
 			<span class="title">
 				<b><a href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
+				<input type="hidden" value="${project.id }">
 			</span>
 		</div>
 		<span id="actions">
-			<a href="#">User Stories</a> |
+			<a href="${pageContext.request.contextPath}/stories/${project.id }/index">User Stories</a> |
 			<a href="#">Iteracoes</a> |
 			<a href="#">Participantes</a> |
-			<a href="#">Gerenciar</a>
+			<a href="#">Gerenciar</a> |
+			<a href="${pageContext.request.contextPath}/users/index">Users</a> |
+            <a href="${pageContext.request.contextPath}/clients/index">Clients</a> |
 			<b style="float: right;">
 				<c:choose>
 					<c:when test="${currentUser.name == project.owner.name }">

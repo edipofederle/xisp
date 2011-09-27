@@ -55,9 +55,8 @@ public class StoryDaoTest {
 	public void testShouldReturnAllFinishedStoriesFromProject(){
 		Project p = givenAProject();
 		givenFiveStories(p, Status.FINISHED);
-		Assert.assertEquals(0, storydao.showAllStoriesNotFinished(p).size());
-		
-		
+		givenAStory("Story of Sea", p, Status.READY_FOR_TEST);
+		Assert.assertEquals(1, storydao.showAllStoriesNotFinished(p).size());
 	}
 
 	@Test

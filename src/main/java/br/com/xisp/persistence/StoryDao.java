@@ -6,10 +6,12 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import br.com.caelum.vraptor.ioc.Component;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;
 import br.com.xisp.repository.StoryRepository;
 
+@Component
 public class StoryDao implements StoryRepository {
 	
 	//Sessao atual do hibernate

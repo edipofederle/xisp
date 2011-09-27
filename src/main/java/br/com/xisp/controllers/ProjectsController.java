@@ -1,5 +1,6 @@
 package br.com.xisp.controllers;
 
+import static br.com.caelum.vraptor.view.Results.logic;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -14,8 +15,8 @@ import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
-import static br.com.caelum.vraptor.view.Results.logic;
 
 /**
  * O resource <code>ProjectsController</code> manipula todas as operaçoes
@@ -34,6 +35,7 @@ public class ProjectsController {
 	private final User currentUser;
 	private final ClientRepository clientRepository;
 	private final UserRepository userRepository;
+	private final ProjectSession projectSession;
 	
 	
 	/**
@@ -45,13 +47,14 @@ public class ProjectsController {
 	 * @param result VRaptor result handler.
 	 * @param UserSession session para o usuario corrente.
 	 */
-	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, Validator validator, Result result, UserSession user) {
+	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, Validator validator, Result result, UserSession user, ProjectSession projectSession) {
 		this.repository = repository;
 		this.clientRepository = clientRespository;
 		this.userRepository = userRepository;
 		this.validator = validator;
 		this.result = result;
 		this.currentUser = user.getUser();
+		this.projectSession = projectSession;
 	}
 
 	@Path("/projects/index")
@@ -115,7 +118,9 @@ public class ProjectsController {
 	@Get
 	public Project show(Project project){
 		result.include("users", userRepository.usersWithoutProjects(project));
-		return repository.load(project);
+		Project p = repository.load(project);
+		this.projectSession.setProject(p);
+		return p;
 	}
 
 	/**
