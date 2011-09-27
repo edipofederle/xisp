@@ -67,13 +67,16 @@ public class ProjectsControllerTest {
 	
 	@Test
 	public void shouldLoadAProjectShow(){
-		Project project = givenAProject();
+		final Project project = givenAProject();
 		willLoadAProjectToEdit(project);
 		willLoadAllUsers(project);
-		willSetProjectSession(project);
+		mockery.checking(new Expectations() {
+			{
+				one(sessionProject).setProject(with(any(Project.class)));
+			}
+		});
 		controller.show(project);
-		Project p = sessionProject.getProject();
-		Assert.assertEquals("Test Project", p.getName());
+		Assert.assertEquals("Test Project", project.getName());
 	}
 
 	@Test
@@ -305,14 +308,5 @@ public class ProjectsControllerTest {
 		});
 	}
 	
-	private void willSetProjectSession(final Project project) {
-		mockery.checking(new Expectations() {
-			{
-				one(sessionProject).setProject(project);
-				one(sessionProject).getProject();
-				will(returnValue(project));
-			}
-		});
-	}
 
 }

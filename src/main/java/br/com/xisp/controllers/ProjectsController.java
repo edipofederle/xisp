@@ -119,7 +119,7 @@ public class ProjectsController {
 	public Project show(Project project){
 		result.include("users", userRepository.usersWithoutProjects(project));
 		Project p = repository.load(project);
-		this.projectSession.setProject(p);
+		projectSession.setProject(p);
 		return p;
 	}
 

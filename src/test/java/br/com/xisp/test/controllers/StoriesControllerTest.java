@@ -1,7 +1,5 @@
 package br.com.xisp.test.controllers;
 
-import junit.framework.Assert;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
@@ -27,9 +25,15 @@ public class StoriesControllerTest {
 	public void setUp() throws Exception {
 		this.mockery = new Mockery();
 		this.repo = mockery.mock(StoryRepository.class);
-		this.projectSession = mockery.mock(ProjectSession.class);
+		projectSession = mockery.mock(ProjectSession.class);
 		this.projectRepository = mockery.mock(ProjectRepository.class);
 		this.result = new MockResult();
+		mockery.checking(new Expectations() {
+			{
+				one(projectRepository).load(with(any(Project.class)));
+				allowing(projectSession).getProject();
+			}
+		});
 		this.controller = new StoriesController(repo, projectRepository, result, projectSession);
 	}
 	
@@ -56,8 +60,8 @@ public class StoriesControllerTest {
 	private void willNeverLoadAllNoFoneStories(final Project project) {
 		mockery.checking(new Expectations() {
 			{
+				never(projectSession).getProject();
 				never(repo).showAllStoriesNotFinished(project);
-				one(projectSession).getProject();
 			}
 		});
 	}
@@ -66,7 +70,7 @@ public class StoriesControllerTest {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).showAllStoriesNotFinished(with(any(Project.class)));
-				one(projectSession).getProject();
+				allowing(projectSession).getProject();
 			}
 		});
 	}
