@@ -38,7 +38,7 @@ public class Project implements Serializable {
     private List<User> users;
 	
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Interaction> iterations;
+    private List<Interation> iterations;
 
 	@Column
 	private String name;
@@ -94,10 +94,10 @@ public class Project implements Serializable {
 	public void setListaClients(List<Client> listaClients) {
 		this.listaClients = listaClients;
 	}
-	public List<Interaction> getIterations() {
+	public List<Interation> getIterations() {
 		return iterations;
 	}
-	public void setIterations(List<Interaction> iterations) {
+	public void setIterations(List<Interation> iterations) {
 		this.iterations = iterations;
 	}
 	

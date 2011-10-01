@@ -3,6 +3,12 @@
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		$("#newClientIntoProjectForm").hide();
+		$(".newClientLink").click(function(){
+			$("#formProject").hide();
+			$("#newClientIntoProjectForm").show();
+		});
 		$("#formProject").validate();
 	});
 </script>
@@ -16,9 +22,11 @@
 				<input type="hidden" name="project.id" value="${project.id}" />
 				<input type="hidden" name="_method" value="put"/>
 			</c:if>
+			
 			<label><fmt:message key="project.form.name"/></label>
 			<input type="text" name="project.name" id="name" class="required xlarge" value="${project.name }"/>
 			<br /><br/>
+				<a href="#" class="newClientLink">Cadastrar um Cliente</a><br/>
 				<select name="project.client.id" id="project.client.id">
 					<c:if test="${empty project.listaClients }">
 						<c:forEach items="${clients }" var="client">
@@ -43,8 +51,6 @@
 							 </c:choose>
 					</c:forEach>
 				</select>
-
-	
 			
 			<label><fmt:message key="project.form.description"/></label>
 			<textarea name="project.description" class="required xxlarge"  id="description" rows="4">${project.description }</textarea>
@@ -55,5 +61,9 @@
 				<a href="${pageContext.request.contextPath}/projects/index">Cancelar</a>
 			</div>
 		</form>
+				<div id="newClientIntoProjectForm">
+					<b>Criar um novo Cliente</b>
+					<%@include file="../clients/formulario.jsp"%>
+				</div>
 	</div>
 </div>

@@ -18,7 +18,7 @@
    		<mapping class="br.com.xisp.models.User"/>  
    		<mapping class="br.com.xisp.models.Client"/> 
    		<mapping class="br.com.xisp.models.Story"/> 
-   		<mapping class="br.com.xisp.models.Interaction"/> 
+   		<mapping class="br.com.xisp.models.Interation"/> 
    		
                
     </session-factory>  
