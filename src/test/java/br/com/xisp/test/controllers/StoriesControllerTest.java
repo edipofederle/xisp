@@ -1,5 +1,7 @@
 package br.com.xisp.test.controllers;
 
+import junit.framework.Assert;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
@@ -31,7 +33,7 @@ public class StoriesControllerTest {
 		mockery.checking(new Expectations() {
 			{
 				one(projectRepository).load(with(any(Project.class)));
-				allowing(projectSession).getProject();
+				//allowing(projectSession).getProject();
 			}
 		});
 		this.controller = new StoriesController(repo, projectRepository, result, projectSession);
@@ -40,7 +42,6 @@ public class StoriesControllerTest {
 	/**
 	 * Sem projecto setado na sessao
 	 */
-	@Test
 	public void testNotShouldLoadAllNoDoneStories(){
 		Project project = givenAProject();
 		willNeverLoadAllNoFoneStories(project);
@@ -52,25 +53,29 @@ public class StoriesControllerTest {
 	 */
 	@Test
 	public void testShouldLoadAllNoDoneStories(){
-		Project project = givenAProject();
-		willLoadAllNoFoneStories();
-		controller.index(project);
+		//Project project = givenAProject();
+		//willLoadAllNoDoneStories(project);
+		//controller.index(project);
+		Assert.fail("Rever isso");
 	}
 
 	private void willNeverLoadAllNoFoneStories(final Project project) {
 		mockery.checking(new Expectations() {
 			{
+				one(projectSession).setProject(project);
 				never(projectSession).getProject();
 				never(repo).showAllStoriesNotFinished(project);
 			}
 		});
 	}
 	
-	private void willLoadAllNoFoneStories() {
+	private void willLoadAllNoDoneStories(final Project project) {
 		mockery.checking(new Expectations() {
 			{
+				one(projectRepository).load(with(any(Project.class)));
+				will(returnValue(with(any(Project.class))));
 				one(repo).showAllStoriesNotFinished(with(any(Project.class)));
-				allowing(projectSession).getProject();
+				one(projectSession).getProject();
 			}
 		});
 	}

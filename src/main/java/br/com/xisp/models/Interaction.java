@@ -31,6 +31,8 @@ public class Interaction {
 
     @Type(type="org.joda.time.contrib.hibernate.PersistentLocalDate")  
     private LocalDate endDate;
+    
+    private String name;
 
 	public Long getId() {
 		return id;
@@ -63,5 +65,14 @@ public class Interaction {
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	
 }

@@ -80,7 +80,8 @@ public class ProjectsController {
 		repository.add(project);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto criado com sucesso.");
-		result.redirectTo(this).index();
+		result.include("defineFirstInteration", "Voce Precisa Criar a primeira interaçao agora.");
+		result.redirectTo(InterationsController.class).index();
 	}
 	
 	/**

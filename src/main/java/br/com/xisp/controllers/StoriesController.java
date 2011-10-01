@@ -1,7 +1,5 @@
 package br.com.xisp.controllers;
 
-import org.springframework.jms.connection.SessionProxy;
-
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -24,14 +22,15 @@ public class StoriesController {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
-		if(projectSession != null)
-			this.currentProject = projectSession.getProject();
+		this.projectSession = projectSession;
 	}
 	
 	@Path("/stories/{project.id}/index")
 	@Get
 	public Project index(Project project) {
 		Project p = projectRepository.load(project);
+		this.projectSession.setProject(p);
+		this.currentProject = this.projectSession.getProject();
 		if(this.currentProject == null){
 			result.include("selectProjectBefore", "Selecione um projeto!");
 			result.redirectTo(ErrorsController.class).index();
@@ -40,7 +39,4 @@ public class StoriesController {
 		}
 		return p;
 	}
-	
-	
-	
 }

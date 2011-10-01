@@ -16,13 +16,14 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="${pageContext.request.contextPath}/bootstrap-1.1.1.css" rel="stylesheet">
-   	<script type="text/javascript" src="<c:url value="../js/jquery-1.6.2.min.js"/>"></script>
-   	<script type="text/javascript" src="<c:url value="/js/jquery-1.6.2.min.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="../js/jquery.validate.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery.validate.js"/>"></script>
-     <script type="text/javascript" src="<c:url value="/js/application.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/jquery.tablesorter.min.js"/>"></script>
+    <link href="${pageContext.request.contextPath}/css/bootstrap-1.1.1.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet">
+    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
