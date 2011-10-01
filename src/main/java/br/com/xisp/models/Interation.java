@@ -1,13 +1,14 @@
 package br.com.xisp.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Entidade que representa uma interaçao de um projeto XP
@@ -28,11 +29,11 @@ public class Interation {
 	@ManyToOne
 	private Project project;
 	
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalDate")
-    private LocalDate startDate;
+	@Temporal(TemporalType.DATE)
+    private Date startDate;
 
-    @Type(type="org.joda.time.contrib.hibernate.PersistentLocalDate")  
-    private LocalDate endDate;
+	@Temporal(TemporalType.DATE)
+    private Date endDate;
     
     private String name;
 
@@ -52,19 +53,19 @@ public class Interation {
 		this.project = project;
 	}
 
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -77,9 +78,7 @@ public class Interation {
 	}
 
 	public boolean isCurrent() {
-	    if (this.startDate != null &&
-	            this.startDate.compareTo(new LocalDate()) <= 0 &&
-	            (this.endDate == null || this.endDate.compareTo(new LocalDate()) >= 0)) {
+	  if (this.startDate != null && this.startDate.compareTo(new Date()) <= 0 && (this.endDate == null || this.endDate.compareTo(new Date()) >= 0)) {
 	        return true;
 	    } else {
 	        return false;

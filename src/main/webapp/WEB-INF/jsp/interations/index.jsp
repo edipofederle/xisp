@@ -24,7 +24,11 @@ $(document).ready(function() {
 </c:if>
 <br />
 
-<form action="#" method="post" class="form-stacked" id="newInteration">
+<c:forEach items="${interations }" var="i">
+	<p>${i.name }</p>	
+</c:forEach>
+
+<form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
 
 	<label><fmt:message key="interation.name"/></label>
 	<input type="text" id="name" name="interation.name" class="required xlarge">

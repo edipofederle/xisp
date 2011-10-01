@@ -1,5 +1,8 @@
 package br.com.xisp.controllers;
 
+import java.util.List;
+
+import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
@@ -29,7 +32,10 @@ public class InterationsController {
 	/**
 	 * Apesar Redireciona para interations/index.jsp
 	 */
-	public void index(){}
+	public void index(){
+		List<Interation> listai = interationRepo.showAllInterations(projectSession.getProject());
+		result.include("interations",listai );
+	}
 	
 	@Path("/interations")
 	@Post
@@ -38,7 +44,9 @@ public class InterationsController {
 		interation.setProject(project);
 		this.interationRepo.add(interation);
 		result.include("successInteration", "Interacao " + interation.getName() + "criada com sucesso.");
-		result.redirectTo(UsersController.class).index();
+
 	}
+	
+
 	
 }

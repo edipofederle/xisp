@@ -1,5 +1,8 @@
 package br.com.xisp.test.controllers;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import junit.framework.Assert;
 
 import org.jmock.Expectations;
@@ -61,8 +64,18 @@ public class InterationControllerTest {
 	private Interation givenAInteration(String name, Project project) {
 		Interation interation = new Interation();
 		interation.setName(name);
-		interation.setStartDate(new LocalDate().minusDays(1));
-		interation.setEndDate(new LocalDate().plusDays(2));
+		Date minhaData = new Date();  
+		Calendar calendar = Calendar.getInstance();  
+		calendar.setTime(minhaData);
+		// incrementa minha data mais sete dias  
+		calendar.add(Calendar.DAY_OF_MONTH, 1); 
+		interation.setStartDate(calendar.getTime());
+		Date minhaDataend = new Date();  
+		Calendar calendarend = Calendar.getInstance();  
+		calendar.setTime(minhaDataend);
+		// incrementa minha data mais sete dias  
+		calendar.add(Calendar.DAY_OF_MONTH, 2); 
+		interation.setEndDate(calendarend.getTime());
 		interation.setProject(project);
 		return interation;
 	}
@@ -74,6 +87,5 @@ public class InterationControllerTest {
 		project.setDescription("Description of Test Project");
 		return project;
 	}
-	
 	
 }

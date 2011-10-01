@@ -29,7 +29,7 @@
 		</div>
 		<span id="actions">
 			<a href="${pageContext.request.contextPath}/stories/${project.id }/index">User Stories</a> |
-			<a href="#">Iteracoes</a> |
+			<a href="${pageContext.request.contextPath}/interations/index">Iteracoes</a> |
 			<a href="#">Participantes</a> |
 			<a href="#">Gerenciar</a> |
 			<a href="${pageContext.request.contextPath}/users/index">Users</a> |
