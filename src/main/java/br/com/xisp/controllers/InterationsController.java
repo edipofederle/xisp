@@ -44,6 +44,7 @@ public class InterationsController {
 		interation.setProject(project);
 		this.interationRepo.add(interation);
 		result.include("successInteration", "Interacao " + interation.getName() + "criada com sucesso.");
+		result.redirectTo(InterationsController.class).index();
 
 	}
 	

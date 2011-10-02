@@ -6,6 +6,11 @@ $(document).ready(function() {
 	$("#endDate").datepicker();
 	
 	$("#newInteration").validate();
+	$("#newInteration").hide();
+	
+	$(".newInteration").click(function(){
+		$("#newInteration").toggle();
+	});
 	
 });
 </script>
@@ -25,9 +30,12 @@ $(document).ready(function() {
 <br />
 
 <c:forEach items="${interations }" var="i">
-	<p>${i.name }</p>	
+	<p>${i.name } - ${i.startDate } | ${i.endDate } </p>	
+	${i.current }
 </c:forEach>
 
+
+<a href="#" class="newInteration">Criar nova Interaçao</a>
 <form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
 
 	<label><fmt:message key="interation.name"/></label>

@@ -24,8 +24,6 @@ public class Interation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private boolean isCurrent;
-	
 	@ManyToOne
 	private Project project;
 	
@@ -36,6 +34,8 @@ public class Interation {
     private Date endDate;
     
     private String name;
+    
+    private boolean current;
 
 	public Long getId() {
 		return id;
@@ -85,9 +85,8 @@ public class Interation {
 	    }
 	}
 
-	public void setCurrent(boolean isCurrent) {
-		this.isCurrent = isCurrent;
+	public void setCurrent(boolean current) {
+		this.current = current;
 	}
-	
-	
+
 }
