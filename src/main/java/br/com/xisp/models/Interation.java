@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * Entidade que representa uma interaçao de um projeto XP
@@ -32,6 +33,9 @@ public class Interation {
 
 	@Temporal(TemporalType.DATE)
     private Date endDate;
+	
+	@Transient
+	private int days;
     
     private String name;
     
@@ -88,5 +92,15 @@ public class Interation {
 	public void setCurrent(boolean current) {
 		this.current = current;
 	}
+
+	public int getDays() {
+		return days;
+	}
+
+	public void setDays(int days) {
+		this.days = days;
+	}
+	
+	
 
 }
