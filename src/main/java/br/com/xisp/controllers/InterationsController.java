@@ -1,8 +1,8 @@
 package br.com.xisp.controllers;
 
+import java.util.Date;
 import java.util.List;
 
-import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
@@ -35,10 +35,21 @@ public class InterationsController {
 	 */
 	public void index(){
 		List<Interation> listai = interationRepo.showAllInterations(projectSession.getProject());
+		
+		int totalIterations = listai.size();
+		int totalDone = 0;
+		int totalNoDone = 0;
+		
 		for (Interation interation : listai) {
 			int days = DateDifference.calculateDifference(interation.getEndDate(), interation.getStartDate());
 			interation.setDays(days);
+			if(interation.getEndDate().equals(new Date())){
+				totalDone += 1;
+			}else{
+				totalNoDone += 1;
+			}
 		}
+		result.include("stats",  totalIterations + " iteracoes, " + totalDone + " finalizadas, " + totalNoDone + " nao finalizadas");
 		result.include("interations",listai );
 	}
 	

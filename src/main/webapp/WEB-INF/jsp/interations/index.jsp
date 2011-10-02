@@ -29,11 +29,15 @@ $(document).ready(function() {
 </c:if>
 <br />
 
+<h3>${stats }</h3>
 <c:forEach items="${interations }" var="i">
 	<p>${i.name } - ${i.startDate } <b>ate</b> ${i.endDate } </p>
 		
 	<c:if test="${i.current }">
 		<b>Atual</b><br />
+	</c:if>
+		<c:if test="${!i.current }">
+		<b>Nao Iniciada</b><br />
 	</c:if>
 	<b>Começo | </b>
 	<c:forEach begin="0" end="${i.days }">
