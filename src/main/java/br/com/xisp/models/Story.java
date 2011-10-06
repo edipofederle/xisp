@@ -18,8 +18,8 @@ public class Story {
 	private String name;
 	private String description;
 	
-	@Enumerated(EnumType.STRING)
-	private Type type;
+	@ManyToOne
+	private TypeStory typeStory;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -79,10 +79,11 @@ public class Story {
 	public void setInteration(Interation interation) {
 		this.interation = interation;
 	}
-	public Type getType() {
-		return type;
+	public TypeStory getTypeStory() {
+		return typeStory;
 	}
-	public void setType(Type type) {
-		this.type = type;
+	public void setTypeStory(TypeStory typeStory) {
+		this.typeStory = typeStory;
 	}
+
 }

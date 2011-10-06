@@ -27,8 +27,8 @@ public class StoryDao implements StoryRepository {
 		return (Story) query.uniqueResult();
 	}
 
-	public void add(Story t) {
-		this.session.save(t);
+	public void add(Story story) {
+		this.session.save(story);
 	}
 
 	public void update(Story t) {

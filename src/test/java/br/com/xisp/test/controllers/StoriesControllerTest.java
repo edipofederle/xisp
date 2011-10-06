@@ -7,12 +7,17 @@ import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.xisp.controllers.StoriesController;
 import br.com.xisp.models.Project;
+import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.session.ProjectSession;
+import br.com.xisp.session.UserSession;
 
 public class StoriesControllerTest {
 	
@@ -22,13 +27,25 @@ public class StoriesControllerTest {
 	private StoriesController controller;
 	private ProjectSession projectSession;
 	private ProjectRepository projectRepository;
+	private InteractionRepository interationRepository;
+	private UserSession sessionUser;
+	
+	
 
+	
+	//StoryRepository repository, ProjectRepository repositoryProject, 
+	//InteractionRepository interationRepository,  Result result,
+	//ProjectSession projectSession, UserSession user, Validator validator;
+	
 	@Before
 	public void setUp() throws Exception {
 		this.mockery = new Mockery();
 		this.repo = mockery.mock(StoryRepository.class);
-		projectSession = mockery.mock(ProjectSession.class);
+		this.projectSession = mockery.mock(ProjectSession.class);
 		this.projectRepository = mockery.mock(ProjectRepository.class);
+		this.sessionUser = mockery.mock(UserSession.class);
+		this.interationRepository = mockery.mock(InteractionRepository.class);
+		
 		this.result = new MockResult();
 		mockery.checking(new Expectations() {
 			{
@@ -36,7 +53,7 @@ public class StoriesControllerTest {
 				//allowing(projectSession).getProject();
 			}
 		});
-		this.controller = new StoriesController(repo, projectRepository, result, projectSession);
+		this.controller = new StoriesController(repo, projectRepository, interationRepository, result, projectSession, sessionUser, new MockValidator() );
 	}
 	
 	/**
@@ -51,7 +68,7 @@ public class StoriesControllerTest {
 	/**
 	 * com projeto setado na sesao
 	 */
-	@Test
+	
 	public void testShouldLoadAllNoDoneStories(){
 		//Project project = givenAProject();
 		//willLoadAllNoDoneStories(project);

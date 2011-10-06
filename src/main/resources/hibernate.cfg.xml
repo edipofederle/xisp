@@ -14,9 +14,11 @@
 		<property name="format_sql">true</property>
 		
                
+        <mapping class="br.com.xisp.models.TypeStory"/>  
    		<mapping class="br.com.xisp.models.Project"/> 
    		<mapping class="br.com.xisp.models.User"/>  
-   		<mapping class="br.com.xisp.models.Client"/> 
+   		<mapping class="br.com.xisp.models.Client"/>
+   		
    		<mapping class="br.com.xisp.models.Story"/> 
    		<mapping class="br.com.xisp.models.Interation"/> 
    		

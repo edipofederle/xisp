@@ -19,7 +19,6 @@
     <link href="${pageContext.request.contextPath}/css/bootstrap-1.1.1.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet">
     
-    
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker.js"></script>
@@ -31,6 +30,12 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    
+    <script>
+    $(document).ready(function() {
+		$.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+	});
+    </script>
   </head>
   
   <style>

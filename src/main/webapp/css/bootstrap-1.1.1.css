@@ -2067,3 +2067,8 @@ b.days{
 .label.notice {
   background-color: #62cffc;
 }
+
+.formDescStory{
+	width: 400px;
+	height: 100px;
+}
