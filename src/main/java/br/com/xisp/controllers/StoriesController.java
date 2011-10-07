@@ -3,6 +3,8 @@ package br.com.xisp.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.engine.TwoPhaseLoad;
+
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -18,6 +20,7 @@ import br.com.xisp.models.User;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
+import br.com.xisp.repository.TypeStoryRepository;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
@@ -30,15 +33,17 @@ public class StoriesController {
 	private ProjectSession projectSession;
 	private ProjectRepository projectRepository;
 	private InteractionRepository interationRepository;
+	private TypeStoryRepository typestoryRepository;
 	private User currentUser;
 	private final Validator validator;
 	
-	public StoriesController(StoryRepository repository, ProjectRepository repositoryProject, InteractionRepository interationRepository,  Result result, ProjectSession projectSession, UserSession user, Validator validator) {
+	public StoriesController(StoryRepository repository, ProjectRepository repositoryProject, InteractionRepository interationRepository, TypeStoryRepository typestoryRepository,  Result result, ProjectSession projectSession, UserSession user, Validator validator) {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
 		this.projectSession = projectSession;
 		this.interationRepository = interationRepository;
+		this.typestoryRepository = typestoryRepository;
 		this.currentUser = user.getUser();
 		this.validator = validator;
 	}
@@ -59,28 +64,30 @@ public class StoriesController {
 		result.include("unRelatedStories", this.repository.unrelatedStories(this.currentProject));
 	}
 	
-	public void neww(){
+	public void neww() throws Exception{
 		//Carrega os tipos do enum para serem mostrados no select na view
 		List<String> types = new ArrayList<String>();
 		List<Interation> listIterations = new ArrayList<Interation>();
-		
-		for (Type type : Type.values()) {
-			types.add(type.getType());
+		List<TypeStory> listTypes = new ArrayList<TypeStory>();
+		try{
+			listTypes = this.typestoryRepository.findAll();
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
-		
 		//Carrega Todas as Iteracoes de um dado Projecto
 		try{
 			listIterations = this.interationRepository.showAllInterations(projectSession.getProject());
 		}catch (Exception e) {
-			// TODO: handle exception
+			//Logar
+			//Redirect 
 		}
-		result.include("types", types);
+		result.include("types", listTypes);
 		result.include("listIterations", listIterations);
 	}
 	
 	@Path("/stories")
 	@Post
-	public void add(final Story story) {
+	public void add(final Story story) throws Exception {
 		story.setProject(projectSession.getProject());
 		story.setCreatedBy(this.currentUser);
 		TypeStory ts = new TypeStory();

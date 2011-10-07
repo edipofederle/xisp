@@ -33,8 +33,8 @@ public class InterationDaoTest {
 	
 	@Test
 	public void shouldPersisteInteraction(){
-		final Project p = givenAProject("Projecto de teste 0");
-		Interation i = givenAInteration("One", p);
+		final Project p = givenAProject("Projecto de teste 0001");
+		Interation i = givenAInteration("One 2", p);
 		dao.add(i);
 		Assert.assertEquals("One",dao.find("One").getName());
 	}

@@ -10,7 +10,7 @@
 	<label><fmt:message key="stoy.form.type"/></label>
 	<select name="story.type" id="project.type">
 		<c:forEach items="${types }" var="t">
-			<option value="${t }">${t }</option>
+			<option value="${t.id }">${t.type }</option>
 		</c:forEach>
 	</select>
 	<br /><br />

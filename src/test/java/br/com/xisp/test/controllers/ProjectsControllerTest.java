@@ -112,9 +112,14 @@ public class ProjectsControllerTest {
 	
 	@Test
 	public void shouldValidateProjectEdit() throws Exception{
-		Project project = givenValidProject();
+		final Project project = givenValidProject();
 		try{
 			project.setDescription("Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor .Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor .");
+			mockery.checking(new Expectations() {
+				{
+					one(repo).load(project);will(returnValue(any(Project.class)));
+				}
+			});
 			controller.alterar(project);
 			Assert.fail();
 		}catch (ValidationException e) {

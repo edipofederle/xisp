@@ -133,10 +133,10 @@ public class ProjectsController {
 	@Path("/projects")
 	@Put
 	public void alterar(final Project project) {
-		Project p = loadProject(project);
-		p.setName(project.getName());
-		p.setDescription(project.getDescription());
-		p.setClient(project.getClient());
+		Project p = repository.load(project);
+		//p.setName(project.getName());
+		//p.setDescription(project.getDescription());
+		//p.setClient(project.getClient());
 		validateProject(project);
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
 		result.include("project", p);
@@ -222,5 +222,9 @@ public class ProjectsController {
 						"validacao.project.maior");
 			}
 		});
+	}
+	
+	public void testeAjax(){
+		System.out.println("AJAX AJAX AJAX");
 	}
 }

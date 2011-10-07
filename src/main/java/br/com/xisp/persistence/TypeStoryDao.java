@@ -1,12 +1,15 @@
 package br.com.xisp.persistence;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.hibernate.Session;
 
+import br.com.caelum.vraptor.ioc.Component;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.repository.TypeStoryRepository;
 
+@Component
 public class TypeStoryDao implements TypeStoryRepository {
 	
 	private final Session session;
@@ -38,6 +41,12 @@ public class TypeStoryDao implements TypeStoryRepository {
 	public void remove(TypeStory t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<TypeStory> findAll() {
+		return this.session.createQuery("from TypeStory").list();
 	}
 
 }

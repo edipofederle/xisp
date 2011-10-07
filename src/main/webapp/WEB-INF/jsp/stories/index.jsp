@@ -1,14 +1,15 @@
 <%@ include file="../../../header.jsp" %> 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#newStory").click(function(){
-			$('#formStoryNew').toggle('slow', function() {
-				   // Animation complete.
-			});
-		});
-	});
-	</script>
+<script>
+$(document).ready(function(){ 
+	$("input#sucesso").click(function() {
+		$.ajax({
+		   type: "POST",
+		   url: "/xisp/projects/testeAjax"});
+    	});
+});
+
+</script>
 
 <h3>${currentProject.name }</h3>
 	
@@ -16,7 +17,7 @@
 
 <a href="${pageContext.request.contextPath}/stories/neww" id="newStory">Criar Nova Estoria</a>
 
-
+<input id="sucesso" name="sucesso" type="button" value="Teste Sucesso" />
 
 <div id="unrelaedStories">
 	

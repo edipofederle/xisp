@@ -84,7 +84,8 @@ public class Interation {
 	}
 
 	public boolean isCurrent() {
-	  if (this.startDate != null && this.startDate.compareTo(new Date()) <= 0 && (this.endDate == null || this.endDate.compareTo(new Date()) >= 0)) {
+	  if (this.startDate != null && this.startDate.compareTo(new Date()) 
+			  <= 0 && (this.endDate == null || this.endDate.compareTo(new Date()) >= 0)) {
 	        return true;
 	    } else {
 	        return false;
