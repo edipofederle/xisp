@@ -27,7 +27,6 @@ public class StoryTest {
 		TypeStory t = givenAType();
 		story.setTypeStory(t);
 		story.setDescription("Figure out how build a tower");
-		story.setStatus(Status.READY_FOR_DEV);
 		Assert.assertEquals("RFD", story.getStatus().getStatus());
 		Assert.assertEquals("Funcionalidade", story.getTypeStory().getType());
 	}

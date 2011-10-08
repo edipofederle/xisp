@@ -3,6 +3,11 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	
+	$('#name').puts("Nome da Iteraçao"); 
+	$('#startDate').puts("Data de Inicio");  
+	$('#endDate').puts("Data de Fim");  
+	
 	$("#startDate").datepicker();
 	$("#endDate").datepicker();
 	
@@ -15,7 +20,18 @@ $(document).ready(function() {
 		 });
 	});
 	
+	//Submit Form 
+	$("form").submit(function() {
+		if( ($("#name").val() == "Nome da Iteraçao") || ($("#startDate").val() == "Data de Inicio") || ($("#endDate").val() == "Data de Fim") ){
+			return false;
+		}else{
+			return true;
+		}
+	});
+
 });
+
+
 </script>
 
 <h2>Interaçoes<small> Interacoes</small></h2>
@@ -32,11 +48,9 @@ $(document).ready(function() {
 </c:if>
 <br />
 
-
-
 <h3>${stats }</h3>
 
-<a href="#" class="newInteration">Criar nova Interaçao</a>
+<b><a href="#" class="newInteration">Nova Interaçao</a></b>
 <form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
 
 	<label><fmt:message key="interation.name"/></label>
@@ -52,7 +66,6 @@ $(document).ready(function() {
 	<div class="actions">
 		<fmt:message key="interation.form.enviar" var="criar"/>
 		<input type="submit" name="submit" class="btn primary" value="${criar}"/>
-		<a href="${pageContext.request.contextPath}/">Cancelar</a>
 	</div>
 
 </form>

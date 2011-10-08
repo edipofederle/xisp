@@ -134,9 +134,9 @@ public class ProjectsController {
 	@Put
 	public void alterar(final Project project) {
 		Project p = repository.load(project);
-		//p.setName(project.getName());
-		//p.setDescription(project.getDescription());
-		//p.setClient(project.getClient());
+		p.setName(project.getName());
+		p.setDescription(project.getDescription());
+		p.setClient(project.getClient());
 		validateProject(project);
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
 		result.include("project", p);

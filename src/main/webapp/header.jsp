@@ -16,11 +16,11 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap-1.1.1.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet">
-    
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+    <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.3.2.min.js"></script>
+   	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.puts.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"/>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
@@ -50,18 +50,101 @@
   	b.sessionProject{
   		color:white;
   	}
+  	
+#formNewUser{
+	display: none;
+}
+
+
+.my_projects {
+background-color: #333333;
+    border: 1px solid #333333;
+    border-radius: 10px 10px 0 0;
+    color: #A0A4A0;
+    font-size: 10px;
+    height: 37px;
+    line-height: 37px;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#proj{
+	float:left;
+	width: 200px;
+}
+
+.my_projects h3 {
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left:10px;
+    margin-top: 1px !important;
+    text-align: left;
+}
+
+span.title{
+	padding-left:10px;
+}
+
+
+#teste{
+	float:left;
+	margin-left:100px;
+}
+
+span#actions a{
+	color:black;
+	font-weight: bold;
+}
+
+b.days{
+	
+	font-size:16px;
+	font-weight: bold;
+	
+}
+
+.label {
+  padding: 1px 3px 2px;
+  background-color: #bfbfbf;
+  font-size: 9.75px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.label.important {
+  background-color: #c43c35;
+}
+.label.warning {
+  background-color: #f89406;
+}
+.label.success {
+  background-color: #46a546;
+}
+.label.notice {
+  background-color: #62cffc;
+}
+
+.formDescStory{
+	width: 400px;
+	height: 100px;
+  	
   </style>
 
   <body>
-	
 	<div class="topbar">
-      <div class="fill">
-        <div class="container">
-          <h3><a href="${pageContext.request.contextPath}/projects/index">XISP ${currentProject.name } </a></h3>
-          <span class="userSession">${currentUser.name } <a href="${pageContext.request.contextPath}/login/logout"><b class="userSession">Sair</b></a></span>
+      <div class="topbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="${pageContext.request.contextPath}/projects/index">XISP ${currentProject.name } </a>
+           <p class="pull-right">${currentUser.name } <a href="${pageContext.request.contextPath}/login/logout">Sair</a></p>
         </div>
       </div>
     </div>
     
-    <div class="container">
-	<div class="hero-unit">
+
+      <div class="content">
+      	<div class="hero-unit">

@@ -1,5 +1,10 @@
 <%@ include file="../../../header.jsp" %> 
 
+<script>
+$(document).ready(function(){
+	  $("label").inFieldLabels();
+	});
+</script>
 
 <h2>Defina sua Estoria<small> </small></h2>
 <form action="${pageContext.request.contextPath}/stories" method="post" class="form-stacked" id="formProject"> 
@@ -14,6 +19,16 @@
 		</c:forEach>
 	</select>
 	<br /><br />
+
+	<label><fmt:message key="stoy.form.compl"/></label>
+	<select name="story.complexity" id="project.complexity">
+		<option value="LOW">Baixa</option>
+		<option value="MEDIUM">Media</option>
+		
+		<option value="HIGH">Alta</option>
+	</select>
+	<br /><br />
+	
 	
 	<label><fmt:message key="stoy.form.iteraction"/></label>
 	<select name="story.interation.id" id="story.interation.id">

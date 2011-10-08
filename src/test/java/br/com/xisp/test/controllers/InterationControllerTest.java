@@ -7,7 +7,6 @@ import junit.framework.Assert;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 

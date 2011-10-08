@@ -1,10 +1,8 @@
 $(document).ready(function() {
+	
+	
 	$('.close').click(function(){
 		$('.alert-message').hide();
-	});
-	
-	$(function() {
-		$("table#tableUsers").tablesorter({ sortList: [[1,0]] });
 	});
 	
 	// Clique no  link adicionar novo usurio pagina index user
@@ -14,5 +12,6 @@ $(document).ready(function() {
 		else
 			$("#formNewUser").hide();
 	});
+	
 	
 });

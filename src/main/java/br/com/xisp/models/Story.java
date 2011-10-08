@@ -22,7 +22,14 @@ public class Story {
 	private TypeStory typeStory;
 	
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private Status status = Status.READY_FOR_DEV;
+	
+	@Enumerated(EnumType.STRING)
+	private Complexity complexity;
+	
+	public static enum Complexity{
+		LOW, MEDIUM, HIGH
+	}
 	
 	@ManyToOne
 	private User createdBy;
@@ -84,6 +91,12 @@ public class Story {
 	}
 	public void setTypeStory(TypeStory typeStory) {
 		this.typeStory = typeStory;
+	}
+	public Complexity getComplexity() {
+		return complexity;
+	}
+	public void setComplexity(Complexity complexity) {
+		this.complexity = complexity;
 	}
 
 }

@@ -3,7 +3,6 @@ package br.com.xisp.test.models;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 

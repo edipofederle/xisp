@@ -24,7 +24,6 @@ public class InterationDao implements InteractionRepository {
 		this.session = session;
 	}
 
-
 	public Interation find(String name) {
 		String sql = "from Interation u where u.name = :name";
 		Query query = this.session.createQuery(sql).setParameter("name", name);
@@ -42,15 +41,17 @@ public class InterationDao implements InteractionRepository {
 
 	public void remove(Interation t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
 	}
-
-
+	
+	/**
+	 * Retorna todas as iteracoes ainda nao finalizadas
+	 * 
+	 * @return List<Iterations>
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Interation> showAllInterations(Project project) {
-		return this.session.createQuery("from Interation i where i.project = :project ").setParameter("project", project).list();		
+		return this.session.createQuery("from Interation i where i.project = :project and i.done != true").setParameter("project", project).list();		
 	}
-
 
 	public Interation load(Interation interation) {
 		return (Interation) session.get(Interation.class, interation.getId());

@@ -49,3 +49,18 @@
 </table>
 <br />
 <a href="/xisp/users/newUser" class="btn small primary"><fmt:message key="user.novo"/></a>
+
+
+<script>
+$(document).ready(function() {
+	
+	$('.close').click(function(){
+		$('.alert-message').hide();
+	});
+	
+	$(function() {
+		$("table#tableUsers").tablesorter({ sortList: [[1,0]] });
+	});
+	
+});
+</script>

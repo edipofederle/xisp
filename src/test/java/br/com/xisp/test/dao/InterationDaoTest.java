@@ -38,20 +38,25 @@ public class InterationDaoTest {
 		dao.add(i);
 		Assert.assertEquals("One",dao.find("One").getName());
 	}
-
-	private Interation givenAInteration(String name, Project project) {
+	
+	@Test
+	public void shouldReturnOnlyInteractioNoFinished(){
+		final Project p = givenAProject("Projecto de teste 0001");
 		Interation interation = new Interation();
-		interation.setName(name);
+		interation.setName("Algum nome");
 		interation.setStartDate(new Date());
 		Date minhaData = new Date();
 		Calendar calendar = Calendar.getInstance();  
 		calendar.setTime(minhaData);  
 		// incrementa minha data mais um dias  
-		calendar.add(Calendar.DAY_OF_MONTH, 1);  
+		calendar.add(Calendar.DAY_OF_MONTH, -10);  
 		interation.setEndDate(minhaData);
-		interation.setProject(project);
-		return interation;
+		interation.setProject(p);
+		interation.setDone(true);
+		dao.add(interation);
+		Assert.assertEquals(0, dao.showAllInterations(p).size());
 	}
+
 	
 	@Test
 	public void shouldLoadOnlyInteractionOfGivenProject(){
@@ -90,7 +95,6 @@ public class InterationDaoTest {
 		return interation;
 	}
 
-
 	private Project givenAProject(String name) {
 		Project project = new Project();
 		project.setId(1L);
@@ -98,6 +102,20 @@ public class InterationDaoTest {
 		project.setDescription("Description of Test Project");
 		daop.add(project);
 		return project;
+	}
+	
+	private Interation givenAInteration(String name, Project project) {
+		Interation interation = new Interation();
+		interation.setName(name);
+		interation.setStartDate(new Date());
+		Date minhaData = new Date();
+		Calendar calendar = Calendar.getInstance();  
+		calendar.setTime(minhaData);  
+		// incrementa minha data mais um dias  
+		calendar.add(Calendar.DAY_OF_MONTH, 1);  
+		interation.setEndDate(minhaData);
+		interation.setProject(project);
+		return interation;
 	}
 	
 }

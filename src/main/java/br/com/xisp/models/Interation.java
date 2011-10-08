@@ -2,6 +2,7 @@ package br.com.xisp.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Entidade que representa uma interaçao de um projeto XP
@@ -29,20 +31,21 @@ public class Interation {
 	private Project project;
 	
 	@Temporal(TemporalType.DATE)
+	@Column(unique=true)
     private Date startDate;
 
 	@Temporal(TemporalType.DATE)
+	@Column(unique=true)
     private Date endDate;
 	
 	@Transient
 	private int days;
-	
     
     private String name;
     private boolean done;
     
     private boolean current;
-
+    
 	public Long getId() {
 		return id;
 	}
