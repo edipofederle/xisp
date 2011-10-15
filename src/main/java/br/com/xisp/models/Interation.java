@@ -36,8 +36,10 @@ public class Interation {
 	
 	@Transient
 	private int days;
+	
     
     private String name;
+    private boolean done;
     
     private boolean current;
 
@@ -100,7 +102,16 @@ public class Interation {
 	public void setDays(int days) {
 		this.days = days;
 	}
-	
-	
 
+	public boolean isDone() {
+		if(this.endDate.before(new Date()))
+			return true;
+		else
+			return false;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+	
 }

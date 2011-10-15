@@ -43,7 +43,7 @@ public class InterationsController {
 		for (Interation interation : listai) {
 			int days = DateDifference.calculateDifference(interation.getEndDate(), interation.getStartDate());
 			interation.setDays(days);
-			if(interation.getEndDate().equals(new Date())){
+			if(interation.getEndDate().before(new Date())){
 				totalDone += 1;
 			}else{
 				totalNoDone += 1;
