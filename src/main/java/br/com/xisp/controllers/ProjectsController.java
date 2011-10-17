@@ -224,7 +224,4 @@ public class ProjectsController {
 		});
 	}
 	
-	public void testeAjax(){
-		System.out.println("AJAX AJAX AJAX");
-	}
 }

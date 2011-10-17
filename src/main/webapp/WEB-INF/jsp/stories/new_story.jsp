@@ -2,8 +2,18 @@
 
 <script>
 $(document).ready(function(){
-	  $("label").inFieldLabels();
+	$("#name").puts("Nome da Estoria");
+	$("#description").puts("Sua Estorias de Usuario");
+	
+	//Submit Form 
+	$("form").submit(function() {
+		if( ($("#name").val() == "Nome da Estoria") || ($("#description").val() == "")){
+			return false;
+		}else{
+			return true;
+		}
 	});
+});
 </script>
 
 <h2>Defina sua Estoria<small> </small></h2>
@@ -13,7 +23,7 @@ $(document).ready(function(){
 	<br /><br/>
 	
 	<label><fmt:message key="stoy.form.type"/></label>
-	<select name="story.type" id="project.type">
+	<select name="story.typeStory" id="project.typeStory">
 		<c:forEach items="${types }" var="t">
 			<option value="${t.id }">${t.type }</option>
 		</c:forEach>
@@ -24,15 +34,27 @@ $(document).ready(function(){
 	<select name="story.complexity" id="project.complexity">
 		<option value="LOW">Baixa</option>
 		<option value="MEDIUM">Media</option>
-		
 		<option value="HIGH">Alta</option>
 	</select>
 	<br /><br />
 	
+	<label><fmt:message key="stoy.form.points"/></label>
+	<select name="project.points" id="project.points">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+	</select>
+	<br /><br />
 	
 	<label><fmt:message key="stoy.form.iteraction"/></label>
 	<select name="story.interation.id" id="story.interation.id">
-		<option value="no" selected="selected"><b>Nenhuma Ainda</b></option>
 		<c:forEach items="${listIterations }" var="i">
 			<option value="${i.id }">${i.name }</option>
 		</c:forEach>

@@ -9,16 +9,14 @@
 		<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1/xisp</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">false</property>
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
-		
-               
+		               
         <mapping class="br.com.xisp.models.TypeStory"/>  
    		<mapping class="br.com.xisp.models.Project"/> 
    		<mapping class="br.com.xisp.models.User"/>  
    		<mapping class="br.com.xisp.models.Client"/>
-   		
    		<mapping class="br.com.xisp.models.Story"/> 
    		<mapping class="br.com.xisp.models.Interation"/> 
    		

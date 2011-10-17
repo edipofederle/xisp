@@ -1,5 +1,7 @@
 package br.com.xisp.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -7,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Story {
@@ -18,11 +22,17 @@ public class Story {
 	private String name;
 	private String description;
 	
+	@Temporal(TemporalType.DATE)
+	private Date startedAt;
+	
+	@Temporal(TemporalType.DATE)
+	private Date endAt;
+	
 	@ManyToOne
 	private TypeStory typeStory;
 	
 	@Enumerated(EnumType.STRING)
-	private Status status = Status.READY_FOR_DEV;
+	private Status status = Status.NOSTARTED;
 	
 	@Enumerated(EnumType.STRING)
 	private Complexity complexity;
@@ -39,7 +49,6 @@ public class Story {
 
 	@ManyToOne
 	private Interation interation;
-	
 		
 	public Long getId() {
 		return id;
@@ -63,6 +72,9 @@ public class Story {
 		return status;
 	}
 	public void setStatus(Status status) {
+		if(status.equals(Status.READY_FOR_DEV)){
+			this.startedAt = new Date();
+		}
 		this.status = status;
 	}
 	public User getCreatedBy() {
@@ -98,5 +110,17 @@ public class Story {
 	public void setComplexity(Complexity complexity) {
 		this.complexity = complexity;
 	}
-
+	public Date getStartedAt() {
+		return startedAt;
+	}
+	public void setStartedAt(Date startedAt) {
+		this.startedAt = startedAt;
+	}
+	public Date getEndAt() {
+		return endAt;
+	}
+	public void setEndAt(Date endAt) {
+		this.endAt = endAt;
+	}
+	
 }

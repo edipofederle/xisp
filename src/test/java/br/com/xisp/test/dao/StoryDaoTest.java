@@ -95,6 +95,7 @@ public class StoryDaoTest {
 	
 	@Test
 	public void testShouldReturnAllStoriesNotBelongsToAnyIterations(){
+		clearInteraction();
 		Project p = givenAProject();
 		Story s1 = givenAStory("Story One", p, Status.READY_FOR_DEV, givenAType());
 		Story s2 = givenAStory("Story Two", p, Status.READY_FOR_DEV, givenAType());
@@ -110,6 +111,11 @@ public class StoryDaoTest {
 		}
 		Assert.assertNotNull(s4.getInteration());		
 	}
+
+	private void clearInteraction() {
+		this.session.createQuery("DELETE FROM Interation").executeUpdate();
+	}
+
 
 	private Story givenAStoryWithInteration(String string, Project p,
 			Status readyForDev, Interation i) {
@@ -174,6 +180,7 @@ public class StoryDaoTest {
 		interation.setStartDate(new Date());
 		interation.setEndDate(new Date());
 		interationdao.add(interation);
+		this.session.flush();
 		return interation;
 	}
 

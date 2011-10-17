@@ -56,5 +56,6 @@ public class InterationDao implements InteractionRepository {
 	public Interation load(Interation interation) {
 		return (Interation) session.get(Interation.class, interation.getId());
 	}
+	
 
 }

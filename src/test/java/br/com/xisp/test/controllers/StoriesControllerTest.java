@@ -90,21 +90,6 @@ public class StoriesControllerTest {
 		controller.neww();
 	}
 	
-	@Test(expected=Exception.class)
-	public void testShouldExpIfDontLoadInterationsForNeww() throws Exception{
-		final Project p = null;
-		mockery.checking(new Expectations() {
-			{
-				one(projectSession).getProject();
-				one(typestoryRepository).findAll();
-				one(projectSession).getProject();will(returnValue(null));
-				one(interationRepository).showAllInterations(p);
-			}
-		});
-		controller.neww();
-	}
-	
-
 	private void willNeverLoadAllNoFoneStories(final Project project) {
 		mockery.checking(new Expectations() {
 			{

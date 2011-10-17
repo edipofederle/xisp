@@ -1,5 +1,7 @@
 package br.com.xisp.test.models;
 
+import java.util.Date;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -8,7 +10,6 @@ import org.junit.Test;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
-import br.com.xisp.models.Type;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
 
@@ -22,37 +23,41 @@ public class StoryTest {
 	}
 	
 	@Test
-	public void testShouldReturnStatusRDF(){
+	public void testShouldReturnStatusRDD(){
 		story.setName("Build a Tower");
 		TypeStory t = givenAType();
 		story.setTypeStory(t);
+		story.setStatus(Status.READY_FOR_DEV);
 		story.setDescription("Figure out how build a tower");
 		Assert.assertEquals("RFD", story.getStatus().getStatus());
 		Assert.assertEquals("Funcionalidade", story.getTypeStory().getType());
 	}
 
-	private TypeStory givenAType() {
-		TypeStory type = new TypeStory();
-		type.setType("Funcionalidade");
-		return type;
-	}
-	
 	@Test
 	public void testStoryOne(){
 		Project project = givenAProject();
 		Story story = givenAStory(project);
 		Assert.assertEquals("Edipo", story.getCreatedBy().getName());
 		Assert.assertEquals("Test Project", story.getProject().getName());
-		Assert.assertEquals("RFD", story.getStatus().getStatus());
 	}
 	
 	@Test
 	public void testStoryChangeStatus(){
 		Project project = givenAProject();
 		Story story = givenAStory(project);
-		Assert.assertEquals("RFD",story.getStatus().getStatus());
+		Assert.assertEquals("NOSTARTED",story.getStatus().getStatus());
 		story.setStatus(Status.READY_FOR_TEST);
 		Assert.assertEquals("RFT",story.getStatus().getStatus());
+	}
+	
+	@Test
+	public void testStoryWhenInDevShouldFillStartAt(){
+		Project project = givenAProject();
+		Story story = givenAStory(project);
+		Assert.assertEquals("NOSTARTED",story.getStatus().getStatus());
+		story.setStatus(Status.READY_FOR_DEV);
+		Assert.assertEquals("RFD",story.getStatus().getStatus());
+		Assert.assertEquals(new Date(), story.getStartedAt());
 	}
 	
 	@Test
@@ -61,6 +66,13 @@ public class StoryTest {
 		Story story = givenAStory(project);
 		story.markAsCompleted();
 		Assert.assertEquals("FINISHED", story.getStatus().getStatus());
+	}
+	
+	@Test
+	public void testStoryShouldCreateAsNotStarted(){
+		Project project = givenAProject();
+		Story story = givenAStory(project);
+		Assert.assertEquals("NOSTARTED", story.getStatus().getStatus());
 	}
 	
 	private Project givenAProject() {
@@ -76,7 +88,6 @@ public class StoryTest {
 		 story.setCreatedBy(givenAUser());
 		 story.setName("Create a Crud for Users");
 		 story.setDescription("Here Description for the user story");
-		 story.setStatus(Status.READY_FOR_DEV);
 		 story.setProject(project);
 		 return story;
 	}
@@ -88,4 +99,11 @@ public class StoryTest {
 		user.setPassword("edipo");
 		return user;
 	}
+	
+	private TypeStory givenAType() {
+		TypeStory type = new TypeStory();
+		type.setType("Funcionalidade");
+		return type;
+	}
+	
 }

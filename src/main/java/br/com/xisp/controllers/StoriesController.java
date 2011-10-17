@@ -1,9 +1,9 @@
 package br.com.xisp.controllers;
 
+import static br.com.caelum.vraptor.view.Results.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.engine.TwoPhaseLoad;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -14,7 +14,6 @@ import br.com.caelum.vraptor.Validator;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;
-import br.com.xisp.models.Type;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.InteractionRepository;
@@ -90,12 +89,24 @@ public class StoriesController {
 	public void add(final Story story) throws Exception {
 		story.setProject(projectSession.getProject());
 		story.setCreatedBy(this.currentUser);
-		TypeStory ts = new TypeStory();
-		ts.setId(1L);
-		ts.setType("Funcionalidade");
-		story.setTypeStory(ts); //TODO ira vir da tabel StoryType
 		repository.add(story);
 		validator.onErrorUsePageOf(StoriesController.class).index(projectSession.getProject());
 		result.redirectTo(StoriesController.class).neww();
+	}
+	
+	@Path("/stories/board")
+	public void board(){
+	}
+	
+	@Get
+	@Path("/stories/mudaStatus/{story.id}/{status.name}")
+	public void mudaStatus(Story story, Status status){
+		ResultChangeStory r = new ResultChangeStory();
+		r.setId(story.getId());
+		r.setStatus(status.getName());
+		//Aqui sera setada a qauntidade de uns naquele staus
+		r.setQtdStories(10);
+		System.out.println("muda status " + story.getId() + " Status: " + status.getName());
+		result.use(json()).from(r).serialize();
 	}
 }

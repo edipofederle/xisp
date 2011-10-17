@@ -15,7 +15,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/edipo/Downloads/javax.annotation.jar"/>
+	<classpathentry kind="lib" path="/Users/edipo/Desktop/xstream-1.4.1.jar"/>
 	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/edipo/Desktop/iogi-0.8.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

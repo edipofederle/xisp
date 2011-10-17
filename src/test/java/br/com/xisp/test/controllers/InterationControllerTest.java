@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.xisp.controllers.InterationsController;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
@@ -40,7 +41,7 @@ public class InterationControllerTest {
 		interationRepo = mockery.mock(InteractionRepository.class);
 		projectSession = mockery.mock(ProjectSession.class);
 		result = new MockResult();
-		controller = new InterationsController(interationRepo,projectRepo,projectSession, result);
+		controller = new InterationsController(interationRepo,projectRepo,projectSession, result, new MockValidator());
 	}
 	
 	@Test
