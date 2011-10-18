@@ -27,9 +27,9 @@ public class StoryTest {
 		story.setName("Build a Tower");
 		TypeStory t = givenAType();
 		story.setTypeStory(t);
-		story.setStatus(Status.READY_FOR_DEV);
+		story.setStatus(Status.IN_DEV);
 		story.setDescription("Figure out how build a tower");
-		Assert.assertEquals("RFD", story.getStatus().getStatus());
+		Assert.assertEquals("INDEV", story.getStatus().getStatus());
 		Assert.assertEquals("Funcionalidade", story.getTypeStory().getType());
 	}
 
@@ -55,8 +55,8 @@ public class StoryTest {
 		Project project = givenAProject();
 		Story story = givenAStory(project);
 		Assert.assertEquals("NOSTARTED",story.getStatus().getStatus());
-		story.setStatus(Status.READY_FOR_DEV);
-		Assert.assertEquals("RFD",story.getStatus().getStatus());
+		story.setStatus(Status.IN_DEV);
+		Assert.assertEquals("INDEV",story.getStatus().getStatus());
 		Assert.assertEquals(new Date(), story.getStartedAt());
 	}
 	

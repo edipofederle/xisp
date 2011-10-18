@@ -101,24 +101,31 @@ public class StoriesController {
 		
 		List<Story> listStoriesNotFinished = new ArrayList<Story>();
 		List<Story> noStarted = new ArrayList<Story>();
-		List<Story> readyDev = new ArrayList<Story>();
+		List<Story> inDev = new ArrayList<Story>();
 		List<Story> readyTest = new ArrayList<Story>();
+		List<Story> inTest = new ArrayList<Story>();
+		List<Story> finished = new ArrayList<Story>();
+		
 		listStoriesNotFinished = repository.showAllStoriesNotFinished(projectSession.getProject());
 		
 		for (Story story : listStoriesNotFinished) {
 			if(story.getStatus().equals(br.com.xisp.models.Status.NOSTARTED))
 				noStarted.add(story);
 			if(story.getStatus().equals(br.com.xisp.models.Status.IN_DEV))
-				readyDev.add(story);
+				inDev.add(story);
 			if(story.getStatus().equals(br.com.xisp.models.Status.READY_FOR_TEST))
 				readyTest.add(story);
-			
+			if(story.getStatus().equals(br.com.xisp.models.Status.IN_TEST))
+				inTest.add(story);
+			if(story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
+				finished.add(story);
 		}
 		
 		result.include("noStarted", noStarted);
-		result.include("readyDev", readyDev);
+		result.include("inDev", inDev);
 		result.include("readyTest", readyTest);
-		
+		result.include("finished",finished);
+		result.include("inTest", inTest);
 	}
 	
 	@Get
@@ -132,18 +139,22 @@ public class StoriesController {
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.IN_DEV);
 		}
-		
 		if(status.getName().equals("pronta_para_dev")){
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.NOSTARTED);
 		}
-		
 		if(status.getName().equals("pronta_para_testes")){
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.READY_FOR_TEST);
 		}
-		
-		
+		if(status.getName().equals("em_testes")){
+			Story us = repository.find(story.getId());
+			us.setStatus(br.com.xisp.models.Status.IN_TEST);
+		}
+		if(status.getName().equals("finalizadas")){
+			Story us = repository.find(story.getId());
+			us.setStatus(br.com.xisp.models.Status.FINISHED);
+		}
 		
 		r.setQtdStories(10);
 		System.out.println("muda status " + story.getId() + " Status: " + status.getName());

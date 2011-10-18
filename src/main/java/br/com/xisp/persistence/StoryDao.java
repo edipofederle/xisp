@@ -41,8 +41,9 @@ public class StoryDao implements StoryRepository {
 	}
 
 	@SuppressWarnings("unchecked")
+	//TODO Mudar nome do metodo
 	public List<Story> showAllStoriesNotFinished(Project project ) {
-		return this.session.createQuery("from Story s where s.project = :project and s.status != 'FINISHED'").setParameter("project", project).list();
+		return this.session.createQuery("from Story s where s.project = :project").setParameter("project", project).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -54,8 +55,9 @@ public class StoryDao implements StoryRepository {
 	}
 
 	public Story find(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "from Story u where u.name = :name";
+		Query query = this.session.createQuery(sql).setParameter("name", name);
+		return (Story) query.uniqueResult();
 	}
 	
 

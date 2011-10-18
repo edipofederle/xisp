@@ -49,7 +49,7 @@ public class ProjectsControllerTest {
 				allowing(sessionUser);
 			}
 		});
-		controller = new ProjectsController( repo, clientRepostiroy, userRepository,  new MockValidator(), result, sessionUser, sessionProject);
+		controller = new ProjectsController(repo, clientRepostiroy, userRepository,  new MockValidator(), result, sessionUser, sessionProject);
 	}
 	
 	@Test

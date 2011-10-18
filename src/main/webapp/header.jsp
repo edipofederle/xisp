@@ -16,11 +16,12 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+    
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.3.2.min.js"></script>
    	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.puts.js"></script>
-   	   	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker-pt-BR.js"></script>
+   	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker-pt-BR.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"/>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tablesorter.min.js"></script>

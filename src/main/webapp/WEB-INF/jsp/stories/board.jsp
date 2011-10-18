@@ -255,7 +255,7 @@
 		<div id="em_dev">
 		<small id="info">Em Desenvolvimento</small>
 			<b class="em_dev" ></b>
-			<c:forEach items="${readyDev }" var="un">
+			<c:forEach items="${inDev }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
 			</c:forEach>
 		</div>
@@ -273,13 +273,18 @@
 		<div id="em_testes">
 			<b class="em_testes" ></b>
 			<small id="info">Em Testes</small>
-			<div class="story" id="122131265">Story Sem Refactoring</div>
+			<c:forEach items="${inTest }" var="un">
+				<div class="story" id="${un.id }">${un.name }</div>
+			</c:forEach>
 		</div>
 		
 		<div id="finalizadas">
 			<b class="finalizadas"></b>
 			<small id="info">Finalizadas</small>
-			<div class="story" id="1221312111">Story Login </div>
+			<c:forEach items="${finished }" var="un">
+				<div class="story" id="${un.id }">${un.name }</div>
+			</c:forEach>
+			
 		</div>
 		
 		<div id="teste"></div>

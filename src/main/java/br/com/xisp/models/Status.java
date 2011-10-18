@@ -9,8 +9,8 @@ package br.com.xisp.models;
 public enum Status {
 
 	//Declaraçoes das constante que mostram o status de um Story e tambem sua descricao.
-	READY_FOR_DEV("RFD", "User Story pronta para desenvolvimento"),
 	READY_FOR_TEST("RFT", "User Story pronta para testes"),
+	IN_TEST("INTEST", "User Story sem testes"),
 	IN_DEV("INDEV", "User Story em Desenvolvimento"),
 	FINISHED("FINISHED","User Story concluida"),
 	NOSTARTED("NOSTARTED", "User Story nao iniciada");

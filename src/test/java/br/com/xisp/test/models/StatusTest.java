@@ -20,10 +20,10 @@ public class StatusTest {
 	
 	@Test
 	public void shouldReturnStatusOfEnumRFD(){
-		String statusDesc = Status.READY_FOR_DEV.getDesc();
-		String status = Status.READY_FOR_DEV.getStatus();
-		Assert.assertEquals("User Story pronta para desenvolvimento", statusDesc);
-		Assert.assertEquals("RFD", status);
+		String statusDesc = Status.IN_DEV.getDesc();
+		String status = Status.IN_DEV.getStatus();
+		Assert.assertEquals("User Story em Desenvolvimento", statusDesc);
+		Assert.assertEquals("INDEV", status);
 	}
 	
 	

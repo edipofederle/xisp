@@ -72,7 +72,7 @@ public class Story {
 		return status;
 	}
 	public void setStatus(Status status) {
-		if(status.equals(Status.READY_FOR_DEV)){
+		if(status.equals(Status.IN_DEV)){
 			this.startedAt = new Date();
 		}
 		this.status = status;
