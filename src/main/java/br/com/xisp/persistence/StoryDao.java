@@ -21,9 +21,9 @@ public class StoryDao implements StoryRepository {
 		this.session = session;
 	}
 
-	public Story find(String name) {
-		String sql = "from Story u where u.name = :name";
-		Query query = this.session.createQuery(sql).setParameter("name", name);
+	public Story find(Long id) {
+		String sql = "from Story u where u.id = :id";
+		Query query = this.session.createQuery(sql).setParameter("id", id);
 		return (Story) query.uniqueResult();
 	}
 
@@ -51,6 +51,11 @@ public class StoryDao implements StoryRepository {
 		Query query = session.createQuery(hql);
 		query.setParameter("project", p);
 		return query.list();
+	}
+
+	public Story find(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -21,6 +22,7 @@ import javax.persistence.UniqueConstraint;
  */
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"startDate", "endDate", "project_id"})})
 public class Interation {
 	
 	@Id
@@ -31,11 +33,9 @@ public class Interation {
 	private Project project;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(unique=true)
     private Date startDate;
 
 	@Temporal(TemporalType.DATE)
-	@Column(unique=true)
     private Date endDate;
 	
 	@Transient

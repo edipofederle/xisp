@@ -17,7 +17,11 @@ $(document).ready(function(){
 
 <a href="${pageContext.request.contextPath}/stories/neww" id="newStory">Criar Nova Estoria</a>
 
-<input id="sucesso" name="sucesso" type="button" value="Teste Sucesso" />
+<a href="${pageContext.request.contextPath}/stories/board"> Mostrar Stories no Quadro</a>
+
+	<c:forEach items="${listStoriesNotFinished }" var="uss">
+		<p>${uss.name} ${uss.status} - Iteraçao Pertencente: ${uss.interation.name}</p>
+	</c:forEach>
 
 <div id="unrelaedStories">
 	

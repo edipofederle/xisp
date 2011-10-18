@@ -1,4 +1,7 @@
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -238,48 +241,33 @@
       </div>
     </div>
 	<div id="board">	
-		<div id="em_dev">
-			<b class="em_dev" ></b>
-			<small id="info">Em Desenvolvimento</small>
-			<div class="story" id="122131231">Teste Estorias</div>
-			<div class="122131231 storyDialog" title="Teste Estorias" style="display: none;">
-				<small style="float: right;">10</small>
-				<small><b>Nome:</b> Teste Estorias</small><br />
-				<small><b>Complexidade:</b> Baixa</small><br />
-				<small><b>Atribuida a:</b> Fulano</small><br />
-				<small><b>Iteracao:</b> Iteracao Numero Um </small><br />
-				<hr />
-				<small><b>Estoria:</b></small><br />
-				<fieldset>
-					<legend>Teste Estoria</legend>
-					As a user closing the application,
-					I want to be prompted to save anything that has changed since the last save
-					so that I can preserve useful work and discard erroneous work.
-				</fieldset><br />
-				<small><b>Teste de Aceitacao:</b></small><br />
-				<fieldset>
-					<legend>Teste Estoria</legend>
-					As a user closing the application,
-					I want to be prompted to save anything that has changed since the last save
-					so that I can preserve useful work and discard erroneous work.
-				</fieldset>
-
-			</div>
-			
-		</div>
-		
+	
+	
 		<div id="pronta_para_dev">
 			<b class="pronta_para_dev"></b>
 			<small id="info">Prontas para Dev</small>
-			<div class="story" id="13434343">Story One</div>
-			<div class="story" id="54421434">Story Test</div>
+			<c:forEach items="${noStarted }" var="un">
+				<div class="story" id="${un.id }">${un.name }</div>
+			</c:forEach>
+			
+		</div> 
+		
+		<div id="em_dev">
+		<small id="info">Em Desenvolvimento</small>
+			<b class="em_dev" ></b>
+			<c:forEach items="${readyDev }" var="un">
+				<div class="story" id="${un.id }">${un.name }</div>
+			</c:forEach>
 		</div>
+		
+
 		
 		<div id="pronta_para_testes" >
 			<b class="pronta_para_testes" ></b>
 			<small id="info">Prontas para Testes</small>
-			<b class="pronta_para_testes"></b>
-			<div class="story" id="5634524">Story Teste 2</div>
+			<c:forEach items="${readyTest }" var="un">
+				<div class="story" id="${un.id }">${un.name }</div>
+			</c:forEach>
 		</div>
 		
 		<div id="em_testes">

@@ -50,6 +50,7 @@ public class StoriesController {
 	@Path("/stories/{project.id}/index")
 	@Get
 	public void index(Project project) {
+		List<Story> listStoriesNotFinished = new ArrayList<Story>();
 		Project p = projectRepository.load(project);
 		this.projectSession.setProject(p);
 		this.currentProject = this.projectSession.getProject();
@@ -57,10 +58,11 @@ public class StoriesController {
 			result.include("selectProjectBefore", "Selecione um projeto!");
 			result.redirectTo(ErrorsController.class).index();
 		}else{
-			repository.showAllStoriesNotFinished(this.currentProject);
+			listStoriesNotFinished = repository.showAllStoriesNotFinished(this.currentProject);
 		}
 		result.include("project", p);
 		result.include("unRelatedStories", this.repository.unrelatedStories(this.currentProject));
+		result.include("listStoriesNotFinished", listStoriesNotFinished);
 	}
 	
 	public void neww() throws Exception{
@@ -96,6 +98,27 @@ public class StoriesController {
 	
 	@Path("/stories/board")
 	public void board(){
+		
+		List<Story> listStoriesNotFinished = new ArrayList<Story>();
+		List<Story> noStarted = new ArrayList<Story>();
+		List<Story> readyDev = new ArrayList<Story>();
+		List<Story> readyTest = new ArrayList<Story>();
+		listStoriesNotFinished = repository.showAllStoriesNotFinished(projectSession.getProject());
+		
+		for (Story story : listStoriesNotFinished) {
+			if(story.getStatus().equals(br.com.xisp.models.Status.NOSTARTED))
+				noStarted.add(story);
+			if(story.getStatus().equals(br.com.xisp.models.Status.IN_DEV))
+				readyDev.add(story);
+			if(story.getStatus().equals(br.com.xisp.models.Status.READY_FOR_TEST))
+				readyTest.add(story);
+			
+		}
+		
+		result.include("noStarted", noStarted);
+		result.include("readyDev", readyDev);
+		result.include("readyTest", readyTest);
+		
 	}
 	
 	@Get
@@ -104,7 +127,24 @@ public class StoriesController {
 		ResultChangeStory r = new ResultChangeStory();
 		r.setId(story.getId());
 		r.setStatus(status.getName());
-		//Aqui sera setada a qauntidade de uns naquele staus
+		
+		if(status.getName().equals("em_dev")){
+			Story us = repository.find(story.getId());
+			us.setStatus(br.com.xisp.models.Status.IN_DEV);
+		}
+		
+		if(status.getName().equals("pronta_para_dev")){
+			Story us = repository.find(story.getId());
+			us.setStatus(br.com.xisp.models.Status.NOSTARTED);
+		}
+		
+		if(status.getName().equals("pronta_para_testes")){
+			Story us = repository.find(story.getId());
+			us.setStatus(br.com.xisp.models.Status.READY_FOR_TEST);
+		}
+		
+		
+		
 		r.setQtdStories(10);
 		System.out.println("muda status " + story.getId() + " Status: " + status.getName());
 		result.use(json()).from(r).serialize();
