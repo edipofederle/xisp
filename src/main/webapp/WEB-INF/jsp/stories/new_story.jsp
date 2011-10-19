@@ -23,7 +23,7 @@ $(document).ready(function(){
 	<br /><br/>
 	
 	<label><fmt:message key="stoy.form.type"/></label>
-	<select name="story.typeStory" id="project.typeStory">
+	<select name="story.typeStory" id="story.typeStory">
 		<c:forEach items="${types }" var="t">
 			<option value="${t.id }">${t.type }</option>
 		</c:forEach>

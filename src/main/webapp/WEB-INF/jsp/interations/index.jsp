@@ -85,11 +85,6 @@ $(document).ready(function() {
 		</c:when>
 	</c:choose>
 
-	<b>Começo | </b>
-	<c:forEach begin="0" end="${i.days }">
-		<b class="days"> - </b>
-	</c:forEach>
-	| <b>Fim</b>
 	<br/><br/>
 	</hr>
 </c:forEach>

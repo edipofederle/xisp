@@ -2,6 +2,7 @@ package br.com.xisp.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 public class Story {
 
@@ -20,6 +23,8 @@ public class Story {
 	private Long id;
 	
 	private String name;
+	
+	@Type(type="text")
 	private String description;
 	
 	@Temporal(TemporalType.DATE)

@@ -224,7 +224,7 @@
 			}
 
 			$(".story").click(function(){
-				$("."+this.id).dialog({ width: 460 });
+				$("."+this.id).dialog({ width: 600 });
 			});
 		});
 
@@ -248,6 +248,24 @@
 			<small id="info">Prontas para Dev</small>
 			<c:forEach items="${noStarted }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
+				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
+					<small style="float: right;">10</small>
+					<small><b>Nome:</b> ${un.name }</small><br />
+					<small><b>Complexidade:</b> ${un.complexity }</small><br />
+					<small><b>Atribuida a:</b> Fulano</small><br />
+					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
+					<hr />
+					<small><b>Estoria:</b></small><br />
+					<fieldset>
+						<p style="text-align: justify;">${ un.description }</p>
+					</fieldset><br />
+					<small><b>Teste de Aceitacao:</b></small><br />
+					<fieldset>
+						As a user closing the application,
+						I want to be prompted to save anything that has changed since the last save
+						so that I can preserve useful work and discard erroneous work.
+					</fieldset>
+				</div>
 			</c:forEach>
 			
 		</div> 
@@ -257,6 +275,24 @@
 			<b class="em_dev" ></b>
 			<c:forEach items="${inDev }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
+				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
+					<small style="float: right;">10</small>
+					<small><b>Nome:</b> ${un.name }</small><br />
+					<small><b>Complexidade:</b> ${un.complexity }</small><br />
+					<small><b>Atribuida a:</b> Fulano</small><br />
+					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
+					<hr />
+					<small><b>Estoria:</b></small><br />
+					<fieldset>
+						<p style="text-align: justify;">${ un.description }</p>
+					</fieldset><br />
+					<small><b>Teste de Aceitacao:</b></small><br />
+					<fieldset>
+						As a user closing the application,
+						I want to be prompted to save anything that has changed since the last save
+						so that I can preserve useful work and discard erroneous work.
+					</fieldset>
+				</div>
 			</c:forEach>
 		</div>
 		
@@ -267,6 +303,24 @@
 			<small id="info">Prontas para Testes</small>
 			<c:forEach items="${readyTest }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
+				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
+					<small style="float: right;">10</small>
+					<small><b>Nome:</b> ${un.name }</small><br />
+					<small><b>Complexidade:</b> ${un.complexity }</small><br />
+					<small><b>Atribuida a:</b> Fulano</small><br />
+					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
+					<hr />
+					<small><b>Estoria:</b></small><br />
+					<fieldset>
+						<p style="text-align: justify;">${ un.description }</p>
+					</fieldset><br />
+					<small><b>Teste de Aceitacao:</b></small><br />
+					<fieldset>
+						As a user closing the application,
+						I want to be prompted to save anything that has changed since the last save
+						so that I can preserve useful work and discard erroneous work.
+					</fieldset>
+				</div>
 			</c:forEach>
 		</div>
 		
@@ -275,6 +329,24 @@
 			<small id="info">Em Testes</small>
 			<c:forEach items="${inTest }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
+				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
+					<small style="float: right;">10</small>
+					<small><b>Nome:</b> ${un.name }</small><br />
+					<small><b>Complexidade:</b> ${un.complexity }</small><br />
+					<small><b>Atribuida a:</b> Fulano</small><br />
+					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
+					<hr />
+					<small><b>Estoria:</b></small><br />
+					<fieldset>
+						<p style="text-align: justify;">${ un.description }</p>
+					</fieldset><br />
+					<small><b>Teste de Aceitacao:</b></small><br />
+					<fieldset>
+						As a user closing the application,
+						I want to be prompted to save anything that has changed since the last save
+						so that I can preserve useful work and discard erroneous work.
+					</fieldset>
+				</div>
 			</c:forEach>
 		</div>
 		
@@ -283,6 +355,24 @@
 			<small id="info">Finalizadas</small>
 			<c:forEach items="${finished }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
+				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
+					<small style="float: right;">10</small>
+					<small><b>Nome:</b> ${un.name }</small><br />
+					<small><b>Complexidade:</b> ${un.complexity }</small><br />
+					<small><b>Atribuida a:</b> Fulano</small><br />
+					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
+					<hr />
+					<small><b>Estoria:</b></small><br />
+					<fieldset>
+						<p style="text-align: justify;">${ un.description }</p>
+					</fieldset><br />
+					<small><b>Teste de Aceitacao:</b></small><br />
+					<fieldset>
+						As a user closing the application,
+						I want to be prompted to save anything that has changed since the last save
+						so that I can preserve useful work and discard erroneous work.
+					</fieldset>
+				</div>
 			</c:forEach>
 			
 		</div>
