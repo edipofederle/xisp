@@ -133,15 +133,15 @@ public class ProjectsController {
 	@Path("/projects")
 	@Put
 	public void alterar(final Project project) {
-		Project p = repository.load(project);
-		p.setName(project.getName());
-		p.setDescription(project.getDescription());
-		p.setClient(project.getClient());
+		//p.setName(project.getName());
+		//p.setDescription(project.getDescription());
+		//p.setClient(project.getClient());
+		
 		validateProject(project);
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
-		result.include("project", p);
+		result.include("project", project);
 		project.setOwner(this.currentUser);
-		repository.update(p);
+		repository.update(project);
 		result.include("success", true);
 		result.include("message", "<strong>Sucesso!</strong> Projeto alterado com sucesso.");
 		result.redirectTo(this).index();

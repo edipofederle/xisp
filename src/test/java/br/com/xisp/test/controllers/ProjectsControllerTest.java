@@ -111,7 +111,7 @@ public class ProjectsControllerTest {
 	    }
 	}
 	
-	@Ignore
+	@Test
 	public void shouldValidateProjectEdit() throws Exception{
 		final Project project = givenValidProject();
 		try{
@@ -266,10 +266,17 @@ public class ProjectsControllerTest {
 	private Project givenValidProject() {
 		Project project = new Project();
 		project.setName("Meu Projeto");
+		project.setClient(givenAClient());
 		project.setDescription("Minha descricao do meu projeto");
 		willAddTheProject(project);
-		repo.add(project);
 		return project;
+	}
+	
+	private Client givenAClient() {
+		Client client = new Client();
+		client.setName("Robert");
+		client.setEndereco("New York - Main Street");
+		return client;
 	}
 	
 	private User givenAValidUser() {
