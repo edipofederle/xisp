@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.xisp.controllers.StoriesController;
 import br.com.xisp.models.Project;
+import br.com.xisp.repository.AcceptenceTestRepository;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
@@ -26,6 +27,7 @@ public class StoriesControllerTest {
 	private ProjectRepository projectRepository;
 	private InteractionRepository interationRepository;
 	private TypeStoryRepository typestoryRepository;
+	private AcceptenceTestRepository acceptenceTestRepository;
 	private UserSession sessionUser;
 
 	
@@ -36,6 +38,7 @@ public class StoriesControllerTest {
 		this.projectSession = mockery.mock(ProjectSession.class);
 		this.projectRepository = mockery.mock(ProjectRepository.class);
 		this.typestoryRepository = mockery.mock(TypeStoryRepository.class);
+		this.acceptenceTestRepository = mockery.mock(AcceptenceTestRepository.class);
 		this.sessionUser = mockery.mock(UserSession.class);
 		this.interationRepository = mockery.mock(InteractionRepository.class);
 		
@@ -47,7 +50,7 @@ public class StoriesControllerTest {
 				one(sessionUser).getUser();
 			}
 		});
-		this.controller = new StoriesController(repo, projectRepository, interationRepository, typestoryRepository, result, projectSession, sessionUser, new MockValidator() );
+		this.controller = new StoriesController(repo, projectRepository, interationRepository, typestoryRepository, acceptenceTestRepository, result, projectSession, sessionUser, new MockValidator() );
 	}
 	
 	/**

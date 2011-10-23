@@ -8,6 +8,7 @@ $(document).ready(function() {
 	$('#startDate').puts("Data de Inicio");  
 	$('#endDate').puts("Data de Fim");  
 	
+	
 	$("#startDate").datepicker();
 	$("#endDate").datepicker();
 	

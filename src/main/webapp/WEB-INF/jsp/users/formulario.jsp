@@ -24,10 +24,6 @@
 			<input type="password" name="user.password" id="password" class="required xlarge" value=""/>
 			<br />
 			
-			<label><fmt:message key="user.form.password.confirm"/></label>
-			<input type="password" name="" id="confirm" class="required xlarge" value=""/>
-			<br />
-			
 			<div class="actions">
 				<fmt:message key="project.form.enviar" var="criar"/>
 				<input type="submit" name="submit" class="btn primary" value="${criar}"/>

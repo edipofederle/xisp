@@ -133,10 +133,6 @@ public class ProjectsController {
 	@Path("/projects")
 	@Put
 	public void alterar(final Project project) {
-		//p.setName(project.getName());
-		//p.setDescription(project.getDescription());
-		//p.setClient(project.getClient());
-		
 		validateProject(project);
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
 		result.include("project", project);

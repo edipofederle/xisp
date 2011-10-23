@@ -86,6 +86,24 @@ public class UsersControllerTest {
 	}
 	
 	@Test
+	public void loadForEdit(){
+		User user = givenAInvalidUser();
+		mockery.checking(new Expectations() {{
+			one(dao).load(with(any(User.class)));
+		}});
+		controller.edita(user);
+	}
+	
+	@Test
+	public void loadForShow(){
+		User user = givenAInvalidUser();
+		mockery.checking(new Expectations() {{
+			one(dao).load(with(any(User.class)));
+		}});
+		controller.show(user);
+	}
+	
+	@Test
 	public void shouldRemoveAUser() throws Exception{
 		User user = givenAValidUser();
 		willAddUser(user);

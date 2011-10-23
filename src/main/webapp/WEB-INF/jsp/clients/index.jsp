@@ -1,7 +1,7 @@
 <%@ include file="../../../header.jsp" %> 
 
 <h2><fmt:message key="titulos.client.title"/><small> <fmt:message key="titulos.client.title.desc"/></small></h2>
-
+<br />
 <c:if test="${success }">
 	<div class="alert-message success">
       		<a href="#" class="close">×</a>
@@ -15,14 +15,14 @@
    	</div>
 </c:if>
 
-<table class="zebra-striped" id="tableUsers">
+<table>
 	<thead>
 		<tr>
 			<th class="header">#</th>
 			<th>Nome</th>
 			<th>Endereco</th>
-			<td>Remover</td>
-			<td>Editar</td>
+			<th>Remover</th>
+			<th>Editar</th>
 		</tr>
 	</thead>
 	<tbody>

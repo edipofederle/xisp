@@ -21,8 +21,8 @@
 			<th class="header">#</th>
 			<th>Nome</th>
 			<th>Email</th>
-			<td>Remover</td>
-			<td>Editar</td>
+			<th>Remover</th>
+			<th>Editar</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -16,7 +16,15 @@ $(document).ready(function(){
 });
 </script>
 
+<style>
+	#test{
+		float:right;
+		margin-right: 400px;
+	}
+</style>
+
 <h2>Defina sua Estoria<small> </small></h2>
+
 <form action="${pageContext.request.contextPath}/stories" method="post" class="form-stacked" id="formProject"> 
 	<label><fmt:message key="stoy.form.name"/></label>
 	<input type="text" name="story.name" id="name" class="required xlarge" value="${story.name }"/>
@@ -31,15 +39,18 @@ $(document).ready(function(){
 	<br /><br />
 
 	<label><fmt:message key="stoy.form.compl"/></label>
-	<select name="story.complexity" id="project.complexity">
+	<select name="story.complexity" id="story.complexity">
 		<option value="LOW">Baixa</option>
 		<option value="MEDIUM">Media</option>
 		<option value="HIGH">Alta</option>
 	</select>
 	<br /><br />
 	
+	<label>Teste de Aceitacao:</label>
+	<textarea rows="10" cols="100" class="required xxlarge" id="acceptsTest" name="story.acceptsTest"></textarea>
+	
 	<label><fmt:message key="stoy.form.points"/></label>
-	<select name="project.points" id="project.points">
+	<select name="story.points" id="story.points">
 		<option value="1">1</option>
 		<option value="2">2</option>
 		<option value="3">3</option>
@@ -64,6 +75,9 @@ $(document).ready(function(){
 	<label><fmt:message key="stoy.form.story"/></label>
 	<textarea name="story.description" id="description" class="required xxlarge" class="formDescStory" ></textarea>
 	<br /><br/>
+	
+	
+
 	
 	<div class="actions">
 		<fmt:message key="project.form.enviar" var="criar"/>

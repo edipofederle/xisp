@@ -2,17 +2,14 @@ package br.com.xisp.models;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Entidade que representa uma interaçao de um projeto XP
@@ -22,7 +19,6 @@ import javax.persistence.UniqueConstraint;
  */
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"startDate", "endDate", "project_id"})})
 public class Interation {
 	
 	@Id
@@ -107,6 +103,7 @@ public class Interation {
 		this.days = days;
 	}
 
+	//TODO final tem que ser o dia do endDate+ 1 FIX
 	public boolean isDone() {
 		if(this.endDate.before(new Date()))
 			return true;

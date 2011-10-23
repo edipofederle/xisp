@@ -2,7 +2,6 @@ package br.com.xisp.models;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -42,12 +42,24 @@ public class Story {
 	@Enumerated(EnumType.STRING)
 	private Complexity complexity;
 	
+	/**
+	 * Atributo usado somente para fazer um nested form na criacao da estorias
+	 * Este atributo sera persitido na tabela de Acceptence Tests.
+	 * Eu nao sei se tem uma maneira melhor de se fazer isso, se tiver
+	 * faça um pull request :).
+	 */
+	@Transient
+	private String acceptsTest;
+	
 	public static enum Complexity{
 		LOW, MEDIUM, HIGH
 	}
 	
 	@ManyToOne
 	private User createdBy;
+	
+	@ManyToOne
+	private AcceptenceTest test;
 	
 	@ManyToOne
 	private Project project;
@@ -127,5 +139,19 @@ public class Story {
 	public void setEndAt(Date endAt) {
 		this.endAt = endAt;
 	}
+	public String getAcceptsTest() {
+		return acceptsTest;
+	}
+	public void setAcceptsTest(String acceptsTest) {
+		this.acceptsTest = acceptsTest;
+	}
+	public AcceptenceTest getTest() {
+		return test;
+	}
+	public void setTest(AcceptenceTest test) {
+		this.test = test;
+	}
+	
+	
 	
 }

@@ -1,6 +1,6 @@
 package br.com.xisp.controllers;
 
-import static br.com.caelum.vraptor.view.Results.*;
+import static br.com.caelum.vraptor.view.Results.json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,13 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.xisp.models.AcceptenceTest;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
+import br.com.xisp.repository.AcceptenceTestRepository;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
@@ -23,6 +25,13 @@ import br.com.xisp.repository.TypeStoryRepository;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
+/**
+ * 
+ * @author edipo
+ *
+ * Controller Responsavel por controlar a parte das Estorias de Usuario
+ *
+ */
 @Resource
 public class StoriesController {
 	
@@ -33,16 +42,20 @@ public class StoriesController {
 	private ProjectRepository projectRepository;
 	private InteractionRepository interationRepository;
 	private TypeStoryRepository typestoryRepository;
+	private AcceptenceTestRepository acceptenceTestRepository;
 	private User currentUser;
 	private final Validator validator;
 	
-	public StoriesController(StoryRepository repository, ProjectRepository repositoryProject, InteractionRepository interationRepository, TypeStoryRepository typestoryRepository,  Result result, ProjectSession projectSession, UserSession user, Validator validator) {
+	public StoriesController(StoryRepository repository, ProjectRepository repositoryProject,
+							 InteractionRepository interationRepository, TypeStoryRepository typestoryRepository,
+		                     AcceptenceTestRepository acceptenceTestRepository, Result result, ProjectSession projectSession, UserSession user, Validator validator) {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
 		this.projectSession = projectSession;
 		this.interationRepository = interationRepository;
 		this.typestoryRepository = typestoryRepository;
+		this.acceptenceTestRepository = acceptenceTestRepository;
 		this.currentUser = user.getUser();
 		this.validator = validator;
 	}
@@ -66,8 +79,6 @@ public class StoriesController {
 	}
 	
 	public void neww() throws Exception{
-		//Carrega os tipos do enum para serem mostrados no select na view
-		List<String> types = new ArrayList<String>();
 		List<Interation> listIterations = new ArrayList<Interation>();
 		List<TypeStory> listTypes = new ArrayList<TypeStory>();
 		try{
@@ -79,8 +90,8 @@ public class StoriesController {
 		try{
 			listIterations = this.interationRepository.showAllInterations(projectSession.getProject());
 		}catch (Exception e) {
-			//Logar
-			//Redirect 
+			//TODO Logar
+			//TODO Redirect 
 		}
 		result.include("types", listTypes);
 		result.include("listIterations", listIterations);
@@ -91,11 +102,19 @@ public class StoriesController {
 	public void add(final Story story) throws Exception {
 		story.setProject(projectSession.getProject());
 		story.setCreatedBy(this.currentUser);
+		AcceptenceTest at = new AcceptenceTest();
+		at.setTest(story.getAcceptsTest());
+		acceptenceTestRepository.add(at);
+		story.setTest(at);
 		repository.add(story);
 		validator.onErrorUsePageOf(StoriesController.class).index(projectSession.getProject());
 		result.redirectTo(StoriesController.class).neww();
 	}
 	
+	/**
+	 * Redireciona para a view onde se encontra o quadro com com as estorias em 
+	 * seus diferentes niveis.
+	 */
 	@Path("/stories/board")
 	public void board(){
 		
@@ -128,9 +147,16 @@ public class StoriesController {
 		result.include("inTest", inTest);
 	}
 	
+	/**
+	 * Muda o status de um data estoria de usuario
+	 * 
+	 * @param story
+	 * @param status
+	 */
 	@Get
 	@Path("/stories/mudaStatus/{story.id}/{status.name}")
 	public void mudaStatus(Story story, Status status){
+		//I know this code is bad
 		ResultChangeStory r = new ResultChangeStory();
 		r.setId(story.getId());
 		r.setStatus(status.getName());

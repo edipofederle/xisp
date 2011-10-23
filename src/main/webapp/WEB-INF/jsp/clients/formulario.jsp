@@ -19,7 +19,7 @@
 			<input type="text" name="client.name" id="name" class="required xlarge" value="${client.name }"/>
 			<br /><br/>
 			<label><fmt:message key="client.form.andress"/></label>
-			<textarea name="client.endereco" class="required xxlarge"  id="endereco" rows="4">${client.endereco }</textarea>
+			<input type="text" name="client.endereco" class="required xlarge"  value="${client.endereco }"/>
 			<br />
 			<div class="actions">
 				<fmt:message key="client.form.enviar" var="criar"/>
