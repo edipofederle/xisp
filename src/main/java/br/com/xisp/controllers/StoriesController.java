@@ -63,7 +63,7 @@ public class StoriesController {
 	@Path("/stories/{project.id}/index")
 	@Get
 	public void index(Project project) {
-		List<Story> listStoriesNotFinished = new ArrayList<Story>();
+		List<Story> stories = new ArrayList<Story>();
 		Project p = projectRepository.load(project);
 		this.projectSession.setProject(p);
 		this.currentProject = this.projectSession.getProject();
@@ -71,11 +71,11 @@ public class StoriesController {
 			result.include("selectProjectBefore", "Selecione um projeto!");
 			result.redirectTo(ErrorsController.class).index();
 		}else{
-			listStoriesNotFinished = repository.showAllStoriesNotFinished(this.currentProject);
+			stories = repository.showAllStories(this.currentProject);
 		}
 		result.include("project", p);
 		result.include("unRelatedStories", this.repository.unrelatedStories(this.currentProject));
-		result.include("listStoriesNotFinished", listStoriesNotFinished);
+		result.include("stories", stories);
 	}
 	
 	public void neww() throws Exception{
@@ -118,16 +118,16 @@ public class StoriesController {
 	@Path("/stories/board")
 	public void board(){
 		
-		List<Story> listStoriesNotFinished = new ArrayList<Story>();
+		List<Story> stories = new ArrayList<Story>();
 		List<Story> noStarted = new ArrayList<Story>();
 		List<Story> inDev = new ArrayList<Story>();
 		List<Story> readyTest = new ArrayList<Story>();
 		List<Story> inTest = new ArrayList<Story>();
 		List<Story> finished = new ArrayList<Story>();
 		
-		listStoriesNotFinished = repository.showAllStoriesNotFinished(projectSession.getProject());
+		stories = repository.showAllStories(projectSession.getProject());
 		
-		for (Story story : listStoriesNotFinished) {
+		for (Story story : stories) {
 			if(story.getStatus().equals(br.com.xisp.models.Status.NOSTARTED))
 				noStarted.add(story);
 			if(story.getStatus().equals(br.com.xisp.models.Status.IN_DEV))

@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 <a href="${pageContext.request.contextPath}/stories/board"> Mostrar Stories no Quadro</a>
 
-	<c:forEach items="${listStoriesNotFinished }" var="uss">
+	<c:forEach items="${stories }" var="uss">
 		<p>${uss.name} ${uss.status} - Iteraçao Pertencente: ${uss.interation.name}</p>
 	</c:forEach>
 

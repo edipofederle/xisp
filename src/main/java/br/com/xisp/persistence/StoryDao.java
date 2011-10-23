@@ -41,8 +41,7 @@ public class StoryDao implements StoryRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	//TODO Mudar nome do metodo
-	public List<Story> showAllStoriesNotFinished(Project project ) {
+	public List<Story> showAllStories(Project project ) {
 		return this.session.createQuery("from Story s where s.project = :project").setParameter("project", project).list();
 	}
 

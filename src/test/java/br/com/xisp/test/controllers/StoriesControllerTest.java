@@ -46,7 +46,7 @@ public class StoriesControllerTest {
 		mockery.checking(new Expectations() {
 			{
 				one(projectRepository).load(with(any(Project.class)));
-				//allowing(projectSession).getProject();
+				allowing(projectSession).getProject();
 				one(sessionUser).getUser();
 			}
 		});
