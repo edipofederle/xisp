@@ -35,13 +35,13 @@ $(document).ready(function() {
 	
 	<c:choose>
 		<c:when test="${i.done }">
-			Finalizada
+			<span class="label notice">Finalizada</span><br/>
 		</c:when>
 		<c:when test="${i.current }">
-			<b>Atual.</b><br />
+			<span class="label success">Atual</span><br />
 		</c:when>
 		<c:when test="${!i.current }">
-			<b>Nao Iniciada</b><br />
+			<span class="label warning">Nao Inicada</span><br />
 		</c:when>
 	</c:choose>
 
