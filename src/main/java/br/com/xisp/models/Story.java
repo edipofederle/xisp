@@ -15,8 +15,20 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
+import br.com.xisp.utils.UtilDate;
+
 @Entity
 public class Story {
+	
+	@Transient
+	private UtilDate myDate;
+	
+	//TODO data ta vindo null
+	public Story(UtilDate currentDate){
+		this.myDate = currentDate;
+	}
+	
+	public Story(){}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,9 +101,10 @@ public class Story {
 		return status;
 	}
 	public void setStatus(Status status) {
-		if(status.equals(Status.IN_DEV))
-			this.startedAt = new Date();
-		else if(status.equals(Status.FINISHED))
+		if(this.startedAt == null)
+			if(status.equals(Status.IN_DEV))
+				this.startedAt = new Date();
+		if(status.equals(Status.FINISHED))
 			this.endAt = new Date();
 		this.status = status;
 	}

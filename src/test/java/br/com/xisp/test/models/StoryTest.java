@@ -4,6 +4,8 @@ import java.util.Date;
 
 import junit.framework.Assert;
 
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,14 +14,24 @@ import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
+import br.com.xisp.utils.UtilDate;
 
 public class StoryTest {
 	
 	private Story story;
+	private UtilDate utilDate;
+	private Mockery mockery;
 	
 	@Before
 	public void setUp(){
-		story = new Story();
+		mockery = new Mockery();
+		utilDate = mockery.mock(UtilDate.class);
+		story = new Story(utilDate);
+		mockery.checking(new Expectations() {
+			{
+				allowing(utilDate).currentDate();
+			}
+		});
 	}
 	
 	@Test
@@ -76,11 +88,24 @@ public class StoryTest {
 	}
 	
 	@Test
-	public void testShouldSetCurrentDateWhenStoryFinish(){
+	public void testShouldSetCurrentDateAsEndDateWhenStoryFinish(){
 		Project project = givenAProject();
 		Story story = givenAStory(project);
 		story.setStatus(Status.FINISHED);
 		Assert.assertEquals(new Date(),story.getEndAt());
+	}
+	
+	@Test
+	public void testShouldNotUpdateEndDateWhenStoryBackToTheDevArea(){
+		Date startDate = new Date();
+		startDate.setTime(2);
+		Project project = givenAProject();
+		Story story = givenAStory(project);
+		story.setStartedAt(startDate);
+		story.setStatus(Status.FINISHED);
+		story.setStatus(Status.IN_DEV);
+		Assert.assertSame(startDate, story.getStartedAt());
+		
 		
 	}
 	
@@ -93,7 +118,7 @@ public class StoryTest {
 	}
 	
 	private Story givenAStory(final Project project){
-		 Story story = new Story();
+		 Story story = new Story(utilDate);
 		 story.setCreatedBy(givenAUser());
 		 story.setName("Create a Crud for Users");
 		 story.setDescription("Here Description for the user story");
