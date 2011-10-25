@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import br.com.caelum.vraptor.ioc.Component;
+import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;
 import br.com.xisp.repository.StoryRepository;
@@ -41,8 +42,12 @@ public class StoryDao implements StoryRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Story> showAllStories(Project project ) {
-		return this.session.createQuery("from Story s where s.project = :project").setParameter("project", project).list();
+	public List<Story> showAllStories(Project project, Interation interation) {
+		String hql = "select distinct s from Story s, Interation i where s.project = :project and s.interation = :interation";
+		Query query = session.createQuery(hql);
+		query.setParameter("project",project);
+		query.setParameter("interation", interation);
+		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,6 +62,14 @@ public class StoryDao implements StoryRepository {
 		String sql = "from Story u where u.name = :name";
 		Query query = this.session.createQuery(sql).setParameter("name", name);
 		return (Story) query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Story> showAllStoriesNotFinished(Project project) {
+		String hql = "select u from Story u, Project p where p = :project and u.status != FINISHED ";
+		Query query = session.createQuery(hql);
+		query.setParameter("project", project);
+		return query.list();
 	}
 	
 

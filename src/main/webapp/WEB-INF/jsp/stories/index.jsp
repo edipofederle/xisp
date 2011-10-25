@@ -19,8 +19,14 @@ $(document).ready(function(){
 
 <a href="${pageContext.request.contextPath}/stories/board"> Mostrar Stories no Quadro</a>
 
+	<c:if test="${empty stories }">
+		 <h3>existe iteracao atual</h3>
+	</c:if>
+	
 	<c:forEach items="${stories }" var="uss">
-		<p>${uss.name} ${uss.status} - Iteraçao Pertencente: ${uss.interation.name}</p>
+		<p>${uss.name} ${uss.status} - Iteraçao Pertencente: ${uss.interation.name} </p>
+		<p>${uss.createdBy.name}</p>
+		<p>${uss.test.test }</p>
 	</c:forEach>
 
 <div id="unrelaedStories">

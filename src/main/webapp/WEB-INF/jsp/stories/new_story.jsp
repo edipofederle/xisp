@@ -31,7 +31,7 @@ $(document).ready(function(){
 	<br /><br/>
 	
 	<label><fmt:message key="stoy.form.type"/></label>
-	<select name="story.typeStory" id="story.typeStory">
+	<select name="story.typeStory.id" id="story.typeStory.id">
 		<c:forEach items="${types }" var="t">
 			<option value="${t.id }">${t.type }</option>
 		</c:forEach>
@@ -45,9 +45,6 @@ $(document).ready(function(){
 		<option value="HIGH">Alta</option>
 	</select>
 	<br /><br />
-	
-	<label>Teste de Aceitacao:</label>
-	<textarea rows="10" cols="100" class="required xxlarge" id="acceptsTest" name="story.acceptsTest"></textarea>
 	
 	<label><fmt:message key="stoy.form.points"/></label>
 	<select name="story.points" id="story.points">
@@ -73,8 +70,11 @@ $(document).ready(function(){
 	
 	<br /><br/>
 	<label><fmt:message key="stoy.form.story"/></label>
-	<textarea name="story.description" id="description" class="required xxlarge" class="formDescStory" ></textarea>
+	<textarea name="story.description" id="description" rows="10" cols="100" class="required xxlarge" class="formDescStory" ></textarea>
 	<br /><br/>
+	
+	<label>Teste de Aceitacao:</label>
+	<textarea rows="10" cols="100" class="required xxlarge" id="acceptsTest" name="story.acceptsTest"></textarea>
 	
 	
 

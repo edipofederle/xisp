@@ -75,6 +75,15 @@ public class StoryTest {
 		Assert.assertEquals("NOSTARTED", story.getStatus().getStatus());
 	}
 	
+	@Test
+	public void testShouldSetCurrentDateWhenStoryFinish(){
+		Project project = givenAProject();
+		Story story = givenAStory(project);
+		story.setStatus(Status.FINISHED);
+		Assert.assertEquals(new Date(),story.getEndAt());
+		
+	}
+	
 	private Project givenAProject() {
 		Project project = new Project();
 		project.setId(1L);

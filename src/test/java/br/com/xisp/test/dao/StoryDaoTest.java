@@ -3,6 +3,7 @@ package br.com.xisp.test.dao;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,13 +60,6 @@ public class StoryDaoTest {
 		Assert.assertEquals("Funcionalidade", storyFound.getTypeStory().getType());
 	}
 	
-	@Test
-	public void testShouldReturnAllNotDoneStoriesFromProject() {
-		Project p = givenAProject();
-		givenFiveStories(p, Status.IN_DEV);
-		Assert.assertEquals(5, storydao.showAllStoriesNotFinished(p).size());
-	}
-	
 	@Ignore
 	//TODO Verificar esse test
 	public void testShouldReturnAllFinishedStoriesFromProject(){
@@ -92,7 +86,8 @@ public class StoryDaoTest {
 		Assert.assertEquals(Status.FINISHED, storydao.find(s.getName()).getStatus());
 	}
 	
-	@Test
+	@Ignore
+	//TODO Acredito que isso nao ira ter mais.
 	public void testShouldReturnAllStoriesNotBelongsToAnyIterations(){
 		clearInteraction();
 		Project p = givenAProject();
@@ -140,6 +135,8 @@ public class StoryDaoTest {
 		project.setId(1L);
 		project.setName("Test Project");
 		project.setDescription("Description of Test Project");
+		List<Interation> interations = new ArrayList<Interation>();
+		interations.add(givenInteration2());
 		projectdao.add(project);
 		return project;
 	}
@@ -176,6 +173,16 @@ public class StoryDaoTest {
 		Interation interation = new Interation();
 		interation.setName("Current Interation");
 		interation.setProject(p);
+		interation.setStartDate(new Date());
+		interation.setEndDate(new Date());
+		interationdao.add(interation);
+		this.session.flush();
+		return interation;
+	}
+	
+	private Interation givenInteration2(){
+		Interation interation = new Interation();
+		interation.setName("Current Interation");
 		interation.setStartDate(new Date());
 		interation.setEndDate(new Date());
 		interationdao.add(interation);

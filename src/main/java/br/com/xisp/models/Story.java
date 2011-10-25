@@ -89,9 +89,10 @@ public class Story {
 		return status;
 	}
 	public void setStatus(Status status) {
-		if(status.equals(Status.IN_DEV)){
+		if(status.equals(Status.IN_DEV))
 			this.startedAt = new Date();
-		}
+		else if(status.equals(Status.FINISHED))
+			this.endAt = new Date();
 		this.status = status;
 	}
 	public User getCreatedBy() {

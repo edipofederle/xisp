@@ -3,10 +3,7 @@ package br.com.xisp.controllers;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.UniqueConstraint;
-
 import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;

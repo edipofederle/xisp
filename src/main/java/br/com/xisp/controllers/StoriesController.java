@@ -46,6 +46,8 @@ public class StoriesController {
 	private User currentUser;
 	private final Validator validator;
 	
+	private Interation currentIteration;
+	
 	public StoriesController(StoryRepository repository, ProjectRepository repositoryProject,
 							 InteractionRepository interationRepository, TypeStoryRepository typestoryRepository,
 		                     AcceptenceTestRepository acceptenceTestRepository, Result result, ProjectSession projectSession, UserSession user, Validator validator) {
@@ -71,7 +73,7 @@ public class StoriesController {
 			result.include("selectProjectBefore", "Selecione um projeto!");
 			result.redirectTo(ErrorsController.class).index();
 		}else{
-			stories = repository.showAllStories(this.currentProject);
+			stories = repository.showAllStories(this.currentProject, getcurrentIteration());
 		}
 		result.include("project", p);
 		result.include("unRelatedStories", this.repository.unrelatedStories(this.currentProject));
@@ -125,7 +127,8 @@ public class StoriesController {
 		List<Story> inTest = new ArrayList<Story>();
 		List<Story> finished = new ArrayList<Story>();
 		
-		stories = repository.showAllStories(projectSession.getProject());
+		
+		stories = repository.showAllStories(projectSession.getProject(), getcurrentIteration());
 		
 		for (Story story : stories) {
 			if(story.getStatus().equals(br.com.xisp.models.Status.NOSTARTED))
@@ -145,6 +148,16 @@ public class StoriesController {
 		result.include("readyTest", readyTest);
 		result.include("finished",finished);
 		result.include("inTest", inTest);
+	}
+
+	private Interation getcurrentIteration() {
+		//TODO Move from here
+		List<Interation> iterations = interationRepository.showAllInterations(projectSession.getProject());
+		for (Interation interation : iterations) {
+			if(interation.isCurrent())
+				currentIteration = interation;
+		}
+		return currentIteration;
 	}
 	
 	/**

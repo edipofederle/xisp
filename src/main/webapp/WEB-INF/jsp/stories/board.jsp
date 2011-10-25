@@ -254,17 +254,14 @@
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> Fulano</small><br />
 					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
-					<hr />
-					<small><b>Estoria:</b></small><br />
-					<fieldset>
-						<p style="text-align: justify;">${ un.description }</p>
-					</fieldset><br />
-					<small><b>Teste de Aceitacao:</b></small><br />
-					<fieldset>
-						As a user closing the application,
-						I want to be prompted to save anything that has changed since the last save
-						so that I can preserve useful work and discard erroneous work.
-					</fieldset>
+					<small><b>Criado por:</b>${un.createdBy.name}</small><Br />
+					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
+					
+					<small><b>Estoria:</b></small>
+					<p style="text-align: justify;">${ un.description }</p>
+					
+					<small><b>Teste de Aceitacao:</b></small>
+					<p>${un.test.test }</p>
 				</div>
 			</c:forEach>
 			

@@ -8,6 +8,7 @@ import org.junit.Test;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.xisp.controllers.StoriesController;
+import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.repository.AcceptenceTestRepository;
 import br.com.xisp.repository.InteractionRepository;
@@ -99,7 +100,7 @@ public class StoriesControllerTest {
 				one(projectSession).setProject(project);
 				one(sessionUser).getUser();
 				never(projectSession).getProject();
-				never(repo).showAllStoriesNotFinished(project);
+				never(repo).showAllStories(with(any(Project.class)), with(any(Interation.class)));
 			}
 		});
 	}
@@ -107,7 +108,7 @@ public class StoriesControllerTest {
 	private void willLoadAllNoDoneStories(final Project project) {
 		mockery.checking(new Expectations() {
 			{
-				one(repo).showAllStoriesNotFinished(with(any(Project.class)));
+				one(repo).showAllStories(with(any(Project.class)), with(any(Interation.class)));
 				one(projectRepository).load(with(any(Project.class)));
 				will(returnValue(with(any(Project.class))));
 				one(projectSession).getProject();
