@@ -30,6 +30,13 @@ $(document).ready(function(){
 	<input type="text" name="story.name" id="name" class="required xlarge" value="${story.name }"/>
 	<br /><br/>
 	
+	<label>Atribuida para:</label>
+	<select name="story.assignedTo.id" id="story.assignedTo.id">
+		<c:forEach items="${users }" var="u">
+			<option value="${u.id }">${u.name }</option>
+		</c:forEach>
+	</select>
+	
 	<label><fmt:message key="stoy.form.type"/></label>
 	<select name="story.typeStory.id" id="story.typeStory.id">
 		<c:forEach items="${types }" var="t">

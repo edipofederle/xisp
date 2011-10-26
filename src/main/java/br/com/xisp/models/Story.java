@@ -15,20 +15,9 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
-import br.com.xisp.utils.UtilDate;
-
 @Entity
 public class Story {
 	
-	@Transient
-	private UtilDate myDate;
-	
-	//TODO data ta vindo null
-	public Story(UtilDate currentDate){
-		this.myDate = currentDate;
-	}
-	
-	public Story(){}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +58,9 @@ public class Story {
 	
 	@ManyToOne
 	private User createdBy;
+	
+	@ManyToOne
+	private User assignedTo;
 	
 	@ManyToOne
 	private AcceptenceTest test;
@@ -165,6 +157,15 @@ public class Story {
 	public void setTest(AcceptenceTest test) {
 		this.test = test;
 	}
+
+	public User getAssignedTo() {
+		return assignedTo;
+	}
+
+	public void setAssignedTo(User assignedTo) {
+		this.assignedTo = assignedTo;
+	}
+	
 	
 	
 	

@@ -22,19 +22,20 @@ import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.TypeStoryRepository;
+import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
 /**
  * 
  * @author edipo
- *
- * Controller Responsavel por controlar a parte das Estorias de Usuario
- *
+ * 
+ *         Controller Responsavel por controlar a parte das Estorias de Usuario
+ * 
  */
 @Resource
 public class StoriesController {
-	
+
 	private StoryRepository repository;
 	private Result result;
 	private Project currentProject;
@@ -42,15 +43,20 @@ public class StoriesController {
 	private ProjectRepository projectRepository;
 	private InteractionRepository interationRepository;
 	private TypeStoryRepository typestoryRepository;
+	private UserRepository userRepository;
 	private AcceptenceTestRepository acceptenceTestRepository;
 	private User currentUser;
 	private final Validator validator;
-	
+
 	private Interation currentIteration;
-	
-	public StoriesController(StoryRepository repository, ProjectRepository repositoryProject,
-							 InteractionRepository interationRepository, TypeStoryRepository typestoryRepository,
-		                     AcceptenceTestRepository acceptenceTestRepository, Result result, ProjectSession projectSession, UserSession user, Validator validator) {
+
+	public StoriesController(StoryRepository repository,
+			ProjectRepository repositoryProject,
+			InteractionRepository interationRepository,
+			TypeStoryRepository typestoryRepository,
+			AcceptenceTestRepository acceptenceTestRepository,
+			UserRepository userRepository, Result result,
+			ProjectSession projectSession, UserSession user, Validator validator) {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
@@ -58,10 +64,11 @@ public class StoriesController {
 		this.interationRepository = interationRepository;
 		this.typestoryRepository = typestoryRepository;
 		this.acceptenceTestRepository = acceptenceTestRepository;
+		this.userRepository = userRepository;
 		this.currentUser = user.getUser();
 		this.validator = validator;
 	}
-	
+
 	@Path("/stories/{project.id}/index")
 	@Get
 	public void index(Project project) {
@@ -69,20 +76,23 @@ public class StoriesController {
 		Project p = projectRepository.load(project);
 		this.projectSession.setProject(p);
 		this.currentProject = this.projectSession.getProject();
-		if(this.currentProject == null){
+		if (this.currentProject == null) {
 			result.include("selectProjectBefore", "Selecione um projeto!");
 			result.redirectTo(ErrorsController.class).index();
-		}else{
-			stories = repository.showAllStories(this.currentProject, getcurrentIteration());
+		} else {
+			stories = repository.showAllStories(this.currentProject,
+					getcurrentIteration());
 		}
 		result.include("project", p);
-		result.include("unRelatedStories", this.repository.unrelatedStories(this.currentProject));
+		result.include("unRelatedStories",
+				this.repository.unrelatedStories(this.currentProject));
 		result.include("stories", stories);
 	}
-	
+
 	public void neww() throws Exception{
 		List<Interation> listIterations = new ArrayList<Interation>();
 		List<TypeStory> listTypes = new ArrayList<TypeStory>();
+		List<User> listUsers = new ArrayList<User>();
 		try{
 			listTypes = this.typestoryRepository.findAll();
 		}catch (Exception e) {
@@ -91,14 +101,16 @@ public class StoriesController {
 		//Carrega Todas as Iteracoes de um dado Projecto
 		try{
 			listIterations = this.interationRepository.showAllInterations(projectSession.getProject());
+		    listUsers = this.userRepository.showAll();
 		}catch (Exception e) {
 			//TODO Logar
 			//TODO Redirect 
 		}
 		result.include("types", listTypes);
 		result.include("listIterations", listIterations);
+		result.include("users", listUsers);
 	}
-	
+
 	@Path("/stories")
 	@Post
 	public void add(final Story story) throws Exception {
@@ -109,57 +121,60 @@ public class StoriesController {
 		acceptenceTestRepository.add(at);
 		story.setTest(at);
 		repository.add(story);
-		validator.onErrorUsePageOf(StoriesController.class).index(projectSession.getProject());
+		validator.onErrorUsePageOf(StoriesController.class).index(
+				projectSession.getProject());
 		result.redirectTo(StoriesController.class).neww();
 	}
-	
+
 	/**
-	 * Redireciona para a view onde se encontra o quadro com com as estorias em 
+	 * Redireciona para a view onde se encontra o quadro com com as estorias em
 	 * seus diferentes niveis.
 	 */
 	@Path("/stories/board")
-	public void board(){
-		
+	public void board() {
+
 		List<Story> stories = new ArrayList<Story>();
 		List<Story> noStarted = new ArrayList<Story>();
 		List<Story> inDev = new ArrayList<Story>();
 		List<Story> readyTest = new ArrayList<Story>();
 		List<Story> inTest = new ArrayList<Story>();
 		List<Story> finished = new ArrayList<Story>();
-		
-		
-		stories = repository.showAllStories(projectSession.getProject(), getcurrentIteration());
-		
+
+		stories = repository.showAllStories(projectSession.getProject(),
+				getcurrentIteration());
+
 		for (Story story : stories) {
-			if(story.getStatus().equals(br.com.xisp.models.Status.NOSTARTED))
+			if (story.getStatus().equals(br.com.xisp.models.Status.NOSTARTED))
 				noStarted.add(story);
-			if(story.getStatus().equals(br.com.xisp.models.Status.IN_DEV))
+			if (story.getStatus().equals(br.com.xisp.models.Status.IN_DEV))
 				inDev.add(story);
-			if(story.getStatus().equals(br.com.xisp.models.Status.READY_FOR_TEST))
+			if (story.getStatus().equals(
+					br.com.xisp.models.Status.READY_FOR_TEST))
 				readyTest.add(story);
-			if(story.getStatus().equals(br.com.xisp.models.Status.IN_TEST))
+			if (story.getStatus().equals(br.com.xisp.models.Status.IN_TEST))
 				inTest.add(story);
-			if(story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
+			if (story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
 				finished.add(story);
 		}
-		
+
 		result.include("noStarted", noStarted);
 		result.include("inDev", inDev);
 		result.include("readyTest", readyTest);
-		result.include("finished",finished);
+		result.include("finished", finished);
 		result.include("inTest", inTest);
 	}
 
 	private Interation getcurrentIteration() {
-		//TODO Move from here
-		List<Interation> iterations = interationRepository.showAllInterations(projectSession.getProject());
+		// TODO Move from here
+		List<Interation> iterations = interationRepository
+				.showAllInterations(projectSession.getProject());
 		for (Interation interation : iterations) {
-			if(interation.isCurrent())
+			if (interation.isCurrent())
 				currentIteration = interation;
 		}
 		return currentIteration;
 	}
-	
+
 	/**
 	 * Muda o status de um data estoria de usuario
 	 * 
@@ -168,35 +183,36 @@ public class StoriesController {
 	 */
 	@Get
 	@Path("/stories/mudaStatus/{story.id}/{status.name}")
-	public void mudaStatus(Story story, Status status){
-		//I know this code is bad
+	public void mudaStatus(Story story, Status status) {
+		// I know this code is bad
 		ResultChangeStory r = new ResultChangeStory();
 		r.setId(story.getId());
 		r.setStatus(status.getName());
-		
-		if(status.getName().equals("em_dev")){
+
+		if (status.getName().equals("em_dev")) {
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.IN_DEV);
 		}
-		if(status.getName().equals("pronta_para_dev")){
+		if (status.getName().equals("pronta_para_dev")) {
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.NOSTARTED);
 		}
-		if(status.getName().equals("pronta_para_testes")){
+		if (status.getName().equals("pronta_para_testes")) {
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.READY_FOR_TEST);
 		}
-		if(status.getName().equals("em_testes")){
+		if (status.getName().equals("em_testes")) {
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.IN_TEST);
 		}
-		if(status.getName().equals("finalizadas")){
+		if (status.getName().equals("finalizadas")) {
 			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.FINISHED);
 		}
-		
+
 		r.setQtdStories(10);
-		System.out.println("muda status " + story.getId() + " Status: " + status.getName());
+		System.out.println("muda status " + story.getId() + " Status: "
+				+ status.getName());
 		result.use(json()).from(r).serialize();
 	}
 }
