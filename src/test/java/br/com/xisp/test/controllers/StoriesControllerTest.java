@@ -11,10 +11,12 @@ import br.com.xisp.controllers.StoriesController;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.repository.AcceptenceTestRepository;
+import br.com.xisp.repository.HistoryStoryRepository;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.TypeStoryRepository;
+import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
@@ -29,6 +31,8 @@ public class StoriesControllerTest {
 	private InteractionRepository interationRepository;
 	private TypeStoryRepository typestoryRepository;
 	private AcceptenceTestRepository acceptenceTestRepository;
+	private HistoryStoryRepository historyStoryRepository;
+	private UserRepository userRepository;
 	private UserSession sessionUser;
 
 	
@@ -40,6 +44,8 @@ public class StoriesControllerTest {
 		this.projectRepository = mockery.mock(ProjectRepository.class);
 		this.typestoryRepository = mockery.mock(TypeStoryRepository.class);
 		this.acceptenceTestRepository = mockery.mock(AcceptenceTestRepository.class);
+		this.userRepository = mockery.mock(UserRepository.class);
+		this.historyStoryRepository = mockery.mock(HistoryStoryRepository.class);
 		this.sessionUser = mockery.mock(UserSession.class);
 		this.interationRepository = mockery.mock(InteractionRepository.class);
 		
@@ -49,9 +55,10 @@ public class StoriesControllerTest {
 				one(projectRepository).load(with(any(Project.class)));
 				allowing(projectSession).getProject();
 				one(sessionUser).getUser();
+				one(userRepository).showAll();
 			}
 		});
-		this.controller = new StoriesController(repo, projectRepository, interationRepository, typestoryRepository, acceptenceTestRepository, result, projectSession, sessionUser, new MockValidator() );
+		this.controller = new StoriesController(repo, projectRepository, interationRepository, typestoryRepository, acceptenceTestRepository, userRepository,  result, projectSession, historyStoryRepository, sessionUser, new MockValidator() );
 	}
 	
 	/**

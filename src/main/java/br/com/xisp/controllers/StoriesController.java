@@ -12,12 +12,14 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.xisp.models.AcceptenceTest;
+import br.com.xisp.models.History;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.AcceptenceTestRepository;
+import br.com.xisp.repository.HistoryStoryRepository;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
@@ -45,6 +47,7 @@ public class StoriesController {
 	private TypeStoryRepository typestoryRepository;
 	private UserRepository userRepository;
 	private AcceptenceTestRepository acceptenceTestRepository;
+	private HistoryStoryRepository historyStoryRepository;
 	private User currentUser;
 	private final Validator validator;
 
@@ -56,7 +59,7 @@ public class StoriesController {
 			TypeStoryRepository typestoryRepository,
 			AcceptenceTestRepository acceptenceTestRepository,
 			UserRepository userRepository, Result result,
-			ProjectSession projectSession, UserSession user, Validator validator) {
+			ProjectSession projectSession,HistoryStoryRepository historyStoryRepository, UserSession user, Validator validator) {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
@@ -64,6 +67,7 @@ public class StoriesController {
 		this.interationRepository = interationRepository;
 		this.typestoryRepository = typestoryRepository;
 		this.acceptenceTestRepository = acceptenceTestRepository;
+		this.historyStoryRepository = historyStoryRepository;
 		this.userRepository = userRepository;
 		this.currentUser = user.getUser();
 		this.validator = validator;
@@ -189,24 +193,29 @@ public class StoriesController {
 		r.setId(story.getId());
 		r.setStatus(status.getName());
 
+		
+		Story us = repository.find(story.getId());
+		
+		History hist  = new History();
+		hist.setOrigin(us.getStatus().getStatus());
+		hist.setDestiny(status.getName());
+		
+		hist.setStory(story);
+		this.historyStoryRepository.add(hist);
+		
 		if (status.getName().equals("em_dev")) {
-			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.IN_DEV);
 		}
 		if (status.getName().equals("pronta_para_dev")) {
-			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.NOSTARTED);
 		}
 		if (status.getName().equals("pronta_para_testes")) {
-			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.READY_FOR_TEST);
 		}
 		if (status.getName().equals("em_testes")) {
-			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.IN_TEST);
 		}
 		if (status.getName().equals("finalizadas")) {
-			Story us = repository.find(story.getId());
 			us.setStatus(br.com.xisp.models.Status.FINISHED);
 		}
 

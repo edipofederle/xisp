@@ -1,7 +1,9 @@
 package br.com.xisp.models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -70,6 +73,9 @@ public class Story {
 
 	@ManyToOne
 	private Interation interation;
+	
+	@OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE, orphanRemoval= true)
+	private List<History> listHistoryStory;
 		
 	public Long getId() {
 		return id;
@@ -165,8 +171,14 @@ public class Story {
 	public void setAssignedTo(User assignedTo) {
 		this.assignedTo = assignedTo;
 	}
+	public List<History> getListHistoryStory() {
+		return listHistoryStory;
+	}
+	public void setListHistoryStory(List<History> listHistoryStory) {
+		this.listHistoryStory = listHistoryStory;
+	}
 	
-	
+
 	
 	
 }

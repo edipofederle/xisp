@@ -55,7 +55,7 @@ public class StoryDaoTest {
 		Story story = givenAStory("Create a Crud for Users", givenAProject(), Status.IN_DEV, givenAType());
 		Story storyFound = storydao.find("Create a Crud for Users");
 		assertThat(storyFound, is(story));
-		Assert.assertEquals("INDEV", storyFound.getStatus().getStatus());
+		Assert.assertEquals("Em Dev", storyFound.getStatus().getStatus());
 		Assert.assertNull(storyFound.getInteration());
 		Assert.assertEquals("Funcionalidade", storyFound.getTypeStory().getType());
 	}

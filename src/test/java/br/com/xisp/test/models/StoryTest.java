@@ -4,8 +4,6 @@ import java.util.Date;
 
 import junit.framework.Assert;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,24 +12,14 @@ import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
-import br.com.xisp.utils.UtilDate;
 
 public class StoryTest {
 	
 	private Story story;
-	private UtilDate utilDate;
-	private Mockery mockery;
 	
 	@Before
 	public void setUp(){
-		mockery = new Mockery();
-		utilDate = mockery.mock(UtilDate.class);
-		story = new Story(utilDate);
-		mockery.checking(new Expectations() {
-			{
-				allowing(utilDate).currentDate();
-			}
-		});
+		story = new Story();
 	}
 	
 	@Test
@@ -41,7 +29,7 @@ public class StoryTest {
 		story.setTypeStory(t);
 		story.setStatus(Status.IN_DEV);
 		story.setDescription("Figure out how build a tower");
-		Assert.assertEquals("INDEV", story.getStatus().getStatus());
+		Assert.assertEquals("Em Dev", story.getStatus().getStatus());
 		Assert.assertEquals("Funcionalidade", story.getTypeStory().getType());
 	}
 
@@ -57,18 +45,18 @@ public class StoryTest {
 	public void testStoryChangeStatus(){
 		Project project = givenAProject();
 		Story story = givenAStory(project);
-		Assert.assertEquals("NOSTARTED",story.getStatus().getStatus());
+		Assert.assertEquals("Nao Iniciada",story.getStatus().getStatus());
 		story.setStatus(Status.READY_FOR_TEST);
-		Assert.assertEquals("RFT",story.getStatus().getStatus());
+		Assert.assertEquals("Pronta para Testes",story.getStatus().getStatus());
 	}
 	
 	@Test
 	public void testStoryWhenInDevShouldFillStartAt(){
 		Project project = givenAProject();
 		Story story = givenAStory(project);
-		Assert.assertEquals("NOSTARTED",story.getStatus().getStatus());
+		Assert.assertEquals("Nao Iniciada",story.getStatus().getStatus());
 		story.setStatus(Status.IN_DEV);
-		Assert.assertEquals("INDEV",story.getStatus().getStatus());
+		Assert.assertEquals("Em Dev",story.getStatus().getStatus());
 		Assert.assertEquals(new Date(), story.getStartedAt());
 	}
 	
@@ -77,14 +65,14 @@ public class StoryTest {
 		Project project = givenAProject();
 		Story story = givenAStory(project);
 		story.markAsCompleted();
-		Assert.assertEquals("FINISHED", story.getStatus().getStatus());
+		Assert.assertEquals("Finalizada", story.getStatus().getStatus());
 	}
 	
 	@Test
 	public void testStoryShouldCreateAsNotStarted(){
 		Project project = givenAProject();
 		Story story = givenAStory(project);
-		Assert.assertEquals("NOSTARTED", story.getStatus().getStatus());
+		Assert.assertEquals("Nao Iniciada", story.getStatus().getStatus());
 	}
 	
 	@Test
@@ -118,7 +106,7 @@ public class StoryTest {
 	}
 	
 	private Story givenAStory(final Project project){
-		 Story story = new Story(utilDate);
+		 Story story = new Story();
 		 story.setCreatedBy(givenAUser());
 		 story.setName("Create a Crud for Users");
 		 story.setDescription("Here Description for the user story");
