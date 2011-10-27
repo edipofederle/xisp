@@ -26,6 +26,10 @@ public class Story {
 	
 	@ManyToOne
 	private Project project;
+	
+
+	@ManyToOne
+	private Interation interation;
 		
 	public Long getId() {
 		return id;
@@ -66,6 +70,11 @@ public class Story {
 	public void markAsCompleted() {
 		this.status = Status.FINISHED;
 	}
-	
-	
+	public Interation getInteration() {
+		return interation;
+	}
+	public void setInteration(Interation interation) {
+		this.interation = interation;
+	}
+
 }

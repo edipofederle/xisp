@@ -1,6 +1,7 @@
 <%@ include file="../../../header.jsp" %> 
 
 <script type="text/javascript">
+
 $(document).ready(function() {
 	$("#startDate").datepicker();
 	$("#endDate").datepicker();
@@ -9,7 +10,9 @@ $(document).ready(function() {
 	$("#newInteration").hide();
 	
 	$(".newInteration").click(function(){
-		$("#newInteration").toggle();
+		$('#newInteration').toggle('slow', function() {
+		   // Animation complete.
+		 });
 	});
 	
 });
@@ -29,9 +32,33 @@ $(document).ready(function() {
 </c:if>
 <br />
 
+
+
 <h3>${stats }</h3>
+
+<a href="#" class="newInteration">Criar nova Interaçao</a>
+<form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
+
+	<label><fmt:message key="interation.name"/></label>
+	<input type="text" id="name" name="interation.name" class="required xlarge">
+	
+	<label><fmt:message key="interation.startDate"/></label>
+	<input type="text" id="startDate" name="interation.startDate" class="required xlarge">
+	
+	<label><fmt:message key="interation.endDate"/></label>
+	<input type="text" id="endDate" name="interation.endDate" class="required xlarge">
+	
+	<br />
+	<div class="actions">
+		<fmt:message key="interation.form.enviar" var="criar"/>
+		<input type="submit" name="submit" class="btn primary" value="${criar}"/>
+		<a href="${pageContext.request.contextPath}/">Cancelar</a>
+	</div>
+
+</form>
+
 <c:forEach items="${interations }" var="i">
-	<p>${i.name } - ${i.startDate } <b>ate</b> ${i.endDate } </p>
+	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }</a> - ${i.startDate } <b>ate</b> ${i.endDate } </p>
 	
 	<c:choose>
 		<c:when test="${i.done }">
@@ -54,24 +81,3 @@ $(document).ready(function() {
 	</hr>
 </c:forEach>
 <br /><br/><br/>
-
-<a href="#" class="newInteration">Criar nova Interaçao</a>
-<form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
-
-	<label><fmt:message key="interation.name"/></label>
-	<input type="text" id="name" name="interation.name" class="required xlarge">
-	
-	<label><fmt:message key="interation.startDate"/></label>
-	<input type="text" id="startDate" name="interation.startDate" class="required xlarge">
-	
-	<label><fmt:message key="interation.endDate"/></label>
-	<input type="text" id="endDate" name="interation.endDate" class="required xlarge">
-	
-	<br />
-	<div class="actions">
-		<fmt:message key="interation.form.enviar" var="criar"/>
-		<input type="submit" name="submit" class="btn primary" value="${criar}"/>
-		<a href="${pageContext.request.contextPath}/">Cancelar</a>
-	</div>
-
-</form>

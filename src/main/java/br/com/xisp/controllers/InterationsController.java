@@ -3,6 +3,7 @@ package br.com.xisp.controllers;
 import java.util.Date;
 import java.util.List;
 
+import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
@@ -62,6 +63,14 @@ public class InterationsController {
 		result.include("successInteration", "Interacao " + interation.getName() + "criada com sucesso.");
 		result.redirectTo(InterationsController.class).index();
 
+	}
+	
+	
+	@Path("/interations/{interation.id}")
+	@Get
+	public Interation show(Interation interation){
+		Interation i = interationRepo.load(interation);
+		return i;
 	}
 	
 

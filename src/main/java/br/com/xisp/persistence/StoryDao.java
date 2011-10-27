@@ -45,6 +45,13 @@ public class StoryDao implements StoryRepository {
 		return this.session.createQuery("from Story s where s.project = :project and s.status != 'FINISHED'").setParameter("project", project).list();
 	}
 
-//	return this.session.createQuery("from Card c where c.project = :project and c.parent is null and c.status != 'DONE'")
-  //  		.setResultTransformer(transformer)
+	@SuppressWarnings("unchecked")
+	public List<Story> unrelatedStories(Project p) {
+		String hql = "select u from Story u, Project p where p = :project and u.interation is null";
+		Query query = session.createQuery(hql);
+		query.setParameter("project", p);
+		return query.list();
+	}
+	
+
 }

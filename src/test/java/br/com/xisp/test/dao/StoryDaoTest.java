@@ -2,6 +2,10 @@ package br.com.xisp.test.dao;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.util.Date;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.hibernate.Session;
@@ -9,10 +13,12 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.User;
+import br.com.xisp.persistence.InterationDao;
 import br.com.xisp.persistence.ProjectDao;
 import br.com.xisp.persistence.StoryDao;
 import br.com.xisp.persistence.UserDao;
@@ -21,6 +27,7 @@ public class StoryDaoTest {
 
 	private StoryDao storydao;
 	private ProjectDao projectdao;
+	private InterationDao interationdao;
 	private UserDao userdao;
 	private Session session;
 
@@ -34,6 +41,7 @@ public class StoryDaoTest {
 		storydao = new StoryDao(session);
 		projectdao = new ProjectDao(session);
 		userdao = new UserDao(session);
+		interationdao = new InterationDao(session);
 	}
 
 	@Test
@@ -42,6 +50,7 @@ public class StoryDaoTest {
 		Story storyFound = storydao.find("Create a Crud for Users");
 		assertThat(storyFound, is(story));
 		Assert.assertEquals("RFD", storyFound.getStatus().getStatus());
+		Assert.assertNull(storyFound.getInteration());
 	}
 
 	@Test
@@ -73,6 +82,37 @@ public class StoryDaoTest {
 		s.markAsCompleted();
 		storydao.update(s);
 		Assert.assertEquals(Status.FINISHED, storydao.find(s.getName()).getStatus());
+	}
+	
+	@Test
+	public void testShouldReturnAllStoriesNotBelongsToAnyIterations(){
+		Project p = givenAProject();
+		Story s1 = givenAStory("Story One", p, Status.READY_FOR_DEV);
+		Story s2 = givenAStory("Story Two", p, Status.READY_FOR_DEV);
+		Story s3 = givenAStory("Story Three", p, Status.READY_FOR_DEV);
+		
+		Story s4 = givenAStoryWithInteration("Story Four", p, Status.READY_FOR_DEV, givenInteration(p));
+		
+		List<Story> unRelatedStories = storydao.unrelatedStories(p);
+		Assert.assertEquals(3, unRelatedStories.size());
+		for (Story story : unRelatedStories) {
+			Assert.assertNull(story.getInteration());
+		}
+		Assert.assertNotNull(s4.getInteration());		
+	}
+
+	private Story givenAStoryWithInteration(String string, Project p,
+			Status readyForDev, Interation i) {
+		Story story = new Story();
+		story.setCreatedBy(givenAUser());
+		story.setName("Story Story");
+		story.setInteration(i);
+		story.setDescription("Here Description for the user story Story");
+		story.setStatus(Status.READY_FOR_DEV);
+		story.setProject(p);
+		storydao.add(story);
+		return story;
+			
 	}
 
 	private void givenFiveStories(Project project, Status status) {
@@ -107,6 +147,16 @@ public class StoryDaoTest {
 		story.setProject(project);
 		storydao.add(story);
 		return story;
+	}
+
+	private Interation givenInteration(Project p){
+		Interation interation = new Interation();
+		interation.setName("Current Interation");
+		interation.setProject(p);
+		interation.setStartDate(new Date());
+		interation.setEndDate(new Date());
+		interationdao.add(interation);
+		return interation;
 	}
 
 }
