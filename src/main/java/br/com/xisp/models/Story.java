@@ -19,6 +19,9 @@ public class Story {
 	private String description;
 	
 	@Enumerated(EnumType.STRING)
+	private Type type;
+	
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@ManyToOne
@@ -26,10 +29,10 @@ public class Story {
 	
 	@ManyToOne
 	private Project project;
-	
 
 	@ManyToOne
 	private Interation interation;
+	
 		
 	public Long getId() {
 		return id;
@@ -76,5 +79,10 @@ public class Story {
 	public void setInteration(Interation interation) {
 		this.interation = interation;
 	}
-
+	public Type getType() {
+		return type;
+	}
+	public void setType(Type type) {
+		this.type = type;
+	}
 }

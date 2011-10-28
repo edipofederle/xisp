@@ -27,7 +27,7 @@ public class StoriesController {
 	
 	@Path("/stories/{project.id}/index")
 	@Get
-	public Project index(Project project) {
+	public void index(Project project) {
 		Project p = projectRepository.load(project);
 		this.projectSession.setProject(p);
 		this.currentProject = this.projectSession.getProject();
@@ -37,6 +37,7 @@ public class StoriesController {
 		}else{
 			repository.showAllStoriesNotFinished(this.currentProject);
 		}
-		return p;
+		result.include("project", p);
+		result.include("unRelatedStories", this.repository.unrelatedStories(this.currentProject));
 	}
 }

@@ -8,6 +8,7 @@ import org.junit.Test;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
+import br.com.xisp.models.Type;
 import br.com.xisp.models.User;
 
 public class StoryTest {
@@ -22,9 +23,11 @@ public class StoryTest {
 	@Test
 	public void testShouldReturnStatusRDF(){
 		story.setName("Build a Tower");
+		story.setType(Type.FEATURE);
 		story.setDescription("Figure out how build a tower");
 		story.setStatus(Status.READY_FOR_DEV);
 		Assert.assertEquals("RFD", story.getStatus().getStatus());
+		Assert.assertEquals("Funcionalidade", story.getType().getType());
 	}
 	
 	@Test
