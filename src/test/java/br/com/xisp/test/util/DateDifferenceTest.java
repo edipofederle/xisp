@@ -12,8 +12,6 @@ import br.com.xisp.utils.DateDifference;
 
 public class DateDifferenceTest {
 	
-	
-	
 	@Test
 	public void shouldRetiurn3Days() throws InvalidMaskException{
 		Date start  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();

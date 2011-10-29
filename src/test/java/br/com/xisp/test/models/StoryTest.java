@@ -1,19 +1,22 @@
 package br.com.xisp.test.models;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.xisp.datemath.*;
+import br.com.xisp.datemath.DateMath;
+import br.com.xisp.datemath.InvalidMaskException;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
+import br.com.xisp.utils.StoryUtil;
 
 public class StoryTest {
 	
@@ -96,6 +99,44 @@ public class StoryTest {
 		story.setStatus(Status.IN_DEV);
 		Assert.assertSame(startDate, story.getStartedAt());
 	}
+	
+	@Test
+	public void testShouldReturnAGVAllStoriesIteration() throws InvalidMaskException{
+		Date start  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();
+		Date end = new DateMath().on("02/11/2011 10:30", "dd/MM/yyy HH:mm").result();
+		Story s1  = givenAStoryWithName(givenAProject(), "Um");
+		s1.setStartedAt(start);
+		s1.setEndAt(end);
+		
+		List<Story> list = new ArrayList<Story>();
+		list.add(s1);
+		
+		Assert.assertEquals("Media de dias estorias finalizadas: 3.",StoryUtil.calculeAvgForStories(list));
+		
+	}
+	
+	@Test
+	public void testShouldReturnAGVAllStoriesIteration2() throws InvalidMaskException{
+		Date start  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();
+		Date end = new DateMath().on("02/11/2011 10:30", "dd/MM/yyy HH:mm").result();
+		Story s1  = givenAStoryWithName(givenAProject(), "Um");
+		s1.setStartedAt(start);
+		s1.setEndAt(end);
+		
+		Date start1  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();
+		Date end1 = new DateMath().on("08/11/2011 10:30", "dd/MM/yyy HH:mm").result();
+		
+		Story s2  = givenAStoryWithName(givenAProject(), "Um");
+		s2.setStartedAt(start1);
+		s2.setEndAt(end1);
+		
+		List<Story> list = new ArrayList<Story>();
+		list.add(s1);
+		list.add(s2);
+		
+		Assert.assertEquals("Media de dias estorias finalizadas: 6.", StoryUtil.calculeAvgForStories(list));
+		
+	}
 
 	private Project givenAProject() {
 		Project project = new Project();
@@ -114,6 +155,15 @@ public class StoryTest {
 		 return story;
 	}
 
+	private Story givenAStoryWithName(final Project project, String name){
+		 Story story = new Story();
+		 story.setCreatedBy(givenAUser());
+		 story.setName(name);
+		 story.setDescription("Here Description for the user story");
+		 story.setProject(project);
+		 return story;
+	}
+	
 	private User givenAUser() {
 		User user =new User();
 		user.setName("Edipo");
