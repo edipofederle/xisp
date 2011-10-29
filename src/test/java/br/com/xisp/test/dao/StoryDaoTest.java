@@ -40,7 +40,7 @@ public class StoryDaoTest {
 	public void setUp() throws Exception {
 		AnnotationConfiguration cfg = new AnnotationConfiguration();
 		cfg.configure().setProperty("hibernate.connection.url",
-				"jdbc:mysql://127.0.0.1/xisp");
+				"jdbc:mysql://127.0.0.1/xispTest");
 		session = cfg.buildSessionFactory().openSession();
 		session.beginTransaction();
 		storydao = new StoryDao(session);
@@ -84,45 +84,6 @@ public class StoryDaoTest {
 		s.markAsCompleted();
 		storydao.update(s);
 		Assert.assertEquals(Status.FINISHED, storydao.find(s.getName()).getStatus());
-	}
-	
-	@Test
-	//TODO Acredito que isso nao ira ter mais.
-	public void testShouldReturnAllStoriesNotBelongsToAnyIterations(){
-		clearInteraction();
-		Project p = givenAProject();
-		Story s1 = givenAStory("Story One", p, Status.IN_DEV, givenAType());
-		Story s2 = givenAStory("Story Two", p, Status.IN_DEV, givenAType());
-		Story s3 = givenAStory("Story Three", p, Status.IN_DEV, givenAType());
-		
-		//Projecto tem um iteracao, nao deve aparecer nos unRelatedStories
-		Story s4 = givenAStoryWithInteration("Story Four", p, Status.IN_DEV, givenInteration(p));
-		
-		List<Story> unRelatedStories = storydao.unrelatedStories(p);
-		Assert.assertEquals(3, unRelatedStories.size());
-		for (Story story : unRelatedStories) {
-			Assert.assertNull(story.getInteration());
-		}
-		Assert.assertNotNull(s4.getInteration());		
-	}
-
-	private void clearInteraction() {
-		this.session.createQuery("DELETE FROM Interation").executeUpdate();
-	}
-
-
-	private Story givenAStoryWithInteration(String string, Project p,
-			Status readyForDev, Interation i) {
-		Story story = new Story();
-		story.setCreatedBy(givenAUser());
-		story.setName("Story Story");
-		story.setInteration(i);
-		story.setDescription("Here Description for the user story Story");
-		story.setStatus(Status.IN_DEV);
-		story.setProject(p);
-		storydao.add(story);
-		return story;
-			
 	}
 
 	private void givenFiveStories(Project project, Status status) {
@@ -169,16 +130,6 @@ public class StoryDaoTest {
 		return t;
 	}
 
-	private Interation givenInteration(Project p){
-		Interation interation = new Interation();
-		interation.setName("Current Interation");
-		interation.setProject(p);
-		interation.setStartDate(new Date());
-		interation.setEndDate(new Date());
-		interationdao.add(interation);
-		this.session.flush();
-		return interation;
-	}
 	
 	private Interation givenInteration2(){
 		Interation interation = new Interation();

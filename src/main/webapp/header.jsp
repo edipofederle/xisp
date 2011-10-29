@@ -141,7 +141,7 @@ b.days{
       <div class="topbar-inner">
         <div class="container-fluid">
           <a class="brand" href="${pageContext.request.contextPath}/projects/index">XISP ${currentProject.name } </a>
-           <p class="pull-right">${currentUser.name } <a href="${pageContext.request.contextPath}/login/logout">Sair</a></p>
+           <p class="pull-right" style="color: white;">${currentUser.email } <a href="${pageContext.request.contextPath}/login/logout">Sair</a></p>
         </div>
       </div>
     </div>

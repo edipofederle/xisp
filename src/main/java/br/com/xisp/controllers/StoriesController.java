@@ -110,6 +110,11 @@ public class StoriesController {
 			//TODO Logar
 			//TODO Redirect 
 		}
+		
+		if(listIterations.size() == 0 || listIterations.equals(null)){
+			result.include("erroSemIteracoes","Nao existem iteracoes criada, crie uma primeiro.");
+			result.forwardTo(ErrorsController.class).index();
+		}
 		result.include("types", listTypes);
 		result.include("listIterations", listIterations);
 		result.include("users", listUsers);

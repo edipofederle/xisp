@@ -22,11 +22,13 @@ public class ClientDaoTest {
 	@Before
 	public void setUp() throws Exception {
 		AnnotationConfiguration cfg = new AnnotationConfiguration();
-		cfg.configure().setProperty("hibernate.connection.url", "jdbc:mysql://127.0.0.1/xisp");
+		cfg.configure().setProperty("hibernate.connection.url", "jdbc:mysql://127.0.0.1/xispTest");
 		session = cfg.buildSessionFactory().openSession();
 		session.beginTransaction();
 		dao = new ClientDao(session);
 		daop = new ProjectDao(session);
+		
+		
 	}
 	
 	@Test
@@ -64,17 +66,26 @@ public class ClientDaoTest {
 			c.setEndereco("Endereco " + i);
 			dao.add(c);
 		}
-		Assert.assertEquals(11, dao.showAll().size());
+		Assert.assertEquals(10, dao.showAll().size());
 	}
 	
 	@Test
 	public void shouldReturnAllProjectGivenAClient(){
 		Client c = givenAClient();
+		this.dao.add(c);
+		this.session.flush();
+		Client fc = foundAClient(c);
 		Project p = givenAProject();
-		p.setClient(c);
+		p.setClient(fc);
+		this.daop.add(p);
+		this.session.flush();
 
 		List<Client> lista = dao.showAll();
-		Assert.assertEquals(2, lista.get(0).getProjects().size());
+		Assert.assertNotNull(lista.get(0));
+		Project found = daop.load(p);
+		Assert.assertNotNull(found);
+		Assert.assertEquals(fc.getId(), found.getClient().getId());
+		
 	}
 	
 
@@ -87,8 +98,6 @@ public class ClientDaoTest {
 		Client c = new Client();
 		c.setName("ABC");
 		c.setEndereco("ABC Street");
-		this.dao.add(c);
-		this.session.flush();
 		return c;
 	}
 	
@@ -97,8 +106,6 @@ public class ClientDaoTest {
 		Project project = new Project();
 		project.setName("Project 2");
 		project.setDescription("Description of Test Project");
-		this.daop.add(project);
-		this.session.flush();
 		return project;
 	}
 }

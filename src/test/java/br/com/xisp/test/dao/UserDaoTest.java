@@ -29,7 +29,7 @@ public class UserDaoTest {
 	@Before
 	public void setUp() throws Exception {
 		AnnotationConfiguration cfg = new AnnotationConfiguration();
-		cfg.configure().setProperty("hibernate.connection.url", "jdbc:mysql://127.0.0.1/xisp");
+		cfg.configure().setProperty("hibernate.connection.url", "jdbc:mysql://127.0.0.1/xispTest");
 		session = cfg.buildSessionFactory().openSession();
 		session.beginTransaction();
 		dao = new UserDao(session);

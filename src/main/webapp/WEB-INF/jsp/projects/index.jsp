@@ -33,8 +33,7 @@
 		<a href="${pageContext.request.contextPath}/interations/index">Iteracoes</a> |
 		<a href="#">Participantes</a> |
 		<a href="#">Gerenciar</a> |
-		<a href="${pageContext.request.contextPath}/users/index">Users</a> |
-	    <a href="${pageContext.request.contextPath}/clients/index">Clients</a> |
+		<a href="${pageContext.request.contextPath}/users/index">Users</a>
 		<b style="float: right;">
 			<c:choose>
 				<c:when test="${currentUser.name == project.owner.name }">
