@@ -16,7 +16,6 @@ import br.com.xisp.models.Project;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.session.ProjectSession;
-import br.com.xisp.utils.DateDifference;
 
 @Resource
 public class InterationsController {
@@ -47,8 +46,6 @@ public class InterationsController {
 		int totalNoDone = 0;
 		
 		for (Interation interation : listai) {
-			int days = DateDifference.calculateDifference(interation.getEndDate(), interation.getStartDate());
-			interation.setDays(days);
 			if(interation.getEndDate().before(new Date())){
 				totalDone += 1;
 			}else{

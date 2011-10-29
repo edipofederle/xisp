@@ -8,7 +8,7 @@
 		<c:if test="${erroSemIteracoes != '' }">
 		<p>${erroSemIteracoes}</p>
 		   <div class="alert-actions">
-    		 <a href="${pageContext.request.contextPath}/interations/index" class="btn small">Criar Iteracao</a> <a href="/xisp/projects/index" class="btn small">Voltar para Home</a>
+    		 <a href="${pageContext.request.contextPath}/interations/index" class="btn small">Criar Iteracao</a> <a href="/3xisp/projects/index" class="btn small">Voltar para Home</a>
    		   </div>
 	</c:if>
 	

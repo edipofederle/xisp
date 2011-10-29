@@ -1,5 +1,6 @@
 package br.com.xisp.test.models;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import junit.framework.Assert;
@@ -7,6 +8,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.xisp.datemath.*;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
@@ -93,10 +95,8 @@ public class StoryTest {
 		story.setStatus(Status.FINISHED);
 		story.setStatus(Status.IN_DEV);
 		Assert.assertSame(startDate, story.getStartedAt());
-		
-		
 	}
-	
+
 	private Project givenAProject() {
 		Project project = new Project();
 		project.setId(1L);
