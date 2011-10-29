@@ -43,7 +43,7 @@ public class ClientDao implements ClientRepository {
 		 }catch (Exception e) {
 		  throw e;
 		 }
-		}
+	}
 	
 	public Client load(Client client) {
 		return (Client) session.get(Client.class, client.getId());

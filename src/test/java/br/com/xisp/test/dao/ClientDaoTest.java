@@ -1,5 +1,7 @@
 package br.com.xisp.test.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.Assert;
@@ -7,11 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.xisp.models.Client;
+import br.com.xisp.models.Project;
 import br.com.xisp.persistence.ClientDao;
+import br.com.xisp.persistence.ProjectDao;
 
 public class ClientDaoTest {
 	
 	private ClientDao dao;
+	private ProjectDao daop;
 	private Session session;
 	
 	@Before
@@ -21,6 +26,7 @@ public class ClientDaoTest {
 		session = cfg.buildSessionFactory().openSession();
 		session.beginTransaction();
 		dao = new ClientDao(session);
+		daop = new ProjectDao(session);
 	}
 	
 	@Test
@@ -58,7 +64,17 @@ public class ClientDaoTest {
 			c.setEndereco("Endereco " + i);
 			dao.add(c);
 		}
-		Assert.assertEquals(10, dao.showAll().size());
+		Assert.assertEquals(11, dao.showAll().size());
+	}
+	
+	@Test
+	public void shouldReturnAllProjectGivenAClient(){
+		Client c = givenAClient();
+		Project p = givenAProject();
+		p.setClient(c);
+
+		List<Client> lista = dao.showAll();
+		Assert.assertEquals(2, lista.get(0).getProjects().size());
 	}
 	
 
@@ -71,7 +87,18 @@ public class ClientDaoTest {
 		Client c = new Client();
 		c.setName("ABC");
 		c.setEndereco("ABC Street");
+		this.dao.add(c);
+		this.session.flush();
 		return c;
 	}
 	
+
+	private Project givenAProject() {
+		Project project = new Project();
+		project.setName("Project 2");
+		project.setDescription("Description of Test Project");
+		this.daop.add(project);
+		this.session.flush();
+		return project;
+	}
 }

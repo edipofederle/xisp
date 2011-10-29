@@ -5,6 +5,9 @@
 	<c:if test="${erroDeleteClient != '' }">
 		<p>${erroDeleteClient}</p>
 	</c:if>
+	<c:if test="${erroDeleteUser != '' }">
+		<p>${erroDeleteUser}</p>
+	</c:if>
 	<c:if test="${selectProjectBefore != '' }">
 		<p>${selectProjectBefore}</p>
 	</c:if>

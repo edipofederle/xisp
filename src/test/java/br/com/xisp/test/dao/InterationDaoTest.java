@@ -51,8 +51,6 @@ public class InterationDaoTest {
 	
 	@Test
 	public void shouldReturnOnlyInteractioNoFinished(){
-		
-	
 		clearInteraction();
 		final Project p = givenAProject("Projecto de teste 100");
 		Interation interation = new Interation();

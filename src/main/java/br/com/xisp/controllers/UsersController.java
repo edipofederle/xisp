@@ -79,16 +79,27 @@ public class UsersController {
 	@Path("/users/{user.id}")
 	@Delete
 	public void remove(User user) throws Exception {
-		repository.remove(user);
-		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> Usuario deletado com sucesso.");
-		result.redirectTo(this).index();
+		boolean error = true;
+		
+		try{
+			repository.remove(user);
+		}catch (Exception e) {
+			error = true;
+			result.include("erroDeleteUser","Usuario nao pode ser deletado.");
+			result.forwardTo(ErrorsController.class).index();
+		}
+		if(!error){
+			result.include("success", true);
+			result.include("message", "<strong>Sucesso!</strong> Usuario deletado com sucesso.");
+			result.redirectTo(this).index();
+		}
 	}
+	
 	
 	@Path("/users/{user.id}/edita")
 	@Get
 	public User edita(User user) {
 		return repository.load(user);
 	}
-	
+		
 }

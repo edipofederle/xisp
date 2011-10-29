@@ -25,7 +25,7 @@ public class Client implements Serializable{
 	private String name;
 	private String endereco;
 	
-	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
 	private List<Project> projects;
 	
 	public Long getId() {
@@ -54,5 +54,4 @@ public class Client implements Serializable{
 	}
 	
 	
-
 }

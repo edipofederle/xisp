@@ -21,6 +21,7 @@
 			<th class="header">#</th>
 			<th>Nome</th>
 			<th>Endereco</th>
+			<th>Projetos</th>
 			<th>Remover</th>
 			<th>Editar</th>
 		</tr>
@@ -31,6 +32,11 @@
 				<td>${client.id }</td>
 				<td>${client.name }</td>
 				<td>${client.endereco }</td>
+				<td>
+					<c:forEach items="${client.projects }" var="cp">
+						<a href="#">${cp.name }</a><br />
+					</c:forEach>
+				</td>
 				<td>
 					<form action="${pageContext.request.contextPath}/clients/${client.id}" method="post">
 						<input type="hidden" name="_method" value="delete"/>

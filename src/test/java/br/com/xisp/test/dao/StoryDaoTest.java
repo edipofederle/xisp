@@ -86,7 +86,7 @@ public class StoryDaoTest {
 		Assert.assertEquals(Status.FINISHED, storydao.find(s.getName()).getStatus());
 	}
 	
-	@Ignore
+	@Test
 	//TODO Acredito que isso nao ira ter mais.
 	public void testShouldReturnAllStoriesNotBelongsToAnyIterations(){
 		clearInteraction();

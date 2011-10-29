@@ -1,9 +1,12 @@
 package br.com.xisp.persistence;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.xisp.models.History;
+import br.com.xisp.models.Story;
 import br.com.xisp.repository.HistoryStoryRepository;
 
 @Component
@@ -23,6 +26,10 @@ public class HistoryStoryDao implements HistoryStoryRepository {
 	
 	public void add(History historyStory) {
 		this.session.save(historyStory);
+	}
+
+	public List<History> findHistory(Story s) {
+		return null;
 	}
 
 }

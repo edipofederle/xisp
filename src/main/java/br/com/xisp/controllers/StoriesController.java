@@ -224,4 +224,8 @@ public class StoriesController {
 				+ status.getName());
 		result.use(json()).from(r).serialize();
 	}
+	
+	public void findStoryHistory(Story story){
+		
+	}
 }

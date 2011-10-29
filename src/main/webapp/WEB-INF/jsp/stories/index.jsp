@@ -25,8 +25,7 @@ $(document).ready(function(){
 	
 	<c:forEach items="${stories }" var="uss">
 		<p>${uss.name} ${uss.status} - Iteraçao Pertencente: ${uss.interation.name} </p>
-		<p>${uss.createdBy.name}</p>
-		<p>${uss.test.test }</p>
+		<a href="#">Mostrar Historico Da Estoria</a>
 	</c:forEach>
 
 <div id="unrelaedStories">

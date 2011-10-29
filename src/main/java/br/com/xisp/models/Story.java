@@ -76,6 +76,8 @@ public class Story {
 	
 	@OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE, orphanRemoval= true)
 	private List<History> listHistoryStory;
+	
+	private Integer points;
 		
 	public Long getId() {
 		return id;
@@ -176,6 +178,12 @@ public class Story {
 	}
 	public void setListHistoryStory(List<History> listHistoryStory) {
 		this.listHistoryStory = listHistoryStory;
+	}
+	public Integer getPonits() {
+		return points;
+	}
+	public void setPonits(Integer ponits) {
+		this.points = ponits;
 	}
 	
 
