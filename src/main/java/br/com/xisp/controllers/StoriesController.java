@@ -233,5 +233,6 @@ public class StoriesController {
 	@Path("/stories/history/{story.id}")
 	public void findStoryHistory(Story story){
 		
+		
 	}
 }

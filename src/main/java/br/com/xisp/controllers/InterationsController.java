@@ -13,8 +13,10 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
+import br.com.xisp.models.Story;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
+import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.session.ProjectSession;
 
 @Resource
@@ -23,13 +25,15 @@ public class InterationsController {
 	private InteractionRepository interationRepo;
 	private ProjectRepository projectRepo;
 	private ProjectSession projectSession;
+	private StoryRepository storyRepo;
 	private final Result result;
 	private final Validator validator;
 	
 	public InterationsController(InteractionRepository interationRepo, ProjectRepository projectRepo,
-			ProjectSession projectSession, Result result, Validator validator){
+			ProjectSession projectSession, StoryRepository storyRepo, Result result, Validator validator){
 		this.interationRepo = interationRepo;
 		this.projectRepo = projectRepo;
+		this.storyRepo = storyRepo;
 		this.projectSession = projectSession;
 		this.result = result;
 		this.validator = validator;
@@ -80,6 +84,9 @@ public class InterationsController {
 	@Get
 	public Interation show(Interation interation){
 		Interation i = interationRepo.load(interation);
+		Project project = projectSession.getProject();
+		List<Story> stories = this.storyRepo.showAllStories(project, i);
+		result.include("stories", stories);
 		return i;
 	}
 	
