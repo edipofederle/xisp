@@ -116,6 +116,27 @@ public class StoryTest {
 	}
 	
 	@Test
+	public void testShouldReturnAGVAllStoriesWithOneWitoutEndDate() throws InvalidMaskException{
+		Date start  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();
+		Date end = new DateMath().on("02/11/2011 10:30", "dd/MM/yyy HH:mm").result();
+		Story s1  = givenAStoryWithName(givenAProject(), "Um");
+		s1.setStartedAt(start);
+		s1.setEndAt(end);
+		
+		Date start1  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();
+		
+		Story s2  = givenAStoryWithName(givenAProject(), "Um");
+		s2.setStartedAt(start1);
+		
+		List<Story> list = new ArrayList<Story>();
+		list.add(s1);
+		list.add(s2);
+		
+		Assert.assertEquals("Media de dias estorias finalizadas: 3.",StoryUtil.calculeAvgForStories(list));
+		
+	}
+	
+	@Test
 	public void testShouldReturnAGVAllStoriesIteration2() throws InvalidMaskException{
 		Date start  = new DateMath().on("29/10/2011 10:30", "dd/MM/yyyy HH:mm").result();
 		Date end = new DateMath().on("02/11/2011 10:30", "dd/MM/yyy HH:mm").result();

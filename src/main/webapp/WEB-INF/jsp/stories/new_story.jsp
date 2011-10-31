@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 <h2>Defina sua Estoria<small> </small></h2>
 
+<div id="form_new_story">
 <form action="${pageContext.request.contextPath}/stories" method="post" class="form-stacked" id="formProject"> 
 	<label><fmt:message key="stoy.form.name"/></label>
 	<input type="text" name="story.name" id="name" class="required xlarge" value="${story.name }"/>
@@ -83,13 +84,12 @@ $(document).ready(function(){
 	<label>Teste de Aceitacao:</label>
 	<textarea rows="10" cols="100" class="required xxlarge" id="acceptsTest" name="story.acceptsTest"></textarea>
 	
-	
-
-	
-	<div class="actions">
+	<br /><Br /><Br />
+	<div class="actions_form">
 		<fmt:message key="project.form.enviar" var="criar"/>
 		<input type="submit" name="submit" class="btn primary" value="${criar}"/>
 		<a href="${pageContext.request.contextPath}/projects/index">Cancelar</a>
 	</div>
 	
 </form>
+</div>

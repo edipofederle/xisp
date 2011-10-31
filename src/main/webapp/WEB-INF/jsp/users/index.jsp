@@ -1,5 +1,5 @@
 <%@ include file="../../../header.jsp" %> 
-<h2><fmt:message key="users.title"/><small> <fmt:message key="users.title.desc"/></small></h2>
+<div id="title"><fmt:message key="users.title"/></div>
 <br />
 
 <c:if test="${success }">

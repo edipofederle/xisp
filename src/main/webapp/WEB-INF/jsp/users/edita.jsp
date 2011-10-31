@@ -1,5 +1,6 @@
 <%@ include file="../../../header.jsp" %>
-<h2><fmt:message key="project.edit.project"/><small> <fmt:message key='project.form.info.edit'/></small></h2>
+<div id="title"><fmt:message key="user.edit.user"/></div>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#formUsers").validate();

@@ -7,7 +7,9 @@
 	</div>
 </c:if>
 
-<h2><fmt:message key="titulos.project.title"/><small> <fmt:message key="titulos.project.title.desc"/></small></h2><br>
+<div id="title">
+	<fmt:message key="titulos.project.title"/><small> <fmt:message key="titulos.project.title.desc"/></small></h2><br>
+</div>
 
 <c:if test="${empty projects}">
 	<b><fmt:message key="project.no.projects"/></b>

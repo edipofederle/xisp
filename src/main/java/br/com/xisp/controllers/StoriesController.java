@@ -32,7 +32,7 @@ import br.com.xisp.session.UserSession;
  * 
  * @author edipo
  * 
- *         Controller Responsavel por controlar a parte das Estorias de Usuario
+ *Controller Responsavel por controlar a parte das Estorias de Usuario
  * 
  */
 @Resource
@@ -230,6 +230,7 @@ public class StoriesController {
 		result.use(json()).from(r).serialize();
 	}
 	
+	@Path("/stories/history/{story.id}")
 	public void findStoryHistory(Story story){
 		
 	}

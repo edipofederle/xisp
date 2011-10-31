@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 </script>
 
-<h2>Interaçoes<small> Interacoes</small></h2>
+<div id="title">Interaçoes</div>
 
 <c:if test="${success }">
 	<div class="alert-message success">
@@ -49,11 +49,12 @@ $(document).ready(function() {
 </c:if>
 <br />
 
-<h3>${stats }</h3>
+<p style="padding-left: 10px;">${stats }</p>
 
-<b><a href="#" class="newInteration">Nova Interaçao</a></b>
+<a href="#" class="newInteration btn primary">Nova Interaçao</a><br /><Br />
+
 <form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
-
+	<br />
 	<label><fmt:message key="interation.name"/></label>
 	<input type="text" id="name" name="interation.name" class="required xlarge">
 	

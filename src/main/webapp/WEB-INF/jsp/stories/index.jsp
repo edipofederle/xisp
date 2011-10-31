@@ -11,28 +11,66 @@ $(document).ready(function(){
 
 </script>
 
-<h3>${currentProject.name }</h3>
+<div id="title">
+	Estorias para ${currentProject.name }</h3>
+</div>
 	
 <br />
 
-<a href="${pageContext.request.contextPath}/stories/neww" id="newStory">Criar Nova Estoria</a>
-
-<a href="${pageContext.request.contextPath}/stories/board"> Mostrar Stories no Quadro</a>
-
-	<c:if test="${empty stories }">
-		 <h3>existe iteracao atual</h3>
-	</c:if>
+<div id="pnlTopButtons">
+	<a href="${pageContext.request.contextPath}/stories/neww" class="btn small primary" id="newStory">Criar Nova Estoria</a>
 	
-	<c:forEach items="${stories }" var="uss">
-		<p>${uss.name} ${uss.status} - Iteraçao Pertencente: ${uss.interation.name} </p>
-		<a href="#">Mostrar Historico Da Estoria</a>
-	</c:forEach>
-
-<div id="unrelaedStories">
-	
-	<b>Estorias nao relacionadas com nenhuma iteraçao</b>
-	
-	<c:forEach items="${unRelatedStories }" var="us">
-		<p>us.name</p>
-	</c:forEach>
+	<c:choose>
+	<c:when test="${empty stories }">
+		<a href="#" class="btn success disabled"> Mostrar Stories no Quadro</a>
+	</c:when>
+	<c:otherwise>
+		<a href="${pageContext.request.contextPath}/stories/board" class="btn success"> Mostrar Stories no Quadro</a>
+	</c:otherwise>
+	</c:choose>
 </div>
+
+<c:if test="${empty stories }">
+	<div class="alert-message info">
+		<a href="#" class="close">x</a>
+	    <p><strong>Oops!</strong> Ainda nao foi encontrada nenhuma estoria de usuario criada.</p>
+	</div>
+</c:if>
+	
+<br /><Br />
+<table id="tableStory" class="zebra-striped">
+        <thead>
+          <tr>
+            <th class="header">#</th>
+            <th>Estoria</th>
+            <th>Status</th>
+            <th>Iteracao</th>
+            <th><b>Historico</b></th>
+          </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${stories }" var="uss">
+	        <tr>
+	            <td>${uss.id}</td>
+	            <td>${uss.name}</td>
+	            <td>${uss.status}</td>
+	            <td>${uss.interation.name}</td>
+	            <td><a href="${pageContext.request.contextPath}/stories/history/${uss.id}">Exibir Historico</a></td>
+	        </tr>
+         </c:forEach>
+         </tbody>
+      </table>
+      
+<script>
+$(document).ready(function() {
+	
+	$('.close').click(function(){
+		$('.alert-message').hide();
+	});
+	
+	$(function() {
+		$("table#tableStory").tablesorter({ sortList: [[1,0]] });
+	});
+	
+});
+</script>
