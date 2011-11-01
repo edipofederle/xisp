@@ -3,6 +3,7 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.caelum.vraptor.Get;
@@ -94,6 +95,7 @@ public class StoriesController {
 	}
 
 	public void neww() throws Exception{
+		List<Interation> listIterationsTemp = new ArrayList<Interation>();
 		List<Interation> listIterations = new ArrayList<Interation>();
 		List<TypeStory> listTypes = new ArrayList<TypeStory>();
 		List<User> listUsers = new ArrayList<User>();
@@ -104,7 +106,11 @@ public class StoriesController {
 		}
 		//Carrega Todas as Iteracoes de um dado Projecto
 		try{
-			listIterations = this.interationRepository.showAllInterations(projectSession.getProject());
+			listIterationsTemp = this.interationRepository.showAllInterations(projectSession.getProject());
+			for (Interation i : listIterationsTemp) {
+				if(!i.getEndDate().before(new Date()))
+					listIterations.add(i);
+			}
 		    listUsers = this.userRepository.showAll();
 		}catch (Exception e) {
 			//TODO Logar
@@ -174,7 +180,6 @@ public class StoriesController {
 	}
 
 	private Interation getcurrentIteration() {
-		// TODO Move from here
 		List<Interation> iterations = interationRepository
 				.showAllInterations(projectSession.getProject());
 		for (Interation interation : iterations) {
