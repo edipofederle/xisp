@@ -239,7 +239,8 @@ public class StoriesController {
 	
 	@Path("/stories/history/{story.id}")
 	public void findStoryHistory(Story story){
-		
+		Story s = this.repository.find(story.getId());
+		result.include("story", s);
 		
 	}
 	
