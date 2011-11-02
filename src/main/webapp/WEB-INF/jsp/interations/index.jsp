@@ -73,7 +73,7 @@ $(document).ready(function() {
 </form>
 
 <c:forEach items="${interations }" var="i">
-	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }</a> - ${i.startDate } <b>ate</b> ${i.endDate } </p>
+	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }</a> - ${i.startDate } <b>ate</b> ${i.endDate } - <a href="#">Editar</a> | <a href="${pageContext.request.contextPath}/interations/remove/${i.id}">Remover</a> </p>
 	
 	<c:choose>
 		<c:when test="${i.done }">

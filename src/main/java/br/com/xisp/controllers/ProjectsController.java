@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import br.com.xisp.models.Client;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
@@ -155,10 +156,19 @@ public class ProjectsController {
 	@Path("/projects/{project.id}")
 	@Delete
 	public void remove(Project project) throws Exception {
-		repository.remove(project);
-		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
-		result.use(logic()).redirectTo(ProjectsController.class).index();
+		boolean error = false;
+		try{
+			repository.remove(project);
+		}catch (Exception e) {
+			error = true;
+			result.include("erroDeleteProject","OPS. Voce precisa remover as Estorias de usuario antes.");
+			result.forwardTo(ErrorsController.class).index();
+		}
+		if(!error){
+			result.include("success", true);
+			result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
+			result.use(logic()).redirectTo(ProjectsController.class).index();
+		}
 	}
 	
 	/**

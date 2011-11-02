@@ -76,7 +76,7 @@
           <ul>
             <form action="${pageContext.request.contextPath}/projects/${project.id}" method="post">
 				<input type="hidden" name="_method" value="delete"/>
-				<button type="submit" class="btn small" onclick="return confirm('Are you sure?')">Remover</button>
+				<button type="submit" class="btn small" onclick="return confirm('Voce tem certeza? Ao remover um projeto todas iteracoes do mesmo tambem irao ser deletadas.')">Remover</button>
 			</form>
             <a href="${pageContext.request.contextPath}/projects/${project.id}/edita"class="btn small" >Editar</a>
           </ul>

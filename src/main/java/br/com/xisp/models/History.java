@@ -31,7 +31,7 @@ public class History implements Serializable {
 	private String origin;
 	private String destiny;
 
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=true)
 	@JoinColumn
 	private Story story;
 

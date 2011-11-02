@@ -74,7 +74,7 @@ public class Story {
 	@ManyToOne
 	private Interation interation;
 	
-	@OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE, orphanRemoval= true)
+	@OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
 	private List<History> listHistoryStory;
 	
 	private Integer points;

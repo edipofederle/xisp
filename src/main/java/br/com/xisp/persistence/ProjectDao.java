@@ -68,7 +68,9 @@ public class ProjectDao implements ProjectRepository {
 	 * Remove um entidade project
 	 */
 	public void remove(Project project) {
-		this.session.delete(project);		
+	    this.session.createQuery("delete from Interation i where i.project = :project")
+	    		.setParameter("project", project).executeUpdate();
+	    this.session.delete(project);
 	}
 	
 	/**

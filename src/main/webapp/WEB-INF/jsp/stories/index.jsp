@@ -46,6 +46,7 @@ $(document).ready(function(){
             <th>Status</th>
             <th>Iteracao</th>
             <th><b>Historico</b></th>
+            <th>Remover</th>
           </tr>
         </thead>
         <tbody>
@@ -56,6 +57,7 @@ $(document).ready(function(){
 	            <td>${uss.status}</td>
 	            <td>${uss.interation.name}</td>
 	            <td><a href="${pageContext.request.contextPath}/stories/history/${uss.id}">Exibir Historico</a></td>
+	            <td><a href="${pageContext.request.contextPath}/stories/remove/${uss.id}">Remover</a></td>
 	        </tr>
          </c:forEach>
          </tbody>

@@ -1,10 +1,13 @@
 package br.com.xisp.controllers;
 
+import static br.com.caelum.vraptor.view.Results.logic;
+
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -90,11 +93,17 @@ public class InterationsController {
 		return i;
 	}
 	
+
+	@Path("/interations/remove/{interation.id}")
+	public void remove(Interation interation) throws Exception {
+		this.interationRepo.remove(interation);
+		result.include("success", true);
+		result.include("message", "<strong>Sucesso!</strong> Iteracao deletada com sucesso.");
+		result.use(logic()).redirectTo(InterationsController.class).index();
+	}
+	
 	public void errorIteration(){
 		
 	}
-	
-
-
 	
 }

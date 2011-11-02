@@ -40,7 +40,7 @@ public class InterationDao implements InteractionRepository {
 	}
 
 	public void remove(Interation t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+		this.session.delete(t);
 	}
 	
 	/**

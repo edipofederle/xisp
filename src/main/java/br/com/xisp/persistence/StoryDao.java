@@ -36,9 +36,10 @@ public class StoryDao implements StoryRepository {
 		this.session.update(t);
 	}
 
-	public void remove(Story t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
+	public void remove(Story story) throws SQLException, Exception {
+	  	this.session.createQuery("delete from History h where h.story = :story")
+				.setParameter("story", story).executeUpdate();
+		this.session.delete(story);
 	}
 
 	@SuppressWarnings("unchecked")
