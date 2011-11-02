@@ -101,6 +101,9 @@ public class Story {
 		return status;
 	}
 	public void setStatus(Status status) {
+		
+		if(!status.equals(Status.FINISHED))
+			this.endAt = null;
 		if(this.startedAt == null)
 			if(status.equals(Status.IN_DEV))
 				this.startedAt = new Date();

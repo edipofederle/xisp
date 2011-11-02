@@ -8,7 +8,7 @@
 </c:if>
 
 <div id="title">
-	<fmt:message key="titulos.project.title"/><small> <fmt:message key="titulos.project.title.desc"/></small></h2><br>
+	<fmt:message key="titulos.project.title"/>
 </div>
 
 <c:if test="${empty projects}">
@@ -23,13 +23,23 @@
 </div>
 <br />
 
+
 <c:forEach items="${projects}" var="project">
 	<div id="proj">
 		<span class="title">
-			<b><a href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
-			<input type="hidden" value="${project.id }">
+			<c:choose>
+				<c:when test="${currentProject.name == project.name}">
+					<b style="background-color: yellow;"><a href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
+					<input type="hidden" value="${project.id }">
+				</c:when>
+				<c:otherwise>
+					<b><a href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
+					<input type="hidden" value="${project.id }">
+				</c:otherwise>
+			</c:choose>
 		</span>
 	</div>
+	
 	<span id="actions">
 		<a href="${pageContext.request.contextPath}/stories/${project.id }/index">User Stories</a> |
 		<a href="${pageContext.request.contextPath}/interations/index">Iteracoes</a> |

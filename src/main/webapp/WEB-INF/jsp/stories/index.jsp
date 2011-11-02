@@ -57,7 +57,12 @@ $(document).ready(function(){
 	            <td>${uss.status}</td>
 	            <td>${uss.interation.name}</td>
 	            <td><a href="${pageContext.request.contextPath}/stories/history/${uss.id}">Exibir Historico</a></td>
-	            <td><a href="${pageContext.request.contextPath}/stories/remove/${uss.id}">Remover</a></td>
+	            <td>
+	           		<form action="${pageContext.request.contextPath}/stories/${uss.id}" method="post">
+						<input type="hidden" name="_method" value="delete"/>
+						<button class="btn small" type="submit"  onclick="return confirm('Voce tem certeza?')">Remover</button>
+					</form>            	
+	            </td>
 	        </tr>
          </c:forEach>
          </tbody>

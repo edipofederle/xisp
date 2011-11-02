@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -242,7 +243,8 @@ public class StoriesController {
 		
 	}
 	
-	@Path("/stories/remove/{story.id}")
+	@Path("/stories/{story.id}")
+	@Delete
 	public void remove(Story story) throws Exception {
 		this.repository.remove(story);
 		result.include("success", true);
