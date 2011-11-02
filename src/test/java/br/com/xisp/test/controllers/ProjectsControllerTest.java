@@ -1,12 +1,13 @@
 package br.com.xisp.test.controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.caelum.vraptor.util.test.MockResult;
@@ -16,9 +17,13 @@ import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.xisp.controllers.ProjectsController;
 import br.com.xisp.models.Client;
 import br.com.xisp.models.Project;
+import br.com.xisp.models.Status;
+import br.com.xisp.models.Story;
+import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
+import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
@@ -34,6 +39,7 @@ public class ProjectsControllerTest {
 	private ClientRepository clientRepostiroy;
 	private UserRepository userRepository;
 	private ProjectSession sessionProject;
+	private StoryRepository storyRepository;
 
 	@Before
 	public void setUp() throws Exception {
@@ -41,6 +47,7 @@ public class ProjectsControllerTest {
 		repo = mockery.mock(ProjectRepository.class);
 		clientRepostiroy = mockery.mock(ClientRepository.class);
 		userRepository = mockery.mock(UserRepository.class);
+		storyRepository = mockery.mock(StoryRepository.class);
 		result = new MockResult();
 		sessionUser = mockery.mock(UserSession.class);
 		sessionProject = mockery.mock(ProjectSession.class);
@@ -49,7 +56,7 @@ public class ProjectsControllerTest {
 				allowing(sessionUser);
 			}
 		});
-		controller = new ProjectsController(repo, clientRepostiroy, userRepository,  new MockValidator(), result, sessionUser, sessionProject);
+		controller = new ProjectsController(repo, clientRepostiroy, userRepository, storyRepository,  new MockValidator(), result, sessionUser, sessionProject);
 	}
 	
 	@Test
@@ -71,9 +78,13 @@ public class ProjectsControllerTest {
 		final Project project = givenAProject();
 		willLoadAProjectToEdit(project);
 		willLoadAllUsers(project);
+		
 		mockery.checking(new Expectations() {
 			{
 				one(sessionProject).setProject(with(any(Project.class)));
+				one(sessionProject).getProject();
+				allowing(storyRepository).showAllStories(with(any(Project.class)));
+				//TODO FIX fazer retonar um list de Stories;
 			}
 		});
 		controller.show(project);
@@ -320,6 +331,13 @@ public class ProjectsControllerTest {
 				allowing(anything());
 			}
 		});
+	}
+	
+	private Story givenAStory(String name) {
+		Story story = new Story();
+		story.setName(name);
+		story.setDescription("Here Description for the user story " + name);
+		return story;
 	}
 	
 
