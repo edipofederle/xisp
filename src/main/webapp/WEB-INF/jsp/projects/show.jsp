@@ -8,7 +8,7 @@
 <br />
 	<p>Informaçoes Gerais</p><hr>
 	<div id="infosProject" style="padding-left: 40px;">
-		<b>Velocidade do Projeto: </b>23 <Br /><Br />
+		<b>${avg } - ${qntFinalizadas } Estorias Finalizadas Ate o momento <Br /><Br />
 		<b>Tempo Medio em Dias/Estorias Finalizadas:</b> 10 Estorias Finalizadas Numa media de 4 dias.
 	</div><Br /><br />
 	

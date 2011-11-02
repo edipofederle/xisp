@@ -35,7 +35,7 @@ import br.com.xisp.session.UserSession;
  * 
  * @author edipo
  * 
- *Controller Responsavel por controlar a parte das Estorias de Usuario
+ *         Controller Responsavel por controlar a parte das Estorias de Usuario
  * 
  */
 @Resource
@@ -62,7 +62,9 @@ public class StoriesController {
 			TypeStoryRepository typestoryRepository,
 			AcceptenceTestRepository acceptenceTestRepository,
 			UserRepository userRepository, Result result,
-			ProjectSession projectSession,HistoryStoryRepository historyStoryRepository, UserSession user, Validator validator) {
+			ProjectSession projectSession,
+			HistoryStoryRepository historyStoryRepository, UserSession user,
+			Validator validator) {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
@@ -96,31 +98,33 @@ public class StoriesController {
 		result.include("stories", stories);
 	}
 
-	public void neww() throws Exception{
+	public void neww() throws Exception {
 		List<Interation> listIterationsTemp = new ArrayList<Interation>();
 		List<Interation> listIterations = new ArrayList<Interation>();
 		List<TypeStory> listTypes = new ArrayList<TypeStory>();
 		List<User> listUsers = new ArrayList<User>();
-		try{
+		try {
 			listTypes = this.typestoryRepository.findAll();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		//Carrega Todas as Iteracoes de um dado Projecto
-		try{
-			listIterationsTemp = this.interationRepository.showAllInterations(projectSession.getProject());
+		// Carrega Todas as Iteracoes de um dado Projecto
+		try {
+			listIterationsTemp = this.interationRepository
+					.showAllInterations(projectSession.getProject());
 			for (Interation i : listIterationsTemp) {
-				if(!i.getEndDate().before(new Date()))
+				if (!i.getEndDate().before(new Date()))
 					listIterations.add(i);
 			}
-		    listUsers = this.userRepository.showAll();
-		}catch (Exception e) {
-			//TODO Logar
-			//TODO Redirect 
+			listUsers = this.userRepository.showAll();
+		} catch (Exception e) {
+			// TODO Logar
+			// TODO Redirect
 		}
-		
-		if(listIterations.size() == 0 || listIterations.equals(null)){
-			result.include("erroSemIteracoes","Nao existem iteracoes criada, crie uma primeiro.");
+
+		if (listIterations.size() == 0 || listIterations.equals(null)) {
+			result.include("erroSemIteracoes",
+					"Nao existem iteracoes criada, crie uma primeiro.");
 			result.forwardTo(ErrorsController.class).index();
 		}
 		result.include("types", listTypes);
@@ -205,17 +209,16 @@ public class StoriesController {
 		r.setId(story.getId());
 		r.setStatus(status.getName());
 
-		
 		Story us = repository.find(story.getId());
-		
-		History hist  = new History();
+
+		History hist = new History();
 		hist.setOrigin(us.getStatus().getStatus());
 		hist.setDestiny(status.getName());
 		hist.setModifyAd(new Date());
-		
+
 		hist.setStory(story);
 		this.historyStoryRepository.add(hist);
-		
+
 		if (status.getName().equals("em_dev")) {
 			us.setStatus(br.com.xisp.models.Status.IN_DEV);
 		}
@@ -237,20 +240,21 @@ public class StoriesController {
 				+ status.getName());
 		result.use(json()).from(r).serialize();
 	}
-	
+
 	@Path("/stories/history/{story.id}")
-	public void findStoryHistory(Story story){
+	public void findStoryHistory(Story story) {
 		Story s = this.repository.find(story.getId());
 		result.include("story", s);
-		
+
 	}
-	
+
 	@Path("/stories/{story.id}")
 	@Delete
 	public void remove(Story story) throws Exception {
 		this.repository.remove(story);
 		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> STory deletada com sucesso.");
+		result.include("message",
+				"<strong>Sucesso!</strong> STory deletada com sucesso.");
 		result.use(logic()).redirectTo(ProjectsController.class).index();
 	}
 }

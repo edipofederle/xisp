@@ -1,6 +1,9 @@
 package br.com.xisp.controllers;
 
 import static br.com.caelum.vraptor.view.Results.logic;
+
+import java.util.List;
+
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -10,14 +13,16 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
-import br.com.xisp.models.Client;
 import br.com.xisp.models.Project;
+import br.com.xisp.models.Story;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
+import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
+import br.com.xisp.utils.StoryUtil;
 
 /**
  * O resource <code>ProjectsController</code> manipula todas as operaçoes
@@ -37,6 +42,7 @@ public class ProjectsController {
 	private final ClientRepository clientRepository;
 	private final UserRepository userRepository;
 	private final ProjectSession projectSession;
+	private final StoryRepository storyRepository;
 	
 	
 	/**
@@ -48,10 +54,11 @@ public class ProjectsController {
 	 * @param result VRaptor result handler.
 	 * @param UserSession session para o usuario corrente.
 	 */
-	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, Validator validator, Result result, UserSession user, ProjectSession projectSession) {
+	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, StoryRepository storyRepository, Validator validator, Result result, UserSession user, ProjectSession projectSession) {
 		this.repository = repository;
 		this.clientRepository = clientRespository;
 		this.userRepository = userRepository;
+		this.storyRepository = storyRepository;
 		this.validator = validator;
 		this.result = result;
 		this.currentUser = user.getUser();
@@ -120,7 +127,19 @@ public class ProjectsController {
 	@Path("/projects/{project.id}")
 	@Get
 	public Project show(Project project){
+		
+		List<Story> list = this.storyRepository.showAllStories(this.projectSession.getProject());
+		
+		int finished = 0;
+		
+		for (Story story : list) {
+			if(story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
+				finished++;
+		}
+		
 		result.include("users", userRepository.usersWithoutProjects(project));
+		result.include("avg", StoryUtil.calculeAvgForStories(list));
+		result.include("qntFinalizadas", finished);
 		Project p = repository.load(project);
 		projectSession.setProject(p);
 		return p;

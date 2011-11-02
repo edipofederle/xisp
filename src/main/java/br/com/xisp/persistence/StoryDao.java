@@ -72,6 +72,13 @@ public class StoryDao implements StoryRepository {
 		query.setParameter("project", project);
 		return query.list();
 	}
+
+	public List<Story> showAllStories(Project p) {
+		String hql = "select s from Story s where s.project = :project";
+		Query query = session.createQuery(hql);
+		query.setParameter("project",p);
+		return query.list();
+	}
 	
 
 }
