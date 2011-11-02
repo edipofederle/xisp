@@ -8,6 +8,7 @@
 			<th class="header">#</th>
 			<th>De</th>
 			<th>Para</th>
+			<th>Em </th>
 
 		</tr>
 	</thead>
@@ -17,6 +18,7 @@
 				<td>${h.id }</td>
 				<td>${h.origin }</td>
 				<td>${h.destiny }</td>
+				<td>${h.modifyAd }</td>
 			</tr>
 		</c:forEach>
 	</tbody>

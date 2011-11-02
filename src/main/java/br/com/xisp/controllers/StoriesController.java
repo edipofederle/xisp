@@ -211,6 +211,7 @@ public class StoriesController {
 		History hist  = new History();
 		hist.setOrigin(us.getStatus().getStatus());
 		hist.setDestiny(status.getName());
+		hist.setModifyAd(new Date());
 		
 		hist.setStory(story);
 		this.historyStoryRepository.add(hist);

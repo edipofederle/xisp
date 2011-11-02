@@ -5,11 +5,12 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>VRaptor Blank Project</title>
-	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<script src="http://www.daviferreira.com/blog/exemplos/draganddrop/interface.js"></script>
-  	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<title>Xisp - Estorias - Quadro</title>
+	    <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+	  <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet"/>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.minToFrag.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/interface.js"></script>
 
   	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<style>
