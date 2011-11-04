@@ -1,11 +1,13 @@
 package br.com.xisp.test.intercepts;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertFalse;
+
 import mocks.MockHttpSession;
 
 import org.aspectj.lang.annotation.After;
@@ -21,7 +23,7 @@ import br.com.caelum.vraptor.resource.DefaultResourceMethod;
 import br.com.caelum.vraptor.resource.ResourceMethod;
 import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.xisp.controllers.LoginController;
-import br.com.xisp.intercepts.LoginInterceptor;
+import br.com.xisp.interceptors.LoginInterceptor;
 import br.com.xisp.models.User;
 import br.com.xisp.session.UserSessionImpl;
 
