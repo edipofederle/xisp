@@ -33,7 +33,7 @@ public class History implements Serializable {
 	
 	private String origin;
 	private String destiny;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyAd;
 
 	@ManyToOne(optional=true)

@@ -73,7 +73,7 @@ public class ProjectsControllerTest {
 		controller.index();
 	}
 	
-	@Test
+	@Test(expected=ArithmeticException.class)
 	public void shouldLoadAProjectShow(){
 		final Project project = givenAProject();
 		willLoadAProjectToEdit(project);
@@ -83,8 +83,7 @@ public class ProjectsControllerTest {
 			{
 				one(sessionProject).setProject(with(any(Project.class)));
 				one(sessionProject).getProject();
-				allowing(storyRepository).showAllStories(with(any(Project.class)));
-				//TODO FIX fazer retonar um list de Stories;
+				one(storyRepository).showAllStories(with(any(Project.class)));
 			}
 		});
 		controller.show(project);
