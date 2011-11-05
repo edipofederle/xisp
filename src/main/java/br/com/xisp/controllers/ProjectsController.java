@@ -204,14 +204,14 @@ public class ProjectsController {
 	 */
     @Path("/projects/{project.id}/participantes/") @Post
     public void addColaborator(Project project, User participante) {
-    
     	User _participante = loadUser(participante);
         Project lproject = loadProject(project);
         lproject.getUsers().add(_participante);
-    	this.mailer.sendMail(_participante.getEmail(), "edipofederle@gmail.com", "Gerenciador de Projetos eXtremeProgramming - Xisp", "Ola " + _participante.getName() + " voce foi adicionado no projeto " + lproject.getName());
+    	notificationAddUserToProject(_participante, lproject);
         validator.onErrorUsePageOf(ProjectsController.class).show(project);
         result.redirectTo(ProjectsController.class).show(project);
     }
+
 
 	/**
 	 * ACEITA request HTTP POST<br />
@@ -252,6 +252,11 @@ public class ProjectsController {
 						"validacao.project.maior");
 			}
 		});
+	}
+	
+	private void notificationAddUserToProject(User _participante,
+			Project lproject) {
+		this.mailer.sendMail(_participante.getEmail(), "edipofederle@gmail.com", "Gerenciador de Projetos eXtremeProgramming - Xisp", "Ola " + _participante.getName() + " voce foi adicionado no projeto " + lproject.getName());
 	}
 	
 }
