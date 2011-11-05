@@ -1,7 +1,5 @@
 package br.com.xisp.test.controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.jmock.Expectations;
@@ -15,11 +13,10 @@ import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.xisp.controllers.ProjectsController;
+import br.com.xisp.mail.Mailer;
 import br.com.xisp.models.Client;
 import br.com.xisp.models.Project;
-import br.com.xisp.models.Status;
 import br.com.xisp.models.Story;
-import br.com.xisp.models.TypeStory;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
@@ -30,7 +27,6 @@ import br.com.xisp.session.UserSession;
 
 public class ProjectsControllerTest {
 
-
 	private Mockery mockery;
 	private MockResult result;
 	private ProjectRepository repo;
@@ -40,6 +36,7 @@ public class ProjectsControllerTest {
 	private UserRepository userRepository;
 	private ProjectSession sessionProject;
 	private StoryRepository storyRepository;
+	private Mailer mailer;
 
 	@Before
 	public void setUp() throws Exception {
@@ -50,35 +47,38 @@ public class ProjectsControllerTest {
 		storyRepository = mockery.mock(StoryRepository.class);
 		result = new MockResult();
 		sessionUser = mockery.mock(UserSession.class);
+		mailer = mockery.mock(Mailer.class);
 		sessionProject = mockery.mock(ProjectSession.class);
 		mockery.checking(new Expectations() {
 			{
 				allowing(sessionUser);
 			}
 		});
-		controller = new ProjectsController(repo, clientRepostiroy, userRepository, storyRepository,  new MockValidator(), result, sessionUser, sessionProject);
+		controller = new ProjectsController(repo, clientRepostiroy,
+				userRepository, storyRepository, new MockValidator(), result,
+				sessionUser, sessionProject, mailer);
 	}
-	
+
 	@Test
-	public void shouldLoadClientWhenLoadNewPage(){
+	public void shouldLoadClientWhenLoadNewPage() {
 		willFindAllClient();
 		controller.newProject();
 		List<Client> list = result.included("clients");
 		Assert.assertNotNull(list);
 	}
-	
+
 	@Test
-	public void shouldListAllProjects(){
+	public void shouldListAllProjects() {
 		willListAllProjects();
 		controller.index();
 	}
-	
-	@Test(expected=ArithmeticException.class)
-	public void shouldLoadAProjectShow(){
+
+	@Test(expected = ArithmeticException.class)
+	public void shouldLoadAProjectShow() {
 		final Project project = givenAProject();
 		willLoadAProjectToEdit(project);
 		willLoadAllUsers(project);
-		
+
 		mockery.checking(new Expectations() {
 			{
 				one(sessionProject).setProject(with(any(Project.class)));
@@ -91,40 +91,42 @@ public class ProjectsControllerTest {
 	}
 
 	@Test
-	public void shouldAddAValidProject(){
+	public void shouldAddAValidProject() {
 		Project project = givenAProject();
 		willAddTheProject(project);
-		
+
 		controller.add(project);
 	}
 
 	@Test
-	public void shouldUpdateAProject(){
+	public void shouldUpdateAProject() {
 		Project project = givenAProject();
 		willUpdateTheProject(project);
 		controller.alterar(project);
 	}
 
 	@Test
-	public void shouldNOTAddProject() throws Exception{
+	public void shouldNOTAddProject() throws Exception {
 		Project project = new Project();
 		project.setName("");
 		project.setDescription("");
 		willNotAddTheProject(project);
-	    try {
-	        controller.add(project);
-	       Assert.fail();
-	    } catch (ValidationException e) {
-	       java.util.List<Message> errors = e.getErrors();
-	       Assert.assertEquals("Nome nao pode ser branco.", errors.get(0).getMessage());
-	       Assert.assertEquals("Descricao nao pode ser branco.", errors.get(1).getMessage());
-	    }
+		try {
+			controller.add(project);
+			Assert.fail();
+		} catch (ValidationException e) {
+			java.util.List<Message> errors = e.getErrors();
+			Assert.assertEquals("Nome nao pode ser branco.", errors.get(0)
+					.getMessage());
+			Assert.assertEquals("Descricao nao pode ser branco.", errors.get(1)
+					.getMessage());
+		}
 	}
-	
+
 	@Test
-	public void shouldValidateProjectEdit() throws Exception{
+	public void shouldValidateProjectEdit() throws Exception {
 		final Project project = givenValidProject();
-		try{
+		try {
 			project.setDescription("Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor .Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor .");
 			mockery.checking(new Expectations() {
 				{
@@ -134,66 +136,80 @@ public class ProjectsControllerTest {
 			});
 			controller.alterar(project);
 			Assert.fail();
-		}catch (ValidationException e) {
-		       java.util.List<Message> errors = e.getErrors();
-		       Assert.assertEquals("Descricao muito longa.", errors.get(0).getMessage());
+		} catch (ValidationException e) {
+			java.util.List<Message> errors = e.getErrors();
+			Assert.assertEquals("Descricao muito longa.", errors.get(0)
+					.getMessage());
 		}
-		
+
 	}
-	
+
 	@Test
-	public void shouldNOTAddProjectWithDescriptionLong() throws Exception{
+	public void shouldNOTAddProjectWithDescriptionLong() throws Exception {
 		Project project = new Project();
 		project.setName("Teste");
 		project.setDescription("Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor .Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor .");
 		willNotAddTheProject(project);
-	    try {
-	        controller.add(project);
-	       Assert.fail();
-	    } catch (ValidationException e) {
-	       java.util.List<Message> errors = e.getErrors();
-	       Assert.assertEquals("Descricao muito longa.", errors.get(0).getMessage());
-	    }
+		try {
+			controller.add(project);
+			Assert.fail();
+		} catch (ValidationException e) {
+			java.util.List<Message> errors = e.getErrors();
+			Assert.assertEquals("Descricao muito longa.", errors.get(0)
+					.getMessage());
+		}
 	}
-	
+
 	@Test
-	public void shouldRemoveAProject() throws Exception{
+	public void shouldRemoveAProject() throws Exception {
 		Project project = givenValidProject();
 		willAddTheProject(project);
 		controller.add(project);
 		controller.remove(project);
 		Assert.assertNull(repo.load(project));
 	}
-	
+
 	@Test
-	public void shouldShowAProject(){
+	public void shouldShowAProject() {
 		Project project = givenValidProject();
 		willShowAProject(project);
 		controller.index();
 	}
-	
+
 	@Test
-	public void mustReturnAllProjectsInAGivenUser(){
+	public void mustReturnAllProjectsInAGivenUser() {
 		User user = givenAValidUser();
 		willReturnAllProejctsBelongsToUser(user);
 	}
-	
+
 	@Test
-	public void shouldAddAUserHasParticipante(){
+	public void shouldAddAUserHasParticipante() {
+		mockery.checking(new Expectations() {
+			{
+				one(mailer).sendMail(with(any(String.class)), with(any(String.class)), with(any(String.class)), with(any(String.class)));
+			}
+		});
 		final Project p = givenAProject();
 		final User user = givenAValidUser();
 		willLoadProjectAndLoadUser(p, user);
-		controller.addColaborator(p,user);
+
+
+		controller.addColaborator(p, user);
 	}
-	
+
 	@Test
-	public void shouldRemoveAUserHasParticipant(){
+	public void shouldRemoveAUserHasParticipant() {
 		final Project p = givenAProject();
 		final User user = givenAValidUser();
 		willLoadProjectAndLoadUser(p, user);
-		controller.addColaborator(p,user);
+		mockery.checking(new Expectations() {
+			{
+				one(mailer).sendMail(with(any(String.class)), with(any(String.class)), with(any(String.class)), with(any(String.class)));
+			}
+		});
+		controller.addColaborator(p, user);
 		willLoadProjectAndLoadUser(p, user);
-		controller.removeColaborator(p,user);
+		controller.removeColaborator(p, user);
 	}
 
 	private void willLoadProjectAndLoadUser(final Project p, final User user) {
@@ -203,7 +219,7 @@ public class ProjectsControllerTest {
 				will(returnValue(p));
 				one(userRepository).load(user);
 				will(returnValue(user));
-				
+
 			}
 		});
 	}
@@ -215,13 +231,12 @@ public class ProjectsControllerTest {
 			}
 		});
 	}
-	
 
 	@SuppressWarnings("unused")
 	private void willLoadProject(final Project project) {
 		mockery.checking(new Expectations() {
 			{
-				one(repo).load(project);				
+				one(repo).load(project);
 			}
 		});
 	}
@@ -233,7 +248,7 @@ public class ProjectsControllerTest {
 				allowing(anything());
 			}
 		});
-		
+
 	}
 
 	private void willAddTheProject(final Project project) {
@@ -244,14 +259,14 @@ public class ProjectsControllerTest {
 			}
 		});
 	}
-	
-	private void willUpdateTheProject(final Project project){
+
+	private void willUpdateTheProject(final Project project) {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).load(project);
 				will(returnValue(project));
 				one(repo).update(project);
-				
+
 			}
 		});
 	}
@@ -263,7 +278,7 @@ public class ProjectsControllerTest {
 			}
 		});
 	}
-	
+
 	private void willFindAllClient() {
 		mockery.checking(new Expectations() {
 			{
@@ -271,8 +286,7 @@ public class ProjectsControllerTest {
 			}
 		});
 	}
-	
-	
+
 	private Project givenValidProject() {
 		Project project = new Project();
 		project.setName("Meu Projeto");
@@ -281,14 +295,14 @@ public class ProjectsControllerTest {
 		willAddTheProject(project);
 		return project;
 	}
-	
+
 	private Client givenAClient() {
 		Client client = new Client();
 		client.setName("Robert");
 		client.setEndereco("New York - Main Street");
 		return client;
 	}
-	
+
 	private User givenAValidUser() {
 		User user = new User();
 		user.setId(1L);
@@ -305,7 +319,7 @@ public class ProjectsControllerTest {
 		project.setDescription("Description of Test Project");
 		return project;
 	}
-	
+
 	private void willLoadAllUsers(final Project project) {
 		mockery.checking(new Expectations() {
 			{
@@ -322,7 +336,7 @@ public class ProjectsControllerTest {
 			}
 		});
 	}
-	
+
 	private void willListAllProjects() {
 		mockery.checking(new Expectations() {
 			{
@@ -331,13 +345,12 @@ public class ProjectsControllerTest {
 			}
 		});
 	}
-	
+
 	private Story givenAStory(String name) {
 		Story story = new Story();
 		story.setName(name);
 		story.setDescription("Here Description for the user story " + name);
 		return story;
 	}
-	
 
 }

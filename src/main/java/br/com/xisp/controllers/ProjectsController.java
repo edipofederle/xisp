@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import br.com.xisp.mail.Mailer;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;
 import br.com.xisp.models.User;
@@ -43,6 +44,7 @@ public class ProjectsController {
 	private final UserRepository userRepository;
 	private final ProjectSession projectSession;
 	private final StoryRepository storyRepository;
+	private final Mailer mailer;
 	
 	
 	/**
@@ -54,7 +56,7 @@ public class ProjectsController {
 	 * @param result VRaptor result handler.
 	 * @param UserSession session para o usuario corrente.
 	 */
-	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, StoryRepository storyRepository, Validator validator, Result result, UserSession user, ProjectSession projectSession) {
+	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, StoryRepository storyRepository, Validator validator, Result result, UserSession user, ProjectSession projectSession, Mailer mailer) {
 		this.repository = repository;
 		this.clientRepository = clientRespository;
 		this.userRepository = userRepository;
@@ -63,6 +65,7 @@ public class ProjectsController {
 		this.result = result;
 		this.currentUser = user.getUser();
 		this.projectSession = projectSession;
+		this.mailer = mailer;
 	}
 
 	@Path("/projects/index")
@@ -201,9 +204,11 @@ public class ProjectsController {
 	 */
     @Path("/projects/{project.id}/participantes/") @Post
     public void addColaborator(Project project, User participante) {
+    
     	User _participante = loadUser(participante);
         Project lproject = loadProject(project);
         lproject.getUsers().add(_participante);
+    	this.mailer.sendMail(_participante.getEmail(), "edipofederle@gmail.com", "Gerenciador de Projetos eXtremeProgramming - Xisp", "Ola " + _participante.getName() + " voce foi adicionado no projeto " + lproject.getName());
         validator.onErrorUsePageOf(ProjectsController.class).show(project);
         result.redirectTo(ProjectsController.class).show(project);
     }
