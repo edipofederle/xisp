@@ -18,6 +18,7 @@ import br.com.xisp.models.Project;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
+import br.com.xisp.session.InterationSessionImpl;
 import br.com.xisp.session.ProjectSession;
 
 public class InterationControllerTest {
@@ -32,7 +33,7 @@ public class InterationControllerTest {
 	private InterationsController controller;
 	private StoryRepository storyRepo;
 	private Project project;
-	
+	private InterationSessionImpl sessionInteration;
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,7 +45,7 @@ public class InterationControllerTest {
 		storyRepo = mockery.mock(StoryRepository.class);
 		projectSession = mockery.mock(ProjectSession.class);
 		result = new MockResult();
-		controller = new InterationsController(interationRepo,projectRepo,projectSession, storyRepo, result, new MockValidator());
+		controller = new InterationsController(interationRepo,projectRepo,projectSession, sessionInteration, storyRepo, result, new MockValidator());
 	}
 	
 	@Test

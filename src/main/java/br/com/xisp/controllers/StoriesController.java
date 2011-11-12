@@ -28,6 +28,7 @@ import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.TypeStoryRepository;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
@@ -45,6 +46,7 @@ public class StoriesController {
 	private Result result;
 	private Project currentProject;
 	private ProjectSession projectSession;
+	private InterationSession interationSession;
 	private ProjectRepository projectRepository;
 	private InteractionRepository interationRepository;
 	private TypeStoryRepository typestoryRepository;
@@ -54,21 +56,20 @@ public class StoriesController {
 	private User currentUser;
 	private final Validator validator;
 
-	private Interation currentIteration;
-
 	public StoriesController(StoryRepository repository,
 			ProjectRepository repositoryProject,
 			InteractionRepository interationRepository,
 			TypeStoryRepository typestoryRepository,
 			AcceptenceTestRepository acceptenceTestRepository,
 			UserRepository userRepository, Result result,
-			ProjectSession projectSession,
+			ProjectSession projectSession, InterationSession interationSession,
 			HistoryStoryRepository historyStoryRepository, UserSession user,
 			Validator validator) {
 		this.repository = repository;
 		this.result = result;
 		this.projectRepository = repositoryProject;
 		this.projectSession = projectSession;
+		this.interationSession = interationSession;
 		this.interationRepository = interationRepository;
 		this.typestoryRepository = typestoryRepository;
 		this.acceptenceTestRepository = acceptenceTestRepository;
@@ -186,13 +187,7 @@ public class StoriesController {
 	}
 
 	private Interation getcurrentIteration() {
-		List<Interation> iterations = interationRepository
-				.showAllInterations(projectSession.getProject());
-		for (Interation interation : iterations) {
-			if (interation.isCurrent())
-				currentIteration = interation;
-		}
-		return currentIteration;
+		return this.interationSession.getInteration();
 	}
 
 	/**

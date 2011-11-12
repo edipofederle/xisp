@@ -29,6 +29,17 @@ $(document).ready(function() {
 			return true;
 		}
 	});
+	
+	$(".useThisIteration").click(function(){
+		var idIterations =  $(this).attr('id');
+		$.getJSON("setInteration/" +idIterations,  function (json) {
+			$("span.iterationTop").replaceWith(json.setInteration.name);
+		});
+	});
+	
+	function setIterationc(){
+		alert("hello");
+	}
 
 });
 
@@ -61,9 +72,6 @@ $(document).ready(function() {
 	<label><fmt:message key="interation.startDate"/></label>
 	<input type="text" id="startDate" name="interation.startDate" class="required xlarge">
 	
-	<label><fmt:message key="interation.endDate"/></label>
-	<input type="text" id="endDate" name="interation.endDate" class="required xlarge">
-	
 	<br />
 	<div class="actions">
 		<fmt:message key="interation.form.enviar" var="criar"/>
@@ -73,7 +81,9 @@ $(document).ready(function() {
 </form>
 
 <c:forEach items="${interations }" var="i">
-	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }</a> - ${i.startDate } <b>ate</b> ${i.endDate } - <a href="#">Editar</a> | <a href="${pageContext.request.contextPath}/interations/remove/${i.id}">Remover</a> </p>
+	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }
+	<a href="#">Editar</a> | <a href="${pageContext.request.contextPath}/interations/remove/${i.id}">Remover</a>
+	<small><a href="#" class="useThisIteration" id="${i.id }" >Usar Esta Iteracao</a></small>
 	
 	<c:choose>
 		<c:when test="${i.done }">

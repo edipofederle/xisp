@@ -140,7 +140,7 @@ b.days{
 	<div class="topbar">
       <div class="topbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="${pageContext.request.contextPath}/projects/index">XISP ${currentProject.name } </a>
+          <a class="brand" href="${pageContext.request.contextPath}/projects/index">XISP ${currentProject.name } -  <span class="iterationTop">${currentInteration.name}</span> </a>
            <p class="pull-right" style="color: white;">${currentUser.email } <b><a href="${pageContext.request.contextPath}/login/logout">Sair</a></b></p>
         </div>
       </div>

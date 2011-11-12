@@ -17,6 +17,7 @@ import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.TypeStoryRepository;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
@@ -27,6 +28,7 @@ public class StoriesControllerTest {
 	private MockResult result;
 	private StoriesController controller;
 	private ProjectSession projectSession;
+	private InterationSession interationSession;
 	private ProjectRepository projectRepository;
 	private InteractionRepository interationRepository;
 	private TypeStoryRepository typestoryRepository;
@@ -48,6 +50,7 @@ public class StoriesControllerTest {
 		this.historyStoryRepository = mockery.mock(HistoryStoryRepository.class);
 		this.sessionUser = mockery.mock(UserSession.class);
 		this.interationRepository = mockery.mock(InteractionRepository.class);
+		this.interationSession = mockery.mock(InterationSession.class);
 		
 		this.result = new MockResult();
 		mockery.checking(new Expectations() {
@@ -58,7 +61,7 @@ public class StoriesControllerTest {
 				one(userRepository).showAll();
 			}
 		});
-		this.controller = new StoriesController(repo, projectRepository, interationRepository, typestoryRepository, acceptenceTestRepository, userRepository,  result, projectSession, historyStoryRepository, sessionUser, new MockValidator() );
+		this.controller = new StoriesController(repo, projectRepository, interationRepository, typestoryRepository, acceptenceTestRepository, userRepository,  result, projectSession, interationSession, historyStoryRepository, sessionUser, new MockValidator() );
 	}
 	
 	/**
