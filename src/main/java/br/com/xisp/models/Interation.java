@@ -15,33 +15,33 @@ import javax.persistence.Transient;
  * Entidade que representa uma interaçao de um projeto XP
  * 
  * @author edipo
- *
+ * 
  */
 
 @Entity
 public class Interation {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	private Project project;
-	
-	@Temporal(TemporalType.DATE)
-    private Date startDate;
 
 	@Temporal(TemporalType.DATE)
-    private Date endDate;
-	
+	private Date startDate;
+
+	@Temporal(TemporalType.DATE)
+	private Date endDate;
+
 	@Transient
 	private int days;
-    
-    private String name;
-    private boolean done;
-    
-    private boolean current;
-    
+
+	private String name;
+	private boolean done;
+
+	private boolean current;
+
 	public Long getId() {
 		return id;
 	}
@@ -83,12 +83,13 @@ public class Interation {
 	}
 
 	public boolean isCurrent() {
-	  if (this.startDate != null && this.startDate.compareTo(new Date()) 
-			  <= 0 && (this.endDate == null || this.endDate.compareTo(new Date()) >= 0)) {
-	        return true;
-	    } else {
-	        return false;
-	    }
+		if (this.startDate != null
+				&& this.startDate.compareTo(new Date()) <= 0
+				&& (this.endDate == null || this.endDate.compareTo(new Date()) >= 0)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void setCurrent(boolean current) {
@@ -103,16 +104,19 @@ public class Interation {
 		this.days = days;
 	}
 
-	//TODO final tem que ser o dia do endDate+ 1 FIX
+	// TODO final tem que ser o dia do endDate+ 1 FIX
 	public boolean isDone() {
-		if(this.endDate.before(new Date()))
-			return true;
-		else
+		try {
+			if (!this.endDate.equals(null))
+				return true;
+		} catch (NullPointerException e) {
 			return false;
+		}
+		return false;
 	}
 
 	public void setDone(boolean done) {
 		this.done = done;
 	}
-	
+
 }

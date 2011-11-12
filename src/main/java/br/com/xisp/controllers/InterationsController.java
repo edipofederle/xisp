@@ -19,6 +19,7 @@ import br.com.xisp.models.Story;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
+import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.InterationSessionImpl;
 import br.com.xisp.session.ProjectSession;
 
@@ -29,7 +30,7 @@ public class InterationsController {
 	private ProjectSession projectSession;
 	private StoryRepository storyRepo;
 	private final Result result;
-	private InterationSessionImpl sessionInteration;
+	private InterationSession sessionInteration;
 	
 	public InterationsController(InteractionRepository interationRepo, ProjectRepository projectRepo,
 			ProjectSession projectSession,InterationSessionImpl sessionInteration,  StoryRepository storyRepo, Result result, Validator validator){
@@ -51,11 +52,13 @@ public class InterationsController {
 		int totalNoDone = 0;
 		
 		for (Interation interation : listai) {
-			if(interation.getEndDate().before(new Date())){
-				totalDone += 1;
-			}else{
+			try{
+				if(!interation.getEndDate().equals(null))
+					totalDone += 1;
+			}catch (NullPointerException e) {
 				totalNoDone += 1;
 			}
+
 		}
 		result.include("stats",  totalIterations + " iteracoes, " + totalDone + " finalizadas, " + totalNoDone + " nao finalizadas");
 		result.include("interations",listai );

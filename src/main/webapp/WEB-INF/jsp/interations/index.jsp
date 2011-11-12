@@ -23,7 +23,7 @@ $(document).ready(function() {
 	
 	//Submit Form 
 	$("form").submit(function() {
-		if( ($("#name").val() == "Nome da Iteraçao") || ($("#startDate").val() == "Data de Inicio") || ($("#endDate").val() == "Data de Fim") ){
+		if( ($("#name").val() == "Nome da Iteraçao") || ($("#startDate").val() == "Data de Inicio") ){
 			return false;
 		}else{
 			return true;
@@ -81,19 +81,16 @@ $(document).ready(function() {
 </form>
 
 <c:forEach items="${interations }" var="i">
-	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }
-	<a href="#">Editar</a> | <a href="${pageContext.request.contextPath}/interations/remove/${i.id}">Remover</a>
-	<small><a href="#" class="useThisIteration" id="${i.id }" >Usar Esta Iteracao</a></small>
+	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }<br/>
+	
+	<small><a href="#" class="useThisIteration" id="${i.id }" > - Usar Esta Iteracao</a> |</small>
+	<small><a href="#">Fechar Iteracao</a> |</small>
+	<small><a href="${pageContext.request.contextPath}/interations/remove/${i.id}">Remover</a></small>
+	
 	
 	<c:choose>
-		<c:when test="${i.done }">
+		<c:when test="${i.done eq true }">
 			<span class="label notice">Finalizada</span><br/>
-		</c:when>
-		<c:when test="${i.current }">
-			<span class="label success">Atual</span><br />
-		</c:when>
-		<c:when test="${!i.current }">
-			<span class="label warning">Nao Inicada</span><br />
 		</c:when>
 	</c:choose>
 
