@@ -49,7 +49,7 @@ public class InterationDao implements InteractionRepository {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Interation> showAllInterations(Project project) {
-		return this.session.createQuery("from Interation i where i.project = :project and i.done != true").setParameter("project", project).list();		
+		return this.session.createQuery("from Interation i where i.project = :project").setParameter("project", project).list();		
 	}
 
 	public Interation load(Interation interation) {

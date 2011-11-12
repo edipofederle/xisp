@@ -1,5 +1,25 @@
 <%@ include file="../../../header.jsp" %> 
 
+<script>
+
+	$(document).ready(function() {
+		$(".useThisProject").click(function(){
+			$("a").removeClass("selectedProject");
+			var idProject =  $(this).attr('id');
+			$.getJSON("useProject/" +idProject,  function (json) {
+				$("span.projectTop").replaceWith(json.project.name);
+				$("a."+idProject).addClass("selectedProject");
+			});
+		});
+	});
+</script>
+
+<style>
+	.selectedProject{
+		background-color: yellow;
+	}
+</style>
+
 <c:if test="${success }">
 	<div class="alert-message success">
 		<a href="#" class="close"> X </a>
@@ -29,15 +49,16 @@
 		<span class="title">
 			<c:choose>
 				<c:when test="${currentProject.name == project.name}">
-					<b style="background-color: yellow;"><a href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
+					<b><a class="${project.id } selectedProject"  href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
 					<input type="hidden" value="${project.id }">
 				</c:when>
 				<c:otherwise>
-					<b><a href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
+					<b><a class="${project.id }" href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
 					<input type="hidden" value="${project.id }">
 				</c:otherwise>
 			</c:choose>
 		</span>
+		<small><a href="#" class="useThisProject" id="${project.id }">Use This Project</a></small>
 	</div>
 	
 	<span id="actions">

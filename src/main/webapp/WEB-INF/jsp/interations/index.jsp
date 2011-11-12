@@ -40,7 +40,7 @@ $(document).ready(function() {
 	$("a#closeIteration").click(function(){
 		var idIterations =  $(this).attr('class');
 		$.getJSON("closeInteration/" +idIterations,  function (json) {
-			$("span#UpdateStatus").replaceWith('<span class="label success">Finalizada</span><br/>');
+			$("span#status"+idIterations).replaceWith('<span class="label success">Finalizada</span>');
 		});
 	});
 });
@@ -95,7 +95,7 @@ $(document).ready(function() {
 			<span class="label success">Finalizada</span><br/>
 		</c:when>
 		<c:otherwise>
-		<span id="UpdateStatus"></span>
+		<span id="status${i.id }" class="label success">Nao Finalizada</span><br/>
 		</c:otherwise>
 
 	</c:choose>

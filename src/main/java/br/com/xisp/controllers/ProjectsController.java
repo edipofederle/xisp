@@ -1,5 +1,6 @@
 package br.com.xisp.controllers;
 
+import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
 import java.util.List;
@@ -252,6 +253,14 @@ public class ProjectsController {
 						"validacao.project.maior");
 			}
 		});
+	}
+	
+	@Get
+	@Path("/projects/useProject/{project.id}")
+	public void useProject(Project project){
+		Project p = this.repository.load(project);
+		this.projectSession.setProject(p);
+		result.use(json()).from(p).serialize();
 	}
 	
 	private void notificationAddUserToProject(User _participante,
