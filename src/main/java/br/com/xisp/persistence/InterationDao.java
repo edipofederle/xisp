@@ -35,8 +35,7 @@ public class InterationDao implements InteractionRepository {
 	}
 
 	public void update(Interation t) {
-		// TODO Auto-generated method stub
-		
+		this.session.update(t);
 	}
 
 	public void remove(Interation t) throws SQLException, Exception {

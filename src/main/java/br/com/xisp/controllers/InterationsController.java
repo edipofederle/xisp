@@ -115,8 +115,19 @@ public class InterationsController {
 		result.use(json()).from(i).serialize();
 	}
 	
-	public void errorIteration(){
-		
+	@Get
+	@Path("/interations/closeInteration/{interation.id}")
+	public void closeInteration(Interation interation){
+		Interation inte = this.interationRepo.load(interation);
+		SetInteration i = new SetInteration();
+		i.setName(inte.getName());
+		System.out.println("Fechando iteracao " + interation.getId());
+		inte.setEndDate(new Date());
+		inte.setDone(true);
+		this.interationRepo.update(inte);
+		result.use(json()).from(i).serialize();
 	}
+	
+	public void errorIteration(){}
 	
 }

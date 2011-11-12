@@ -37,10 +37,12 @@ $(document).ready(function() {
 		});
 	});
 	
-	function setIterationc(){
-		alert("hello");
-	}
-
+	$("a#closeIteration").click(function(){
+		var idIterations =  $(this).attr('class');
+		$.getJSON("closeInteration/" +idIterations,  function (json) {
+			$("span#UpdateStatus").replaceWith('<span class="label success">Finalizada</span><br/>');
+		});
+	});
 });
 
 
@@ -84,17 +86,20 @@ $(document).ready(function() {
 	<p><a href="${pageContext.request.contextPath}/interations/${i.id }">${i.name }<br/>
 	
 	<small><a href="#" class="useThisIteration" id="${i.id }" > - Usar Esta Iteracao</a> |</small>
-	<small><a href="#">Fechar Iteracao</a> |</small>
+	<small><a href="#" id="closeIteration" class="${i.id }">Fechar Iteracao</a> |</small>
 	<small><a href="${pageContext.request.contextPath}/interations/remove/${i.id}">Remover</a></small>
 	
-	
+
 	<c:choose>
 		<c:when test="${i.done eq true }">
-			<span class="label notice">Finalizada</span><br/>
+			<span class="label success">Finalizada</span><br/>
 		</c:when>
-	</c:choose>
+		<c:otherwise>
+		<span id="UpdateStatus"></span>
+		</c:otherwise>
 
-	<br/><br/>
+	</c:choose>
+	<br/>
 	</hr>
 </c:forEach>
 <br /><br/><br/>

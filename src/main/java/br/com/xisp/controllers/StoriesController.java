@@ -114,7 +114,7 @@ public class StoriesController {
 			listIterationsTemp = this.interationRepository
 					.showAllInterations(projectSession.getProject());
 			for (Interation i : listIterationsTemp) {
-				if (!i.getEndDate().before(new Date()))
+				if (!i.isDone())
 					listIterations.add(i);
 			}
 			listUsers = this.userRepository.showAll();
