@@ -29,6 +29,13 @@ public class InterationDao implements InteractionRepository {
 		Query query = this.session.createQuery(sql).setParameter("name", name);
 		return (Interation) query.uniqueResult();
 	}
+	
+	public Interation loadById(Long id) {
+		String sql = "from Interation u where u.id = :id";
+		Query query = this.session.createQuery(sql).setParameter("id", id);
+		return (Interation) query.uniqueResult();
+	}
+	
 
 	public void add(Interation t) {
 		this.session.save(t);
@@ -36,6 +43,8 @@ public class InterationDao implements InteractionRepository {
 
 	public void update(Interation t) {
 		this.session.update(t);
+		this.session.flush();
+		
 	}
 
 	public void remove(Interation t) throws SQLException, Exception {
@@ -55,6 +64,5 @@ public class InterationDao implements InteractionRepository {
 	public Interation load(Interation interation) {
 		return (Interation) session.get(Interation.class, interation.getId());
 	}
-	
 
 }

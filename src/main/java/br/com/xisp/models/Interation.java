@@ -28,6 +28,9 @@ public class Interation {
 	@ManyToOne
 	private Project project;
 
+	@ManyToOne
+	private Relyase relyase;
+	
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
@@ -41,6 +44,8 @@ public class Interation {
 	private boolean done;
 
 	private boolean current;
+	
+	private boolean hasRelease;
 
 	public Long getId() {
 		return id;
@@ -119,4 +124,20 @@ public class Interation {
 		this.done = done;
 	}
 
+	public Relyase getRelyase() {
+		return relyase;
+	}
+
+	public void setRelyase(Relyase relyase) {
+		this.relyase = relyase;
+	}
+
+	public boolean isHasReleas() {
+		return hasRelease;
+	}
+
+	public void setHasReleas(boolean hasReleas) {
+		this.hasRelease = hasReleas;
+	}
+	
 }

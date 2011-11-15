@@ -9,5 +9,6 @@ public interface InteractionRepository extends BaseRepository<Interation> {
 	
 	List<Interation> showAllInterations(Project project);
 	Interation load(Interation interation);
-	
+	Interation loadById(Long id);
+
 }
