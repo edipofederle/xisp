@@ -10,14 +10,14 @@
 	<c:if test="${not empty erroSemIteracoes }">
 		<p>${erroSemIteracoes}</p>
 		   <div class="alert-actions">
-    		 <a href="${pageContext.request.contextPath}/interations/index" class="btn small">Criar Iteracao</a> <a href="/xisp/projects/index" class="btn small">Voltar para Home</a>
+    		 <a href="${pageContext.request.contextPath}/interations/index" class="btn small"><fmt:message key="error.createIteration"/></a> <a href="/xisp/projects/index" class="btn small"><fmt:message key="error.home"/></a>
    		   </div>
 	</c:if>
 	
 		<c:if test="${not empty erroDeleteProject }">
 		<p>${erroDeleteProject}</p>
 		   <div class="alert-actions">
-    		 <a href="${pageContext.request.contextPath}/interations/index" class="btn small">Visualizar Estorias</a> <a href="/3xisp/projects/index" class="btn small">Voltar para Home</a>
+    		 <a href="${pageContext.request.contextPath}/interations/index" class="btn small"><fmt:message key="error.visualizeStory"/></a> <a href="/3xisp/projects/index" class="btn small"><fmt:message key="error.home"/></a>
    		   </div>
 	</c:if>
 	

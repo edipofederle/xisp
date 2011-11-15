@@ -6,8 +6,8 @@
 	<thead>
 		<tr>
 			<th class="header">#</th>
-			<th>Nome</th>
-			<th>Status</th>
+			<th><fmt:message key="iterations.table.name"/></th>
+			<th><fmt:message key="iterations.table.status"/></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,10 +16,10 @@
 				<td>${s.id}</td>
 				<td>${s.name}</td>
 				<td>
-						<c:if test="${not empty s.endAt }"><span class="label success">Finalizada</span>
+						<c:if test="${not empty s.endAt }"><span class="label success"><fmt:message key="iteration.finished"/></span>
 	</c:if>
 	<c:if test="${s.endAt == null }">
-		<span class="label warning">Essa Estoria nao foi finalizada</span>
+		<span class="label warning"><fmt:message key="iteration.story.notFisished"/></span>
 	</c:if>
 				</td>
 		</c:forEach>

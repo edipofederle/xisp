@@ -19,11 +19,11 @@
 	<thead>
 		<tr>
 			<th class="header">#</th>
-			<th>Nome</th>
-			<th>Endereco</th>
-			<th>Projetos</th>
-			<th>Remover</th>
-			<th>Editar</th>
+			<th><fmt:message key="client.table.name"/></th>
+			<th><fmt:message key="client.table.address"/></th>
+			<th><fmt:message key="client.table.projects"/></th>
+			<th><fmt:message key="client.table.remove"/></th>
+			<th><fmt:message key="client.table.edit"/></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -40,12 +40,12 @@
 				<td>
 					<form action="${pageContext.request.contextPath}/clients/${client.id}" method="post">
 						<input type="hidden" name="_method" value="delete"/>
-						<button class="btn small" type="submit"  onclick="return confirm('Are you sure?')">Remover</button>
+						<button class="btn small" type="submit"  onclick="return confirm('Are you sure?')"><fmt:message key="client.table.remove"/></button>
 					</form>
 				</td>
 				<td>
 					<form action="${pageContext.request.contextPath}/clients/${client.id}/edita" method="get">
-						<button class="btn small" type="submit">Editar</button>
+						<button class="btn small" type="submit"><fmt:message key="client.table.edit"/></button>
 					</form>
 				</td>
 				

@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 <p style="padding-left: 10px;">${stats }</p>
 
-<a href="#" class="newInteration btn primary">Nova Interaçao</a><br /><Br />
+<a href="#" class="newInteration btn primary"><fmt:message key="iteration.new"/></a><br /><Br />
 
 <form action="${pageContext.request.contextPath}/interations" method="post" class="form-stacked" id="newInteration">
 	<br />
@@ -92,10 +92,10 @@ $(document).ready(function() {
 
 	<c:choose>
 		<c:when test="${i.done eq true }">
-			<span class="label success">Finalizada</span><br/>
+			<span class="label success"><fmt:message key="iteration.finished"/></span><br/>
 		</c:when>
 		<c:otherwise>
-		<span id="status${i.id }" class="label success">Nao Finalizada</span><br/>
+		<span id="status${i.id }" class="label success"><fmt:message key="iteration.notfinished"/></span><br/>
 		</c:otherwise>
 
 	</c:choose>

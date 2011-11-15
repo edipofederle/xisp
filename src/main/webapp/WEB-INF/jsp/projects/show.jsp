@@ -6,18 +6,18 @@
 
 <h4 style="margin-top: -50px;">${project.name }</h4>
 <br />
-	<p>Informaçoes Gerais</p><hr>
+	<p><fmt:message key="projects.show.informations"/></p><hr>
 	<div id="infosProject" style="padding-left: 40px;">
-		<b>${avg } - ${qntFinalizadas } Estorias Finalizadas Ate o momento <Br /><Br />
-		<b>Tempo Medio em Dias/Estorias Finalizadas:</b> 10 Estorias Finalizadas Numa media de 4 dias.
+		<b>${avg } - ${qntFinalizadas } <fmt:message key="projects.attime"></fmt:message> <Br /><Br />
+		<b><fmt:message key="projects.show.avg"/></b> 10 Estorias Finalizadas Numa media de 4 dias.
 	</div><Br /><br />
 	
 	
-	<p>Graficos</p><hr>
+	<p>Charts</p><hr>
 	<br />
 	<Br/>
 	
-	<p>Adicionar Participantes a este projeto</p>
+	<p><fmt:message key="project.show.add"/></p>
 	
 <c:choose>
 	<c:when test="${empty users}">

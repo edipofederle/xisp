@@ -58,19 +58,18 @@
 				</c:otherwise>
 			</c:choose>
 		</span>
-		<small><a href="#" class="useThisProject" id="${project.id }">Use This Project</a></small>
+		<small><a href="#" class="useThisProject" id="${project.id }"><fmt:message key="projects.usethis"/></a></small>
 	</div>
 	
 	<span id="actions">
-		<a href="${pageContext.request.contextPath}/stories/${project.id }/index">User Stories</a> |
-		<a href="${pageContext.request.contextPath}/interations/index">Iteracoes</a> |
-		<a href="#">Participantes</a> |
-		<a href="#">Gerenciar</a> |
-		<a href="${pageContext.request.contextPath}/users/index">Users</a>
+		<a href="${pageContext.request.contextPath}/stories/${project.id }/index"><fmt:message key="projects.userstories"/></a> |
+		<a href="${pageContext.request.contextPath}/interations/index"><fmt:message key="projects.iterations"/></a> |
+		<a href="#"><fmt:message key="proejcts.members"/></a> |
+		<a href="${pageContext.request.contextPath}/users/index"><fmt:message key="projects.users"/></a>
 		<b style="float: right;">
 			<c:choose>
 				<c:when test="${currentUser.name == project.owner.name }">
-					Voce
+					<fmt:message key="projects.you"/>
 				</c:when>
 				<c:otherwise>
 					${project.owner.name }

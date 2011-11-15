@@ -58,7 +58,7 @@
 			<div class="actions">
 				<fmt:message key="project.form.enviar" var="criar"/>
 				<input type="submit" name="submit" class="btn primary" value="${criar}"/>
-				<a href="${pageContext.request.contextPath}/projects/index">Cancelar</a>
+				<a href="${pageContext.request.contextPath}/projects/index"><fmt:message key='form.cancel'/></a>
 			</div>
 		</form>
 				<div id="newClientIntoProjectForm">

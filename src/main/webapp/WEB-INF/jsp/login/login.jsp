@@ -149,7 +149,7 @@ h2.loginTitle{
 		});
 	</script>
 </head>
-<h2 class="loginTitle">Xisp - Login</h2><Br />
+<h2 class="loginTitle"><fmt:message key="xisp.login"/></h2><Br />
 <div id="content-login">
 	
 	<div id="align-login">

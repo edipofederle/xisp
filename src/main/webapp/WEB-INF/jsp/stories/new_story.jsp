@@ -23,7 +23,7 @@ $(document).ready(function(){
 	}
 </style>
 
-<h2>Defina sua Estoria<small> </small></h2>
+<h2><fmt:message key="story.create"/><small> </small></h2>
 
 <div id="form_new_story">
 <form action="${pageContext.request.contextPath}/stories" method="post" class="form-stacked" id="formProject"> 
@@ -31,7 +31,7 @@ $(document).ready(function(){
 	<input type="text" name="story.name" id="name" class="required xlarge" value="${story.name }"/>
 	<br /><br/>
 	
-	<label>Atribuida para:</label>
+	<label><fmt:message key="story.to"/></label>
 	<select name="story.assignedTo.id" id="story.assignedTo.id">
 		<c:forEach items="${users }" var="u">
 			<option value="${u.id }">${u.name }</option>
@@ -81,14 +81,14 @@ $(document).ready(function(){
 	<textarea name="story.description" id="description" rows="10" cols="100" class="required xxlarge" class="formDescStory" ></textarea>
 	<br /><br/>
 	
-	<label>Teste de Aceitacao:</label>
+	<label><fmt:message key="story.test"/><label>
 	<textarea rows="10" cols="100" class="required xxlarge" id="acceptsTest" name="story.acceptsTest"></textarea>
 	
 	<br /><Br /><Br />
 	<div class="actions_form">
 		<fmt:message key="project.form.enviar" var="criar"/>
 		<input type="submit" name="submit" class="btn primary" value="${criar}"/>
-		<a href="${pageContext.request.contextPath}/projects/index">Cancelar</a>
+		<a href="${pageContext.request.contextPath}/projects/index"><fmt:message key="form.cancel"/></a>
 	</div>
 	
 </form>

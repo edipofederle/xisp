@@ -141,7 +141,7 @@ b.days{
       <div class="topbar-inner">
         <div class="container-fluid">
           <a class="brand" href="${pageContext.request.contextPath}/projects/index">XISP <span class="projectTop">${currentProject.name }</span> -  <span class="iterationTop">${currentInteration.name}</span> </a>
-           <p class="pull-right" style="color: white;">${currentUser.email } <b><a href="${pageContext.request.contextPath}/login/logout">Sair</a></b></p>
+           <p class="pull-right" style="color: white;">${currentUser.email } <b><a href="${pageContext.request.contextPath}/login/logout"><fmt:message key="xisp.logout"/></a></b></p>
         </div>
       </div>
     </div>

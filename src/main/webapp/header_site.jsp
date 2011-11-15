@@ -47,10 +47,10 @@
     <div class="container-fluid">
       <div class="sidebar">
         <div class="well">
-          <h5>Inforaçoes Gerais</h5>
+          <h5><fmt:message key="projects.show.informations"/></h5>
           <ul>
-            <small><b>Dono: </b>${project.owner.name }</small><br /><br />
-			<small><b>Cliente: </b>${project.client.name }</small>
+            <small><b><fmt:message key="projects.sitebar.owner"/> </b>${project.owner.name }</small><br /><br />
+			<small><b><fmt:message key="projects.sitebar.client"/> </b>${project.client.name }</small>
           </ul>
           
 		<h5><fmt:message key="project.show.participantes"></fmt:message></h5>
@@ -58,7 +58,7 @@
 			  <c:choose>
 				<c:when test="${empty project.users }">
 					<p style="color: #6BBA70;"><fmt:message key="project.show.semusuario"></fmt:message></p>
-					<a href="${pageContext.request.contextPath}/users/newUser">Add Usuarios</a>
+					<a href="${pageContext.request.contextPath}/users/newUser"><fmt:message key="projects.sitebar.addUser"/></a>
 				</c:when>
 				<c:otherwise>
 					<c:forEach items="${project.users }" var="user">
@@ -72,13 +72,13 @@
 			</c:choose>
           </ul>
           
-          <h5>Acoes</h5>
+          <h5><fmt:message key="projects.sitebar.actions"/></h5>
           <ul>
             <form action="${pageContext.request.contextPath}/projects/${project.id}" method="post">
 				<input type="hidden" name="_method" value="delete"/>
 				<button type="submit" class="btn small" onclick="return confirm('Voce tem certeza? Ao remover um projeto todas iteracoes do mesmo tambem irao ser deletadas.')">Remover</button>
 			</form>
-            <a href="${pageContext.request.contextPath}/projects/${project.id}/edita"class="btn small" >Editar</a>
+            <a href="${pageContext.request.contextPath}/projects/${project.id}/edita"class="btn small" ><fmt:message key="projects.sitebar.edit"/></a>
           </ul>
 
         </div>
