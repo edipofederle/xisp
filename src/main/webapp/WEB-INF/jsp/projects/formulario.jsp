@@ -62,7 +62,6 @@
 			</div>
 		</form>
 				<div id="newClientIntoProjectForm">
-					<b>Criar um novo Cliente</b>
 					<%@include file="../clients/formulario.jsp"%>
 				</div>
 	</div>
