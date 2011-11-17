@@ -22,17 +22,19 @@ import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 import br.com.xisp.utils.StoryUtil;
 
 /**
- * O resource <code>ProjectsController</code> manipula todas as operaçoes
- * com Projects, coisas como adicionar, remover editar Projeto.
+ * O resource <code>ProjectsController</code> manipula todas as operaçoes com
+ * Projects, coisas como adicionar, remover editar Projeto.
  * 
  * Este controller tende a ser REST.
+ * 
  * @author edipo
- *
+ * 
  */
 @Resource
 public class ProjectsController {
@@ -41,23 +43,32 @@ public class ProjectsController {
 	private final ProjectRepository repository;
 	private final Result result;
 	private final User currentUser;
+	private final InterationSession interationSession;
 	private final ClientRepository clientRepository;
 	private final UserRepository userRepository;
 	private final ProjectSession projectSession;
 	private final StoryRepository storyRepository;
 	private final Mailer mailer;
-	
-	
+
 	/**
 	 * Recebe todas as dependencias atraves do construtor.
-	 * @param ProjectRepository repository.
-	 * @param ClientRepository  clientRespository.
-	 * @param UserRepository userRepository
-	 * @param validator VRaptor validator.
-	 * @param result VRaptor result handler.
-	 * @param UserSession session para o usuario corrente.
+	 * 
+	 * @param repository
+	 * @param clientRespository
+	 * @param userRepository
+	 * @param storyRepository
+	 * @param validator
+	 * @param result
+	 * @param user
+	 * @param projectSession
+	 * @param interationSession
+	 * @param mailer
 	 */
-	public ProjectsController(ProjectRepository repository, ClientRepository clientRespository, UserRepository userRepository, StoryRepository storyRepository, Validator validator, Result result, UserSession user, ProjectSession projectSession, Mailer mailer) {
+	public ProjectsController(ProjectRepository repository,
+			ClientRepository clientRespository, UserRepository userRepository,
+			StoryRepository storyRepository, Validator validator,
+			Result result, UserSession user, ProjectSession projectSession,
+			InterationSession interationSession, Mailer mailer) {
 		this.repository = repository;
 		this.clientRepository = clientRespository;
 		this.userRepository = userRepository;
@@ -67,6 +78,7 @@ public class ProjectsController {
 		this.currentUser = user.getUser();
 		this.projectSession = projectSession;
 		this.mailer = mailer;
+		this.interationSession = interationSession;
 	}
 
 	@Path("/projects/index")
@@ -75,12 +87,12 @@ public class ProjectsController {
 		result.include("projects", repository.showAll(currentUser));
 
 	}
-	
+
 	/**
 	 * 
-	 * VIEW: Redireciona para index page projects em caso de sucesso e para newProject em caso
-	 * de falha.
-	 * Este metodo adiciona um projeto.
+	 * VIEW: Redireciona para index page projects em caso de sucesso e para
+	 * newProject em caso de falha. Este metodo adiciona um projeto.
+	 * 
 	 * @param project
 	 */
 	@Path("/projects")
@@ -91,24 +103,28 @@ public class ProjectsController {
 		project.setOwner(this.currentUser);
 		repository.add(project);
 		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> Projeto criado com sucesso.");
-		result.include("defineFirstInteration", "É recomendado que voce cria a primeira iteraçao agora.");
+		result.include("message",
+				"<strong>Sucesso!</strong> Projeto criado com sucesso.");
+		result.include("defineFirstInteration",
+				"É recomendado que voce cria a primeira iteraçao agora.");
 		projectSession.setProject(project);
 		result.redirectTo(InterationsController.class).index();
 	}
-	
+
 	/**
 	 * Este metodo apenas redireciona para o jsp newProject.jsp
 	 */
 	public void newProject() {
 		result.include("clients", clientRepository.showAll());
 	}
-	
+
 	/**
 	 * 
-	 * Este metodo eh responsavel por devolver um objeto Project populado para a view edita.
+	 * Este metodo eh responsavel por devolver um objeto Project populado para a
+	 * view edita.
 	 * 
 	 * VIEW: /projets/1/edita
+	 * 
 	 * @param project
 	 * @return Project
 	 */
@@ -120,27 +136,30 @@ public class ProjectsController {
 		result.include("nameClient", p.getClient().getName());
 		return p;
 	}
+
 	/**
 	 * 
 	 * Este metodo eh responsavel por exibir um projeto
 	 * 
 	 * VIEW: /proejcts/1
+	 * 
 	 * @param project
 	 * @return project
 	 */
 	@Path("/projects/{project.id}")
 	@Get
-	public Project show(Project project){
-		
-		List<Story> list = this.storyRepository.showAllStories(this.projectSession.getProject());
-		
+	public Project show(Project project) {
+
+		List<Story> list = this.storyRepository
+				.showAllStories(this.projectSession.getProject(), this.interationSession.getInteration());
+
 		int finished = 0;
-		
+
 		for (Story story : list) {
-			if(story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
+			if (story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
 				finished++;
 		}
-		
+
 		result.include("users", userRepository.usersWithoutProjects(project));
 		result.include("avg", StoryUtil.calculeAvgForStories(list));
 		result.include("qntFinalizadas", finished);
@@ -152,6 +171,7 @@ public class ProjectsController {
 	/**
 	 * 
 	 * Este metodo é responsável por realizar as alteraçoes em um projeto.
+	 * 
 	 * @param project
 	 */
 	@Path("/projects")
@@ -163,13 +183,13 @@ public class ProjectsController {
 		project.setOwner(this.currentUser);
 		repository.update(project);
 		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> Projeto alterado com sucesso.");
+		result.include("message",
+				"<strong>Sucesso!</strong> Projeto alterado com sucesso.");
 		result.redirectTo(this).index();
 	}
-	
+
 	/**
-	 * Aceita request HTTP DELETE
-	 * VIEW: /proejcts/1
+	 * Aceita request HTTP DELETE VIEW: /proejcts/1
 	 * 
 	 * Metodo que remove um <code>Project</code>
 	 * 
@@ -180,58 +200,65 @@ public class ProjectsController {
 	@Delete
 	public void remove(Project project) throws Exception {
 		boolean error = false;
-		try{
+		try {
 			repository.remove(project);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			error = true;
-			result.include("erroDeleteProject","OPS. Voce precisa remover as Estorias de usuario antes.");
+			result.include("erroDeleteProject",
+					"OPS. Voce precisa remover as Estorias de usuario antes.");
 			result.forwardTo(ErrorsController.class).index();
 		}
-		if(!error){
+		if (!error) {
 			result.include("success", true);
-			result.include("message", "<strong>Sucesso!</strong> Projeto deletado com sucesso.");
+			result.include("message",
+					"<strong>Sucesso!</strong> Projeto deletado com sucesso.");
 			result.use(logic()).redirectTo(ProjectsController.class).index();
 		}
 	}
-	
+
 	/**
 	 * ACEITA request HTTP POST<br />
 	 * 
 	 * VIEW: /projects/1/participantes/
 	 * 
-	 * Este metodo é responsavel por adicionar um participante(<code>User</code>) a um <code>Project</code><Br/>
+	 * Este metodo é responsavel por adicionar um participante(<code>User</code>
+	 * ) a um <code>Project</code><Br/>
+	 * 
 	 * @param project
 	 * @param participante
 	 */
-    @Path("/projects/{project.id}/participantes/") @Post
-    public void addColaborator(Project project, User participante) {
-    	User _participante = loadUser(participante);
-        Project lproject = loadProject(project);
-        lproject.getUsers().add(_participante);
-    	notificationAddUserToProject(_participante, lproject);
-        validator.onErrorUsePageOf(ProjectsController.class).show(project);
-        result.redirectTo(ProjectsController.class).show(project);
-    }
-
+	@Path("/projects/{project.id}/participantes/")
+	@Post
+	public void addColaborator(Project project, User participante) {
+		User _participante = loadUser(participante);
+		Project lproject = loadProject(project);
+		lproject.getUsers().add(_participante);
+		notificationAddUserToProject(_participante, lproject);
+		validator.onErrorUsePageOf(ProjectsController.class).show(project);
+		result.redirectTo(ProjectsController.class).show(project);
+	}
 
 	/**
 	 * ACEITA request HTTP POST<br />
 	 * 
 	 * VIEW: /projects/1/removeParticipantes
 	 * 
-	 * Este metodo é responsavel por remover um participante(<code>User</code>) a um <code>Project</code>
+	 * Este metodo é responsavel por remover um participante(<code>User</code>)
+	 * a um <code>Project</code>
+	 * 
 	 * @param project
 	 * @param participante
 	 */
-    @Path("/projects/{project.id}/removeParticipantes/") @Post
+	@Path("/projects/{project.id}/removeParticipantes/")
+	@Post
 	public void removeColaborator(Project project, User participante) {
-    	User _participante = loadUser(participante);
-        Project lproject = loadProject(project);
-        lproject.getUsers().remove(_participante);
-        validator.onErrorUsePageOf(ProjectsController.class).show(project);
-        result.redirectTo(ProjectsController.class).show(project);		
+		User _participante = loadUser(participante);
+		Project lproject = loadProject(project);
+		lproject.getUsers().remove(_participante);
+		validator.onErrorUsePageOf(ProjectsController.class).show(project);
+		result.redirectTo(ProjectsController.class).show(project);
 	}
-    
+
 	private Project loadProject(Project project) {
 		Project lproject = repository.load(project);
 		return lproject;
@@ -241,7 +268,7 @@ public class ProjectsController {
 		User _participante = userRepository.load(participante);
 		return _participante;
 	}
-	
+
 	private void validateProject(final Project project) {
 		validator.checking(new Validations() {
 			{
@@ -254,18 +281,24 @@ public class ProjectsController {
 			}
 		});
 	}
-	
+
 	@Get
 	@Path("/projects/useProject/{project.id}")
-	public void useProject(Project project){
+	public void useProject(Project project) {
 		Project p = this.repository.load(project);
 		this.projectSession.setProject(p);
 		result.use(json()).from(p).serialize();
 	}
-	
+
 	private void notificationAddUserToProject(User _participante,
 			Project lproject) {
-		this.mailer.sendMail(_participante.getEmail(), "edipofederle@gmail.com", "Gerenciador de Projetos eXtremeProgramming - Xisp", "Ola " + _participante.getName() + " voce foi adicionado no projeto " + lproject.getName());
+		this.mailer.sendMail(
+				_participante.getEmail(),
+				"edipofederle@gmail.com",
+				"Gerenciador de Projetos eXtremeProgramming - Xisp",
+				"Ola " + _participante.getName()
+						+ " voce foi adicionado no projeto "
+						+ lproject.getName());
 	}
-	
+
 }

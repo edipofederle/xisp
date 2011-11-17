@@ -23,9 +23,7 @@ public class StoryDao implements StoryRepository {
 	}
 
 	public Story find(Long id) {
-		String sql = "from Story u where u.id = :id";
-		Query query = this.session.createQuery(sql).setParameter("id", id);
-		return (Story) query.uniqueResult();
+		return (Story) session.get(Story.class, id);
 	}
 
 	public void add(Story story) {
@@ -37,9 +35,8 @@ public class StoryDao implements StoryRepository {
 	}
 
 	public void remove(Story story) throws SQLException, Exception {
-	  	this.session.createQuery("delete from History h where h.story = :story")
-				.setParameter("story", story).executeUpdate();
 		this.session.delete(story);
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -73,12 +70,12 @@ public class StoryDao implements StoryRepository {
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Story> showAllStories(Project p) {
 		String hql = "select s from Story s where s.project = :project";
 		Query query = session.createQuery(hql);
 		query.setParameter("project",p);
 		return query.list();
 	}
-	
 
 }

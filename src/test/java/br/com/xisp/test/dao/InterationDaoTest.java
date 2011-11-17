@@ -66,7 +66,7 @@ public class InterationDaoTest {
 		interation.setDone(true);
 		dao.add(interation);
 		this.session.flush();
-		Assert.assertEquals(0, dao.showAllInterations(p).size());
+		Assert.assertEquals(1, dao.showAllInterations(p).size());
 	}
 
 	

@@ -36,8 +36,8 @@
 					font-weight: bold;
 					font-family: Arial;
 					font-size:13px;
-					color:white;
-					background-color: #993300;
+					color: black;
+					background-color: #69F;
 			}
 			
 		#pronta_para_testes{
@@ -58,8 +58,8 @@
 					font-weight: bold;
 					font-family: Arial;
 					font-size:13px;
-					color:white;
-					background-color: #999900;
+					color: black;
+					background-color: #CCFF33;
 			}
 		
 		#em_dev{
@@ -79,8 +79,8 @@
 						font-weight: bold;
 						font-family: Arial;
 						font-size:13px;
-						color:white;
-						background-color: #FF9966;
+						color: black;
+						background-color: #FF00FF;
 			}
 		
 		#finalizadas{
@@ -99,7 +99,7 @@
 				font-weight: bold;
 				font-family: Arial;
 				font-size:13px;
-				background-color: #669933;
+				background-color: #FF9933;
 			}
 		
 		#em_testes{
@@ -119,7 +119,7 @@
 			font-weight: bold;
 			font-family: Arial;
 			font-size:13px;
-			background-color: #CDEB8B;
+			background-color: #7FFF00;
 		}
 		
 		
@@ -250,7 +250,7 @@
 			<c:forEach items="${noStarted }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
-					<small style="float: right;">10</small>
+					<h1 style="float: right;">10</h1>
 					<small><b>Nome:</b> ${un.name }</small><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
@@ -274,7 +274,7 @@
 			<c:forEach items="${inDev }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
-					<small style="float: right;">10</small>
+					<h1 style="float: right;">10</h1>
 					<small><b>Nome:</b> ${un.name }</small><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
@@ -299,7 +299,7 @@
 			<c:forEach items="${readyTest }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
-					<small style="float: right;">10</small>
+					<h1 style="float: right;">10</h1>
 					<small><b>Nome:</b> ${un.name }</small><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
@@ -322,7 +322,7 @@
 			<c:forEach items="${inTest }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
-					<small style="float: right;">10</small>
+					<h1 style="float: right;">10</h1>
 					<small><b>Nome:</b> ${un.name }</small><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />

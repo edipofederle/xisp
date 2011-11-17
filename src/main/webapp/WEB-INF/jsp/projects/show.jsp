@@ -9,7 +9,7 @@
 	<p><fmt:message key="projects.show.informations"/></p><hr>
 	<div id="infosProject" style="padding-left: 40px;">
 		<b>${avg } - ${qntFinalizadas } <fmt:message key="projects.attime"></fmt:message> <Br /><Br />
-		<b><fmt:message key="projects.show.avg"/></b> 10 Estorias Finalizadas Numa media de 4 dias.
+		<b><fmt:message key="projects.show.avg"/></b>
 	</div><Br /><br />
 	
 	

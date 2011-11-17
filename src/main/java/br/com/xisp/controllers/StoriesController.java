@@ -1,5 +1,4 @@
 package br.com.xisp.controllers;
-
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
@@ -238,18 +237,19 @@ public class StoriesController {
 
 	@Path("/stories/history/{story.id}")
 	public void findStoryHistory(Story story) {
-		Story s = this.repository.find(story.getId());
-		result.include("story", s);
+	//	Story s = this.repository.find(story.getId());
+	//	result.include("story", s);
 
 	}
 
 	@Path("/stories/{story.id}")
 	@Delete
 	public void remove(Story story) throws Exception {
-		this.repository.remove(story);
+		Story s = this.repository.find(story.getId());
+		this.repository.remove(s);
 		result.include("success", true);
 		result.include("message",
-				"<strong>Sucesso!</strong> STory deletada com sucesso.");
-		result.use(logic()).redirectTo(ProjectsController.class).index();
+				"<strong>Sucesso!</strong> Story deletada com sucesso.");
+		result.use(logic()).forwardTo(StoriesController.class).index(this.projectSession.getProject());
 	}
 }

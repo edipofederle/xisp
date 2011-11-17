@@ -21,4 +21,7 @@
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
+  <session-config>
+<session-timeout>-1</session-timeout>
+</session-config> 
 </web-app>

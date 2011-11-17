@@ -22,6 +22,7 @@ import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
@@ -32,6 +33,7 @@ public class ProjectsControllerTest {
 	private ProjectRepository repo;
 	private ProjectsController controller;
 	private UserSession sessionUser;
+	private InterationSession sessionIteration;
 	private ClientRepository clientRepostiroy;
 	private UserRepository userRepository;
 	private ProjectSession sessionProject;
@@ -49,6 +51,7 @@ public class ProjectsControllerTest {
 		sessionUser = mockery.mock(UserSession.class);
 		mailer = mockery.mock(Mailer.class);
 		sessionProject = mockery.mock(ProjectSession.class);
+		sessionIteration = mockery.mock(InterationSession.class);
 		mockery.checking(new Expectations() {
 			{
 				allowing(sessionUser);
@@ -56,7 +59,7 @@ public class ProjectsControllerTest {
 		});
 		controller = new ProjectsController(repo, clientRepostiroy,
 				userRepository, storyRepository, new MockValidator(), result,
-				sessionUser, sessionProject, mailer);
+				sessionUser, sessionProject, sessionIteration, mailer);
 	}
 
 	@Test
@@ -73,7 +76,6 @@ public class ProjectsControllerTest {
 		controller.index();
 	}
 
-	@Test(expected = ArithmeticException.class)
 	public void shouldLoadAProjectShow() {
 		final Project project = givenAProject();
 		willLoadAProjectToEdit(project);

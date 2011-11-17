@@ -15,14 +15,17 @@ public class StoryUtil {
 	
 	public static String calculeAvgForStories(List<Story> list) {
 		long time = 0L;
-		int numberStories = 0;
+		int numberStoriesFinished = 0;
 		for (Story story : list) {
 			//Assegura que somente estorias finalizadas irao ser utilizadas no calculo
 			if(story.getEndAt() != null){
 				time += DateDifference.diferenceInDays(story.getEndAt(), story.getStartedAt());
-				numberStories++;
+				numberStoriesFinished++;
 			}
 		}
-		return "Media de dias estorias finalizadas: " + Math.abs(time/numberStories) + ".";
-	}
+		if(numberStoriesFinished > 0)
+			return "Media de dias estorias finalizadas: " + Math.abs(time/numberStoriesFinished) + ".";
+		else
+			return "";
+		}
 }

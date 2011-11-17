@@ -53,9 +53,9 @@ public class UsersControllerTest {
 	       Assert.fail();
 	    } catch (ValidationException e) {
 	       java.util.List<Message> errors = e.getErrors();
-	       Assert.assertEquals("O campo Usuario deve ser preenchido", errors.get(0).getMessage());
-	       Assert.assertEquals("O campo Email deve ser preenchido", errors.get(1).getMessage());
-	       Assert.assertEquals("O campo Senha deve ser preenchido", errors.get(2).getMessage());
+	       Assert.assertEquals("O campo name deve ser preenchido", errors.get(0).getMessage());
+	       Assert.assertEquals("O campo email deve ser preenchido", errors.get(1).getMessage());
+	       Assert.assertEquals("O campo password deve ser preenchido", errors.get(2).getMessage());
 	    }
 	}
 	
@@ -73,7 +73,7 @@ public class UsersControllerTest {
 			Assert.fail();
 		 } catch (ValidationException e) {
 		       java.util.List<Message> errors = e.getErrors();
-		     Assert.assertEquals("Esse usuario ja existe", errors.get(0).getMessage());
+		     Assert.assertEquals("Usuario existente.", errors.get(0).getMessage());
 		 }
 	}
 	

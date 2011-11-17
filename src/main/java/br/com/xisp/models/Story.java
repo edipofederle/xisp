@@ -10,12 +10,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -65,7 +69,9 @@ public class Story {
 	@ManyToOne
 	private User assignedTo;
 	
-	@ManyToOne
+	@OneToOne
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
+	@JoinColumn
 	private AcceptenceTest test;
 	
 	@ManyToOne
@@ -74,7 +80,7 @@ public class Story {
 	@ManyToOne
 	private Interation interation;
 	
-	@OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "story", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<History> listHistoryStory;
 	
 	private Integer points;
@@ -156,6 +162,7 @@ public class Story {
 	public void setEndAt(Date endAt) {
 		this.endAt = endAt;
 	}
+	
 	public String getAcceptsTest() {
 		return acceptsTest;
 	}
