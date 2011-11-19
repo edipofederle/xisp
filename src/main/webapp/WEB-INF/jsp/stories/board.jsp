@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.minToFrag.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/interface.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.jeditable.js"></script>
 
   	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<style>
@@ -227,6 +228,18 @@
 			$(".story").click(function(){
 				$("."+this.id).dialog({ width: 600 });
 			});
+	
+			
+		     $('.editPlaceDesription').editable('${pageContext.request.contextPath}/stories/updateDescription', { 
+		         type      : 'textarea',
+		         cancel    : 'Cancelar |',
+		         submit    : 'Salvar ',
+		         id   : 'elementid',
+		         name : 'newvalue',
+		         indicator : '<img src="${pageContext.request.contextPath}/img/indicator.gif">',
+		         tooltip   : 'Clique para editar...'
+		     });
+			
 		});
 
 	</script>
@@ -259,7 +272,7 @@
 					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
 					
 					<small><b>Estoria:</b></small>
-					<p style="text-align: justify;">${ un.description }</p>
+					<p class="editPlaceDesription" id="${un.id }">${ un.description }</p>
 					
 					<small><b>Teste de Aceitacao:</b></small>
 					<p>${un.test.test }</p>

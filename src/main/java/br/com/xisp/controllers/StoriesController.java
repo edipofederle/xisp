@@ -252,4 +252,28 @@ public class StoriesController {
 				"<strong>Sucesso!</strong> Story deletada com sucesso.");
 		result.use(logic()).forwardTo(StoriesController.class).index(this.projectSession.getProject());
 	}
+	
+	/**
+	 * 
+	 * @param update_value 
+	 * @param element_id
+	 * @param atributo
+	 * 
+	 * update_value novo nome do atributo
+	 * element_id id da estoria a ser atualizada
+	 * atributo = atributo da estoria a ser atualizado
+	 * 
+	 * Método chamado via ajax, resultado devolvido para a view pelo update.jsp
+	 */
+	@Path("/stories/updateDescription")
+	public void updateDescription(String newvalue, Long elementid, String atributo){
+		System.out.println(newvalue + " " + elementid + " " + atributo);
+		
+		//Chama método de atualizao montando a query dinamicamente
+		Story story = this.repository.find(elementid);
+		story.setDescription(newvalue);
+		this.repository.update(story);
+		
+		result.include("storyContent", newvalue);
+	}
 }
