@@ -20,7 +20,7 @@ public class ReleaseDao implements ReleaseRepository {
 		this.session = session;
 	}
 
-	public Relyase find(String name) {
+	public Relyase find(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

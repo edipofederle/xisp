@@ -24,10 +24,8 @@ public class InterationDao implements InteractionRepository {
 		this.session = session;
 	}
 
-	public Interation find(String name) {
-		String sql = "from Interation u where u.name = :name";
-		Query query = this.session.createQuery(sql).setParameter("name", name);
-		return (Interation) query.uniqueResult();
+	public Interation find(Long id) {
+		return (Interation) session.get(Interation.class, id);
 	}
 	
 	public Interation loadById(Long id) {

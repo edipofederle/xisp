@@ -22,7 +22,7 @@ public class AcceptenceTestDao implements AcceptenceTestRepository{
 	}
 
 
-	public AcceptenceTest find(String name) {
+	public AcceptenceTest find(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

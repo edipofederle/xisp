@@ -27,15 +27,6 @@ public class ProjectDaoTest {
 		session.beginTransaction();
 		dao = new ProjectDao(session);
 	}
-	
-	
-	@Test
-	public void shouldFindProjectGivenAName(){
-		Project project = givenAProject();
-		dao.add(project);
-		assertThat(dao.find("Project 2"), is(project));
-		assertThat(dao.find("Project nao existente"), is(nullValue()));
-	}
 
 	private Project givenAProject() {
 		Project project = new Project();

@@ -250,7 +250,13 @@
       <div class="topbar-inner">
         <div class="container-fluid">
           <a class="brand" href="${pageContext.request.contextPath}/projects/index">XISP <span class="projectTop">${currentProject.name }</span> -  <span class="iterationTop">${currentInteration.name}</span> </a>
-           <p class="pull-right">${currentUser.name } <a href="${pageContext.request.contextPath}/login/logout">Sair</a></p>
+           <p class="pull-right">${currentUser.email } <a href="${pageContext.request.contextPath}/login/logout">Sair</a></p>
+           <ul class="nav">
+            <li><a href="${pageContext.request.contextPath}/stories/${currentProject.id }/index"><fmt:message key="projects.userstories"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/interations/index"><fmt:message key="projects.iterations"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/users/index"><fmt:message key="projects.users"/></a></li>
+          	<li><b><a class="${project.id }" href="${pageContext.request.contextPath}/projects/${ currentProject.id }">${ currentProject.name }</a></li>
+          </ul>
         </div>
       </div>
     </div>

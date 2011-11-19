@@ -1,7 +1,6 @@
 package br.com.xisp.persistence;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 import br.com.caelum.vraptor.ioc.Component;
@@ -39,10 +38,8 @@ public class ProjectDao implements ProjectRepository {
 	 * <br />
 	 * Este metodo Ž responsavel por buscar um Projeto dado um nome
 	 */
-	public Project find(String name) {
-		String sql = "from Project u where u.name = :name";
-		Query query = this.session.createQuery(sql).setParameter("name", name);
-		return (Project) query.uniqueResult();
+	public Project find(Long id) {
+		return (Project) session.get(Project.class, id);
 	}
 
 	/**

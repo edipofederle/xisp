@@ -23,7 +23,7 @@ public class TypeStoryDao implements TypeStoryRepository {
 	}
 
 
-	public TypeStory find(String name) {
+	public TypeStory find(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

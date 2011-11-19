@@ -24,11 +24,8 @@ public class UserDao  implements UserRepository{
 	}
 
 	
-	public User find(String name) {
-		String sql = "from User u where u.name = :string";
-		Query query = session.createQuery(sql).setParameter("string", name);
-
-		return (User) query.uniqueResult();
+	public User find(Long id) {
+		return (User) session.get(User.class, id);
 	}
 
 	public void add(User user) {

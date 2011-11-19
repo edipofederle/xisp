@@ -2,7 +2,6 @@ package br.com.xisp.persistence;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 import br.com.caelum.vraptor.ioc.Component;
@@ -22,10 +21,8 @@ public class ClientDao implements ClientRepository {
 		this.session = session;
 	}
 
-	public Client find(String name) {
-		String sql = "from Client u where u.name = :name";
-		Query query = this.session.createQuery(sql).setParameter("name", name);
-		return (Client) query.uniqueResult();
+	public Client find(Long id) {
+		return (Client) session.get(Client.class, id);
 	}
 
 	public void add(Client t) {

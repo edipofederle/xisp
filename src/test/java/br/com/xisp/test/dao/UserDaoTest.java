@@ -35,12 +35,7 @@ public class UserDaoTest {
 		dao = new UserDao(session);
 		pdao = new ProjectDao(session);
 	}
-	
-	@Test
-	public void shouldAddAUser(){
-		User user = givenAUser();
-		assertThat(dao.find("edipo2"), is(user));
-	}
+
 	
 	@Test
 	public void shouldUpdateAUser(){
@@ -64,7 +59,7 @@ public class UserDaoTest {
 	@Test
 	public void shouldLoadUser(){
 		User user = givenAUser();
-		Assert.assertNotNull(dao.find(user.getName()));
+		Assert.assertNotNull(dao.find(user.getId()));
 	}
 	
 	@SuppressWarnings("unused")

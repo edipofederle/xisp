@@ -7,6 +7,8 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.InterationSession;
+import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 /**
  * @author edipo
@@ -19,11 +21,15 @@ public class LoginController {
 	private Result result;
 	private UserRepository userDao;
 	private UserSession userSession;
+	private InterationSession sessionInteretion;
+	private ProjectSession sessionProject;
 	
-	public LoginController(Result result, UserRepository userDao, UserSession userSession) {
+	public LoginController(Result result, UserRepository userDao, UserSession userSession, InterationSession sessionInteretion, ProjectSession sessionProject ) {
         this.result = result;
         this.userDao = userDao;
         this.userSession = userSession;
+        this.sessionInteretion = sessionInteretion;
+        this.sessionProject = sessionProject;
     }
 	
 	@Get
@@ -53,6 +59,8 @@ public class LoginController {
 	    @Path("/login/logout")
 	    public void logout() {
 	        userSession.setUser(null);
+	        sessionInteretion.setInteration(null);
+	        sessionProject.setProject(null);
 	        result.redirectTo(this).login();
 	    }
 }

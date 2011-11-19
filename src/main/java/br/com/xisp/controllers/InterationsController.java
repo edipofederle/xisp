@@ -2,6 +2,7 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import br.com.xisp.session.ProjectSession;
 public class InterationsController {
 	
 	private InteractionRepository interationRepo;
+	private ProjectRepository projectRepo;
 	private ProjectSession projectSession;
 	private StoryRepository storyRepo;
 	private final Result result;
@@ -35,6 +37,7 @@ public class InterationsController {
 	public InterationsController(InteractionRepository interationRepo, ProjectRepository projectRepo,
 			ProjectSession projectSession,InterationSessionImpl sessionInteration,  StoryRepository storyRepo, Result result, Validator validator){
 		this.interationRepo = interationRepo;
+		this.projectRepo = projectRepo;
 		this.storyRepo = storyRepo;
 		this.projectSession = projectSession;
 		this.result = result;
@@ -129,5 +132,17 @@ public class InterationsController {
 	}
 	
 	public void errorIteration(){}
+	
+	@Path("/interations/getInterations/{project.id}")
+	public void getInterations(Project project){
+		List<Interation> listInterations = new ArrayList<Interation>();
+		Project projectt = this.projectRepo.find(project.getId());
+		
+		listInterations = this.interationRepo.showAllInterations(projectt);
+		
+		this.projectSession.setProject(projectt);
+		
+		result.use(json()).from(listInterations).serialize();
+	}
 	
 }

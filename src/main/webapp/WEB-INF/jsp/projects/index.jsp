@@ -1,16 +1,35 @@
 <%@ include file="../../../header.jsp" %> 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
 
 	$(document).ready(function() {
-		$(".useThisProject").click(function(){
-			$("a").removeClass("selectedProject");
-			var idProject =  $(this).attr('id');
-			$.getJSON("useProject/" +idProject,  function (json) {
-				$("span.projectTop").replaceWith(json.project.name);
-				$("a."+idProject).addClass("selectedProject");
+
+		
+		$("#selectProjets").change(function(){
+			$("#selectIteration").show();
+			var idProject = ($(this).find("option:selected").val());
+			if(idProject == 0)
+				return false;
+			else{
+				$('#selectIteration')[0].options.length = 0;
+				$.get("/xisp/interations/getInterations/"+idProject, function(json) {
+					$.each(json.list, function(index, value) {
+	                   	$("#selectIteration").append($("<option></option>").val(value.id).text(value.name));
+					});
+				});
+			}
+			$("#selectIteration").append($("<option></option>").val("selecione").text("Selecione uma iteracao"));
+		});
+
+
+		//Seleciona uma Iteracao, ao selecionar a iteracao mandar para o tela do quadro
+		$("#selectIteration").change(function(){
+			var idIteration = ($(this).find("option:selected").val());
+			$.get("/xisp/interations/setInteration/"+idIteration, function(json) {
 			});
 		});
+		
+		
 	});
 </script>
 
@@ -44,40 +63,19 @@
 <br />
 
 
-<c:forEach items="${projects}" var="project">
-	<div id="proj">
-		<span class="title">
-			<c:choose>
-				<c:when test="${currentProject.name == project.name}">
-					<b><a class="${project.id } selectedProject"  href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
-					<input type="hidden" value="${project.id }">
-				</c:when>
-				<c:otherwise>
-					<b><a class="${project.id }" href="${pageContext.request.contextPath}/projects/${ project.id }">${ project.name }</a></b>
-					<input type="hidden" value="${project.id }">
-				</c:otherwise>
-			</c:choose>
-		</span>
-		<small><a href="#" class="useThisProject" id="${project.id }"><fmt:message key="projects.usethis"/></a></small>
-	</div>
+<h4>Selecione um Projeto</h4>
+
+	<select id="selectProjets">
+		<option value="0" selected="selected">Selecione um Projeto</option>
+		<c:forEach items="${projects}" var="project">
+			<option value="${project.id }">${project.name }</option>
+		</c:forEach>
+	</select>
 	
-	<span id="actions">
-		<a href="${pageContext.request.contextPath}/stories/${project.id }/index"><fmt:message key="projects.userstories"/></a> |
-		<a href="${pageContext.request.contextPath}/interations/index"><fmt:message key="projects.iterations"/></a> |
-		<a href="#"><fmt:message key="proejcts.members"/></a> |
-		<a href="${pageContext.request.contextPath}/users/index"><fmt:message key="projects.users"/></a>
-		<b style="float: right;">
-			<c:choose>
-				<c:when test="${currentUser.name == project.owner.name }">
-					<fmt:message key="projects.you"/>
-				</c:when>
-				<c:otherwise>
-					${project.owner.name }
-				</c:otherwise>
-			</c:choose>
-		</b>
-	</span>
-	<br /><br />
-</c:forEach>
+	<select id="selectIteration" style="display: none;"></select>
+		
+	<form action="${pageContext.request.contextPath}/stories/board" method="post"  id="formBoard">
+		<input type="submit" name="submit" class="btn primary"/>
+	</form>
 	
 <%@ include file="../../../footer.jsp" %> 

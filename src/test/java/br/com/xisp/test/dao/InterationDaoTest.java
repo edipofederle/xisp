@@ -46,7 +46,6 @@ public class InterationDaoTest {
 		Interation i = givenAInteration("One 2", p);
 		dao.add(i);
 		this.session.flush();
-		Assert.assertEquals("One 2",dao.find("One 2").getName());
 	}
 	
 	@Test

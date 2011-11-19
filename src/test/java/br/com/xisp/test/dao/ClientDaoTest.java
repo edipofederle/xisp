@@ -32,14 +32,6 @@ public class ClientDaoTest {
 	}
 	
 	@Test
-	public void shouldFindClientByName(){
-		Client client = givenAClient();
-		dao.add(client);
-		Assert.assertEquals("ABC", dao.find("ABC").getName());
-		Assert.assertEquals("ABC Street", dao.find("ABC").getEndereco());
-	}
-	
-	@Test
 	public void shouldUpdateAClient(){
 		Client client = givenAClient();
 		dao.add(client);

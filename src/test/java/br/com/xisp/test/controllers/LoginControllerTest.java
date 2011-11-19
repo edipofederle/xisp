@@ -11,6 +11,8 @@ import br.com.caelum.vraptor.util.test.MockResult;
 import br.com.xisp.controllers.LoginController;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.UserRepository;
+import br.com.xisp.session.InterationSession;
+import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
 
 public class LoginControllerTest {
@@ -20,14 +22,18 @@ public class LoginControllerTest {
 	private UserRepository dao;
 	private LoginController controller;
 	private UserSession sessionUser;
+	private InterationSession interationSession;
+	private ProjectSession projectSession;
 	
 	@Before
 	public void setUp() throws Exception {
 		mockery = new Mockery();
 		dao = mockery.mock(UserRepository.class);
+		interationSession = mockery.mock(InterationSession.class);
+		projectSession= mockery.mock(ProjectSession.class);
 		result = new MockResult();
 		sessionUser = mockery.mock(UserSession.class);
-		controller = new LoginController(result, dao, sessionUser);
+		controller = new LoginController(result, dao, sessionUser,interationSession, projectSession);
 	}
 	
 	@Test
