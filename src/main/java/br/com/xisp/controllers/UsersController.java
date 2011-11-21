@@ -1,4 +1,8 @@
 package br.com.xisp.controllers;
+import static br.com.caelum.vraptor.view.Results.json;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -10,6 +14,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.xisp.models.User;
+import br.com.xisp.models.UserTemp;
 import br.com.xisp.repository.UserRepository;
 
 @Resource
@@ -100,6 +105,23 @@ public class UsersController {
 	@Get
 	public User edita(User user) {
 		return repository.load(user);
+	}
+	
+	@Path("/users/getAllUsers/")
+	public void getAllUsers(){
+		List<User> listUsers = new ArrayList<User>();
+		List<UserTemp> listUsers2 = new ArrayList<UserTemp>();
+		listUsers = this.repository.showAll();
+		
+		for (User user : listUsers) {
+			UserTemp u = new UserTemp();
+			u.setId(user.getId());
+			u.setName(user.getName());
+			listUsers2.add(u);
+			
+		}
+		
+		result.use(json()).from(listUsers2).serialize();
 	}
 		
 }

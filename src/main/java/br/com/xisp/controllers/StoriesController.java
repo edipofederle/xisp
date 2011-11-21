@@ -177,7 +177,12 @@ public class StoriesController {
 			if (story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
 				finished.add(story);
 		}
-
+		
+		//Recupera Todas as Iteracoes
+		List<Interation> listIterations = 	this.interationRepository.showAllInterations(this.projectSession.getProject());
+	
+		
+		result.include("iterations", listIterations);
 		result.include("noStarted", noStarted);
 		result.include("inDev", inDev);
 		result.include("readyTest", readyTest);
@@ -263,7 +268,7 @@ public class StoriesController {
 	 * element_id id da estoria a ser atualizada
 	 * atributo = atributo da estoria a ser atualizado
 	 * 
-	 * Método chamado via ajax, resultado devolvido para a view pelo update.jsp
+	 * Método chamado via ajax, resultado devolvido para a view pelo updateDescription.jsp
 	 */
 	@Path("/stories/updateDescription")
 	public void updateDescription(String newvalue, Long elementid, String atributo){
@@ -275,5 +280,32 @@ public class StoriesController {
 		this.repository.update(story);
 		
 		result.include("storyContent", newvalue);
+	}
+	
+	/**
+	 * 
+	 * @param update_value 
+	 * @param element_id
+	 * @param atributo
+	 * 
+	 * update_value novo nome do atributo
+	 * element_id id da estoria a ser atualizada
+	 * atributo = atributo da estoria a ser atualizado
+	 * 
+	 * Método chamado via ajax, resultado devolvido para a view pelo update.jsp
+	 */
+	@Path("/stories/updateName")
+	public void updateName(String newvalue, Long elementid, String atributo){
+		System.out.println(newvalue + " " + elementid + " " + atributo);
+		
+		//Chama método de atualizao montando a query dinamicamente
+		Story story = this.repository.find(elementid);
+		if(!newvalue.isEmpty())
+			story.setName(newvalue);
+		this.repository.update(story);
+		if(!newvalue.isEmpty())
+			result.include("storyContent", newvalue);
+		else
+			result.include("storyContent", story.getName());
 	}
 }

@@ -130,6 +130,7 @@ h2.loginTitle{
 <head>
 	<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.validate.js"></script>
+	   	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.puts.js"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -146,12 +147,13 @@ h2.loginTitle{
 				}
 			}
 			});
+				$("#email").puts("E-mail");
+				$("#password").puts("Senha");
 		});
 	</script>
 </head>
-<h2 class="loginTitle"><fmt:message key="xisp.login"/></h2><Br />
+<h2 class="loginTitle">XISP</h2><Br />
 <div id="content-login">
-	
 	<div id="align-login">
 		
 		<form action="${pageContext.request.contextPath}/login/login" method="post" id="formLogin">

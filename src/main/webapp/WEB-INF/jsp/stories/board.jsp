@@ -6,14 +6,16 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Xisp - Estorias - Quadro</title>
-	    <link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
-	  <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet"/>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.minToFrag.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/interface.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery.jeditable.js"></script>
-
+	<script src="${pageContext.request.contextPath}/js/jquery.jeditable.autogrow.js"></script>
   	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src="${pageContext.request.contextPath}/js/jquery.autogrowtextarea.js"></script>
+		
 	<style>
 	
 	body{
@@ -145,14 +147,19 @@
 			padding-left:55px;
 		}
 		
+		.editName{
+			width: 580px;
+		}
 		
+		#selectIteracao{margin-top:3px;}
 		
 	</style>
 	<script>
 
 		
 		$(document).ready(function() {
-
+	
+			
 			$('div.story').Draggable({
 				ghosting: true,
 				opacity: 0.7,
@@ -226,19 +233,47 @@
 			}
 
 			$(".story").click(function(){
-				$("."+this.id).dialog({ width: 600 });
+				$("."+this.id).dialog({ width: 640 });
 			});
-	
-			
-		     $('.editPlaceDesription').editable('${pageContext.request.contextPath}/stories/updateDescription', { 
-		         type      : 'textarea',
-		         cancel    : 'Cancelar |',
-		         submit    : 'Salvar ',
-		         id   : 'elementid',
-		         name : 'newvalue',
-		         indicator : '<img src="${pageContext.request.contextPath}/img/indicator.gif">',
-		         tooltip   : 'Clique para editar...'
-		     });
+
+		    
+		    $(".autogrow").editable("/xisp/stories/updateDescription", { 
+		        indicator : "<img src='${pageContext.request.contextPath}/img/indicator.gif'>",
+		        type      : "autogrow",
+		        submit    : 'OK ',
+		        cancel    : ' cancel',
+		        tooltip   : "Clique para editar...",
+		        onblur    : "ignore",
+		        id   : 'elementid',
+		        name : 'newvalue',
+		        autogrow : {
+		           lineHeight : 16,
+		           minHeight  : 32
+		        }
+		    });
+		    
+		    //Edit in Place para Nome da Estoria
+			    $('.editName').editable('/xisp/stories/updateName', { 
+			        id   : 'elementid',
+			        name : 'newvalue',
+			        type      : "autogrow",
+			        submit    : 'OK ',
+			        cancel    : ' cancel',
+			        indicator : "<img src='${pageContext.request.contextPath}/img/indicator.gif'>",
+			         tooltip   : 'Clique para editar...',
+			         autogrow : {
+				           lineHeight : 16,
+				           minHeight  : 32
+				        }
+			    });
+		    
+		    //Mudar de Iteracao
+		    $("#selectIteracao").change(function(){
+				var idIteration = ($(this).find("option:selected").val());
+				$.get("/xisp/interations/setInteration/"+idIteration, function(json) {
+				});
+
+			});
 			
 		});
 
@@ -256,6 +291,22 @@
             <li><a href="${pageContext.request.contextPath}/interations/index"><fmt:message key="projects.iterations"/></a></li>
             <li><a href="${pageContext.request.contextPath}/users/index"><fmt:message key="projects.users"/></a></li>
           	<li><b><a class="${project.id }" href="${pageContext.request.contextPath}/projects/${ currentProject.id }">${ currentProject.name }</a></li>
+          	<form action="${pageContext.request.contextPath}/stories/board" method="post"  id="formBoard">
+				<select id="selectIteracao">
+	       			<option>Iteracoes Disponiveis</option>
+	       			<c:forEach items="${iterations }" var="i">
+	       				<c:if test="${i.done }">
+	       					<option value="${i.id }"> ${i.name } - <b>Fechada</b></option> 
+						</c:if>
+						<c:if test="${not i.done}">
+	       					<option value="${i.id }"> ${i.name }</option> 
+						</c:if>
+	       			</c:forEach>
+	       		</select>
+       		<input type="submit" name="submit" class="usarProject" value="Usar"/>
+			</form>
+
+
           </ul>
         </div>
       </div>
@@ -265,20 +316,20 @@
 	
 		<div id="pronta_para_dev">
 			<b class="pronta_para_dev"></b>
-			<small id="info">Prontas para Dev</small>
+			<b><small id="info">Prontas para Dev</small></b>
 			<c:forEach items="${noStarted }" var="un">
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
 					<h1 style="float: right;">10</h1>
-					<small><b>Nome:</b> ${un.name }</small><br />
+					<h4 class="editName" id="${un.id }">${un.name }</h4><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
-					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
+					<small><b class="editable">Atribuida a:</b> ${un.assignedTo.name }</small><br />
 					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
 					<small><b>Criado por:</b>${un.createdBy.name}</small><Br />
 					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
 					
 					<small><b>Estoria:</b></small>
-					<p class="editPlaceDesription" id="${un.id }">${ un.description }</p>
+					<p class="autogrow" id="${un.id }">${ un.description }</p>
 					
 					<small><b>Teste de Aceitacao:</b></small>
 					<p>${un.test.test }</p>
@@ -294,7 +345,7 @@
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
 					<h1 style="float: right;">10</h1>
-					<small><b>Nome:</b> ${un.name }</small><br />
+					<h4 class="editName" id="${un.id }">${un.name }</h4><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
 					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
@@ -302,7 +353,7 @@
 					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
 					
 					<small><b>Estoria:</b></small>
-					<p style="text-align: justify;">${ un.description }</p>
+					<p class="editPlaceDesription" id="${un.id }">${ un.description }</p>
 					
 					<small><b>Teste de Aceitacao:</b></small>
 					<p>${un.test.test }</p>
@@ -319,7 +370,7 @@
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
 					<h1 style="float: right;">10</h1>
-					<small><b>Nome:</b> ${un.name }</small><br />
+					<h4 class="editName" id="${un.id }">${un.name }</h4><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
 					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
@@ -327,7 +378,7 @@
 					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
 					
 					<small><b>Estoria:</b></small>
-					<p style="text-align: justify;">${ un.description }</p>
+					<p class="editPlaceDesription" id="${un.id }">${ un.description }</p>
 					
 					<small><b>Teste de Aceitacao:</b></small>
 					<p>${un.test.test }</p>
@@ -342,7 +393,7 @@
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
 					<h1 style="float: right;">10</h1>
-					<small><b>Nome:</b> ${un.name }</small><br />
+					<h4 class="editName" id="${un.id }">${un.name }</h4><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
 					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
@@ -350,7 +401,7 @@
 					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
 					
 					<small><b>Estoria:</b></small>
-					<p style="text-align: justify;">${ un.description }</p>
+					<p class="editPlaceDesription" id="${un.id }">${ un.description }</p>
 					
 					<small><b>Teste de Aceitacao:</b></small>
 					<p>${un.test.test }</p>
@@ -365,7 +416,7 @@
 				<div class="story" id="${un.id }">${un.name }</div>
 				<div class="${un.id } storyDialog" title="${un.name }" style="display: none;">
 					<small style="float: right;">10</small>
-					<small><b>Nome:</b> ${un.name }</small><br />
+					<h4 class="editName" id="${un.id }">${un.name }</h4><br />
 					<small><b>Complexidade:</b> ${un.complexity }</small><br />
 					<small><b>Atribuida a:</b> ${un.assignedTo.name }</small><br />
 					<small><b>Iteracao:</b> ${un.interation.name } </small><br />
@@ -373,7 +424,7 @@
 					<small><b>Tipo:</b>${un.typeStory.type }</small><hr>
 					
 					<small><b>Estoria:</b></small>
-					<p style="text-align: justify;">${ un.description }</p>
+					<p class="editPlaceDesription" id="${un.id }">${ un.description }</p>
 					
 					<small><b>Teste de Aceitacao:</b></small>
 					<p>${un.test.test }</p>
@@ -384,6 +435,6 @@
 		
 		<div id="teste"></div>
 	</div>
+	
 	</body>
 </html>
-

@@ -1,8 +1,22 @@
 <%@ include file="../../../header.jsp" %> 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-1.6.4.min.js"></script>
 <script>
 
 	$(document).ready(function() {
+		
+		//Clique no botao Usar
+		$(".usarProject").click(function(){
+			if($("#selectProjets").find("option:selected").val() == "selecione"){
+				alert("Selecione primeiro um projeto");
+				return false;
+			}
+			if($("#selectIteration").find("option:selected").val() == "selecione"){
+				alert("Selecione uma iteracao");
+				return false;
+			}
+			
+			$("#formBoard").submit();
+		});
 
 		
 		$("#selectProjets").change(function(){
@@ -63,19 +77,19 @@
 <br />
 
 
-<h4>Selecione um Projeto</h4>
+<h4>Selecione um Projeto</h4> 
 
 	<select id="selectProjets">
-		<option value="0" selected="selected">Selecione um Projeto</option>
+		<option value="selecione" selected="selected">Selecione um Projeto</option>
 		<c:forEach items="${projects}" var="project">
 			<option value="${project.id }">${project.name }</option>
 		</c:forEach>
 	</select>
 	
-	<select id="selectIteration" style="display: none;"></select>
+	<select id="selectIteration" style="display: none;"></select> <br /><br />
 		
 	<form action="${pageContext.request.contextPath}/stories/board" method="post"  id="formBoard">
-		<input type="submit" name="submit" class="btn primary"/>
+		<input type="submit" name="submit" class="btn primary usarProject" value="Usar"/>
 	</form>
 	
 <%@ include file="../../../footer.jsp" %> 
