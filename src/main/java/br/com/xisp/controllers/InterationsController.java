@@ -14,6 +14,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.xisp.auxajax.SetInteration;
 import br.com.xisp.models.Interation;
 import br.com.xisp.models.Project;
 import br.com.xisp.models.Story;

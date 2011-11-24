@@ -13,6 +13,8 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.xisp.auxajax.ResultChangeStory;
+import br.com.xisp.auxajax.Status;
 import br.com.xisp.models.AcceptenceTest;
 import br.com.xisp.models.History;
 import br.com.xisp.models.Interation;
@@ -242,8 +244,8 @@ public class StoriesController {
 
 	@Path("/stories/history/{story.id}")
 	public void findStoryHistory(Story story) {
-	//	Story s = this.repository.find(story.getId());
-	//	result.include("story", s);
+		Story s = this.repository.find(story.getId());
+		result.include("story", s);
 
 	}
 
