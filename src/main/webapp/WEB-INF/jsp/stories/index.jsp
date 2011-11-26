@@ -51,19 +51,38 @@ $(document).ready(function(){
         </thead>
         <tbody>
         <c:forEach items="${stories }" var="uss">
-	        <tr>
-	            <td>${uss.id}</td>
-	            <td>${uss.name}</td>
-	            <td>${uss.status}</td>
-	            <td>${uss.interation.name}</td>
-	            <td><a href="${pageContext.request.contextPath}/stories/history/${uss.id}">Exibir Historico</a></td>
-	            <td>
-	           		<form action="${pageContext.request.contextPath}/stories/${uss.id}" method="post">
-						<input type="hidden" name="_method" value="delete"/>
-						<button class="btn small" type="submit"  onclick="return confirm('Voce tem certeza?')">Remover</button>
-					</form>            	
-	            </td>
-	        </tr>
+	        <c:choose>
+	        	<c:when test="${not empty uss.endAt  }">
+		        	<tr class="green">
+			            <td>${uss.id}</td>
+			            <td>${uss.name}</td>
+			            <td>${uss.status}</td>
+			            <td>${uss.interation.name}</td>
+			            <td><a href="${pageContext.request.contextPath}/stories/history/${uss.id}">Exibir Historico</a></td>
+			            <td>
+			           		<form action="${pageContext.request.contextPath}/stories/${uss.id}" method="post">
+								<input type="hidden" name="_method" value="delete"/>
+								<button class="btn small" type="submit"  onclick="return confirm('Voce tem certeza?')">Remover</button>
+							</form>            	
+			            </td>
+			        </tr>
+	        	</c:when>
+	        	<c:when test="${empty uss.endAt }">
+			        <tr>
+			            <td>${uss.id}</td>
+			            <td>${uss.name}</td>
+			            <td>${uss.status}</td>
+			            <td>${uss.interation.name}</td>
+			            <td><a href="${pageContext.request.contextPath}/stories/history/${uss.id}">Exibir Historico</a></td>
+			            <td>
+			           		<form action="${pageContext.request.contextPath}/stories/${uss.id}" method="post">
+								<input type="hidden" name="_method" value="delete"/>
+								<button class="btn small" type="submit"  onclick="return confirm('Voce tem certeza?')">Remover</button>
+							</form>            	
+			            </td>
+			        </tr>
+		       	</c:when>
+		     </c:choose>
          </c:forEach>
          </tbody>
       </table>

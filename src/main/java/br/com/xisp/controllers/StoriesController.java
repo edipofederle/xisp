@@ -222,6 +222,7 @@ public class StoriesController {
 
 		if (status.getName().equals("em_dev")) {
 			us.setStatus(br.com.xisp.models.Status.IN_DEV);
+			us.setStartedAt(new Date());
 		}
 		if (status.getName().equals("pronta_para_dev")) {
 			us.setStatus(br.com.xisp.models.Status.NOSTARTED);

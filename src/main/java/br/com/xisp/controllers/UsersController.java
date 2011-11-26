@@ -83,14 +83,14 @@ public class UsersController {
 	
 	@Path("/users/{user.id}")
 	@Delete
-	public void remove(User user) throws Exception {
+	public void remove(User user){
 		boolean error = true;
 		
 		try{
 			repository.remove(user);
 		}catch (Exception e) {
 			error = true;
-			result.include("erroDeleteUser","Usuario nao pode ser deletado.");
+			result.include("erroDeleteUser","Ocorre um erro.");
 			result.forwardTo(ErrorsController.class).index();
 		}
 		if(!error){

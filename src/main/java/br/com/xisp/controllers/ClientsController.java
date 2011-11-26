@@ -86,7 +86,7 @@ public class ClientsController {
 			repo.remove(client);
 		}catch (Exception e) {
 			error = true;
-			result.include("erroDeleteClient","Erro ao deletar cliente, este cliente esta ligado ao um projeto logo nao Ž possivel remover o mesmo. Se realmente quizer fazer isso, primeiro remova o projeto.");
+			result.include("erroDeleteClient","Um erro ocorreu");
 			result.forwardTo(ErrorsController.class).index();
 		}
 		if(!error){

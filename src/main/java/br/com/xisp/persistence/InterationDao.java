@@ -47,6 +47,7 @@ public class InterationDao implements InteractionRepository {
 
 	public void remove(Interation t) throws SQLException, Exception {
 		this.session.delete(t);
+		this.session.flush();
 	}
 	
 	/**

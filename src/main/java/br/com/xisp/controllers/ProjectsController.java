@@ -25,6 +25,7 @@ import br.com.xisp.repository.UserRepository;
 import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.ProjectSession;
 import br.com.xisp.session.UserSession;
+import br.com.xisp.utils.StoryUtil;
 
 /**
  * O resource <code>ProjectsController</code> manipula todas as operaçoes com
@@ -154,14 +155,14 @@ public class ProjectsController {
 
 		int finished = 0;
 
-		/*for (Story story : list) {
+		for (Story story : list) {
 			if (story.getStatus().equals(br.com.xisp.models.Status.FINISHED))
 				finished++;
-		}*/
+		}
 
 		result.include("users", userRepository.usersWithoutProjects(project));
-		//result.include("avg", StoryUtil.calculeAvgForStories(list));
-		//result.include("qntFinalizadas", finished);
+		result.include("avg", StoryUtil.calculeAvgForStories(list));
+		result.include("qntFinalizadas", finished);
 		Project p = repository.load(project);
 		projectSession.setProject(p);
 		return p;

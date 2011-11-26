@@ -2,6 +2,7 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,11 +101,26 @@ public class InterationsController {
 	
 
 	@Path("/interations/remove/{interation.id}")
-	public void remove(Interation interation) throws Exception {
-		this.interationRepo.remove(interation);
-		result.include("success", true);
-		result.include("message", "<strong>Sucesso!</strong> Iteracao deletada com sucesso.");
-		result.use(logic()).redirectTo(InterationsController.class).index();
+	public void remove(Interation interation){
+		boolean error = false;
+		
+		try {
+			this.interationRepo.remove(interation);
+		} catch (SQLException e) {
+			error = true;
+			result.include("errorSql", "Nao foi possivel deletar a iteracao.");
+			result.forwardTo(ErrorsController.class).index();
+		} catch (Exception e) {
+			error = true;
+			result.include("errorGeral", "Um erro ocorreu");
+			result.forwardTo(ErrorsController.class).index();
+		}
+		if(!error){
+			result.include("success", true);
+			result.include("message", "<strong>Sucesso!</strong> Iteracao deletada com sucesso.");
+			result.use(logic()).redirectTo(InterationsController.class).index();
+		}
+
 	}
 	
 

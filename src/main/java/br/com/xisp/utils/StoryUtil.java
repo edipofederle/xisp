@@ -24,7 +24,7 @@ public class StoryUtil {
 			}
 		}
 		if(numberStoriesFinished > 0)
-			return "Media de dias estorias finalizadas: " + Math.abs(time/numberStoriesFinished) + ".";
+			return "Uma media de " + Math.abs(time/numberStoriesFinished) + " dias para finalizar " + numberStoriesFinished + " estorias";
 		else
 			return "";
 		}

@@ -40,7 +40,7 @@
 				<td>
 					<form action="${pageContext.request.contextPath}/clients/${client.id}" method="post">
 						<input type="hidden" name="_method" value="delete"/>
-						<button class="btn small" type="submit"  onclick="return confirm('Are you sure?')"><fmt:message key="client.table.remove"/></button>
+						<button class="btn small" type="submit"  onclick="return confirm('Voce tem certeza?')"><fmt:message key="client.table.remove"/></button>
 					</form>
 				</td>
 				<td>

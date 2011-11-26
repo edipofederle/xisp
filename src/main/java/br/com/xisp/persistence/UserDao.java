@@ -38,6 +38,7 @@ public class UserDao  implements UserRepository{
 
 	public void remove(User t) {
 		this.session.delete(t);		
+		this.session.flush();
 	}
 
 	public User load(User user) {

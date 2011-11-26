@@ -1,5 +1,6 @@
 <%@ include file="../../../header_site.jsp" %> 
 
+
 <c:forEach items="${errors}" var="error">
 	<b class="error">${error.category } - ${error.message }</b><br />
 </c:forEach>
@@ -8,14 +9,8 @@
 <br />
 	<p><fmt:message key="projects.show.informations"/></p><hr>
 	<div id="infosProject" style="padding-left: 40px;">
-		<b>${avg } - ${qntFinalizadas } <fmt:message key="projects.attime"></fmt:message> <Br /><Br />
-		<b><fmt:message key="projects.show.avg"/></b>
+		<b>${avg }<Br /><Br />
 	</div><Br /><br />
-	
-	
-	<p>Charts</p><hr>
-	<br />
-	<Br/>
 	
 	<p><fmt:message key="project.show.add"/></p>
 	
