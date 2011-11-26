@@ -111,7 +111,7 @@ public class StoryTest {
 		List<Story> list = new ArrayList<Story>();
 		list.add(s1);
 		
-		Assert.assertEquals("Media de dias estorias finalizadas: 3.",StoryUtil.calculeAvgForStories(list));
+		Assert.assertEquals("Uma media de 3 dias para finalizar 1 estorias",StoryUtil.calculeAvgForStories(list));
 		
 	}
 	
@@ -132,7 +132,7 @@ public class StoryTest {
 		list.add(s1);
 		list.add(s2);
 		
-		Assert.assertEquals("Media de dias estorias finalizadas: 3.",StoryUtil.calculeAvgForStories(list));
+		Assert.assertEquals("Uma media de 3 dias para finalizar 1 estorias",StoryUtil.calculeAvgForStories(list));
 		
 	}
 	
@@ -155,7 +155,7 @@ public class StoryTest {
 		list.add(s1);
 		list.add(s2);
 		
-		Assert.assertEquals("Media de dias estorias finalizadas: 6.", StoryUtil.calculeAvgForStories(list));
+		Assert.assertEquals("Uma media de 6 dias para finalizar 2 estorias", StoryUtil.calculeAvgForStories(list));
 		
 	}
 
