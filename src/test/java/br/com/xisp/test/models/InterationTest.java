@@ -10,22 +10,6 @@ import br.com.xisp.models.Interation;
 
 public class InterationTest {
 	
-	@Test
-	public void interationShouldBeCurrentCreatedYesterday(){
-		Interation interation = new Interation();
-		interation.setName("Current Interation");
-		
-		Date minhaData = new Date();  
-		Calendar calendar = Calendar.getInstance();  
-		calendar.setTime(minhaData);
-		// incrementa minha data mais sete dias  
-		calendar.add(Calendar.DAY_OF_MONTH, -1); 
-		
-		interation.setStartDate(calendar.getTime());
-		interation.setEndDate(new Date());
-		Assert.assertTrue(interation.isCurrent());
-	}
-	
 	
 	@Test
 	public void interationShouldBeCurrentCreatedNow(){

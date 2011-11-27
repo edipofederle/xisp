@@ -1,7 +1,10 @@
 package br.com.xisp.test.controllers;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -18,7 +21,7 @@ import br.com.xisp.models.Project;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
-import br.com.xisp.session.InterationSessionImpl;
+import br.com.xisp.session.InterationSession;
 import br.com.xisp.session.ProjectSession;
 
 public class InterationControllerTest {
@@ -33,7 +36,7 @@ public class InterationControllerTest {
 	private InterationsController controller;
 	private StoryRepository storyRepo;
 	private Project project;
-	private InterationSessionImpl sessionInteration;
+	private InterationSession sessionInteration;
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,23 +47,103 @@ public class InterationControllerTest {
 		interationRepo = mockery.mock(InteractionRepository.class);
 		storyRepo = mockery.mock(StoryRepository.class);
 		projectSession = mockery.mock(ProjectSession.class);
+		sessionInteration = mockery.mock(InterationSession.class);
 		result = new MockResult();
 		controller = new InterationsController(interationRepo,projectRepo,projectSession, sessionInteration, storyRepo, result, new MockValidator());
 	}
 	
 	@Test
 	public void shouldCreateInteration(){
-		Interation interationOne = givenAInteration("One Interation", project);
+		final Interation interationOne = givenAInteration("One Interation", project);
 		willCreateANewInteration(interationOne);
+		mockery.checking(new Expectations() {
+			{
+				one(interationRepo).add(interationOne);
+			}
+		});
 		controller.save(interationOne);
 		Assert.assertNotNull(result.included("successInteration"));
 	}
+	
+	@Test
+	public void shouldTestIndexMethd(){
+		final Project p = givenAProject();
+		mockery.checking(new Expectations() {
+			{
+				one(projectSession).getProject();
+				will(returnValue(p));
+				one(interationRepo).showAllInterations(p);
+				List<Interation> listIteracoes = new ArrayList<Interation>();
+				Interation i = givenAInteration("Teste", p);
+				Interation i2 = givenAInteration("Teste", p);
+				i2.setEndDate(null);
+				i.setEndDate(new Date());
+				listIteracoes.add(i);
+				listIteracoes.add(i2);
+				will(returnValue(((listIteracoes))));
+				
+			}
+		});
+		controller.index();
+	}
+	
+	@Test
+	public void shouldShowIteration(){
+		final Project p = givenAProject();
+		final Interation i = givenAInteration("Iteracao", p);
+		mockery.checking(new Expectations() {
+			{
+				one(interationRepo).load(i);will(returnValue(i));
+				one(projectSession).getProject();will(returnValue(p));
+				one(storyRepo).showAllStories(p,i);
+			}
+		});
+		controller.show(i);
+	}
+	
+	@Test
+	public void shouldRemoveIteration() throws Exception{
+		Project p = givenAProject();
+		final Interation i = givenAInteration("teste", p);
+		mockery.checking(new Expectations() {
+			{
+				one(interationRepo).remove(i);
+			}
+		});
+		controller.remove(i);
+	}
+	
+	@Test
+	public void shouldNOtRemoveIterationSQLException() throws Exception{
+		Project p = givenAProject();
+		final Interation i = givenAInteration("teste", p);
+		mockery.checking(new Expectations() {
+			{
+				one(interationRepo).remove(i);will(returnValue(SQLException.class));
+			}
+		});
+		controller.remove(i);
+	}
+	
+	@Test
+	public void shouldSetInterationIntoSession(){
+		final Interation i = givenAInteration("Teste", givenAProject());
+		mockery.checking(new Expectations() {
+			{
+				one(interationRepo).load(with(any(Interation.class)));will(returnValue(i));
+				one(sessionInteration).setInteration(i);
+			}
+		});
+		controller.setInteration(i);
+	}
+	
+	
 	
 	private void willCreateANewInteration(final Interation interation) {
 		mockery.checking(new Expectations() {
 			{
 				one(projectSession).getProject();will(returnValue(project));
-				one(interationRepo).add(interation);
+				one(sessionInteration).setInteration(interation);
 			}
 		});
 	}

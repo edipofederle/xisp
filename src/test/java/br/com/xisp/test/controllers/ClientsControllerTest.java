@@ -101,7 +101,22 @@ public class ClientsControllerTest {
 		Assert.assertNull(repo.load(client));
 	}
 	
-
+	@Test
+	public void shouldRedirectToNewClient(){
+		controller.neww();
+	}
+	
+	@Test
+	public void shouldNotRemoveAClientWhenInUse() throws Exception{
+		final Client client = givenAClient();
+		mockery.checking(new Expectations() {
+			{
+				one(repo).remove(client);
+				will(returnValue(new Exception()));
+			}
+		});
+		controller.remove(client);
+	}
 
 	private void willRemoveACliente(final Client client) throws Exception {
 		mockery.checking(new Expectations() {

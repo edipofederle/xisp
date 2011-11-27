@@ -80,7 +80,7 @@ public class ClientsController {
 	
 	@Path("/clients/{client.id}")
 	@Delete
-	public void remove(Client client) throws Exception{
+	public void remove(Client client){
 		boolean error = false;
 		try{
 			repo.remove(client);

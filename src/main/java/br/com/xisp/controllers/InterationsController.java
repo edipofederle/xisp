@@ -2,7 +2,6 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +22,6 @@ import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ProjectRepository;
 import br.com.xisp.repository.StoryRepository;
 import br.com.xisp.session.InterationSession;
-import br.com.xisp.session.InterationSessionImpl;
 import br.com.xisp.session.ProjectSession;
 
 @Resource
@@ -37,7 +35,7 @@ public class InterationsController {
 	private InterationSession sessionInteration;
 	
 	public InterationsController(InteractionRepository interationRepo, ProjectRepository projectRepo,
-			ProjectSession projectSession,InterationSessionImpl sessionInteration,  StoryRepository storyRepo, Result result, Validator validator){
+			ProjectSession projectSession,InterationSession sessionInteration,  StoryRepository storyRepo, Result result, Validator validator){
 		this.interationRepo = interationRepo;
 		this.projectRepo = projectRepo;
 		this.storyRepo = storyRepo;
@@ -50,7 +48,8 @@ public class InterationsController {
 	 * Apesar Redireciona para interations/index.jsp
 	 */
 	public void index(){
-		List<Interation> listai = interationRepo.showAllInterations(projectSession.getProject());
+		Project psession = projectSession.getProject();
+		List<Interation> listai = interationRepo.showAllInterations(psession);
 		
 		int totalIterations = listai.size();
 		int totalDone = 0;
@@ -106,10 +105,6 @@ public class InterationsController {
 		
 		try {
 			this.interationRepo.remove(interation);
-		} catch (SQLException e) {
-			error = true;
-			result.include("errorSql", "Nao foi possivel deletar a iteracao.");
-			result.forwardTo(ErrorsController.class).index();
 		} catch (Exception e) {
 			error = true;
 			result.include("errorGeral", "Um erro ocorreu");
@@ -120,7 +115,6 @@ public class InterationsController {
 			result.include("message", "<strong>Sucesso!</strong> Iteracao deletada com sucesso.");
 			result.use(logic()).redirectTo(InterationsController.class).index();
 		}
-
 	}
 	
 
@@ -130,7 +124,6 @@ public class InterationsController {
 		Interation inte = this.interationRepo.load(interation);
 		SetInteration i = new SetInteration();
 		i.setName(inte.getName());
-		System.out.println("Setando iteracao " + interation.getId());
 		this.sessionInteration.setInteration(inte);
 		result.use(json()).from(i).serialize();
 	}

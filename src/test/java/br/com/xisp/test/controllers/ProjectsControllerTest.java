@@ -16,7 +16,6 @@ import br.com.xisp.controllers.ProjectsController;
 import br.com.xisp.mail.Mailer;
 import br.com.xisp.models.Client;
 import br.com.xisp.models.Project;
-import br.com.xisp.models.Story;
 import br.com.xisp.models.User;
 import br.com.xisp.repository.ClientRepository;
 import br.com.xisp.repository.ProjectRepository;
@@ -348,11 +347,5 @@ public class ProjectsControllerTest {
 		});
 	}
 
-	private Story givenAStory(String name) {
-		Story story = new Story();
-		story.setName(name);
-		story.setDescription("Here Description for the user story " + name);
-		return story;
-	}
 
 }

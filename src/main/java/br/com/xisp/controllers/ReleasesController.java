@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.xisp.models.Interation;
+import br.com.xisp.models.Project;
 import br.com.xisp.models.Relyase;
 import br.com.xisp.repository.InteractionRepository;
 import br.com.xisp.repository.ReleaseRepository;
@@ -36,7 +37,8 @@ public class ReleasesController {
 	public void index() {
 		// Carrega todas as iteracoes Finalizadas
 		List<Interation> interationsTemp = new ArrayList<Interation>();
-		List<Interation> interations = this.interationRepo.showAllInterations(this.sessionProject.getProject());
+		Project projectIntoSession = this.sessionProject.getProject();
+		List<Interation> interations = this.interationRepo.showAllInterations(projectIntoSession);
 		for (Interation interation : interations) {
 			if(!interation.isHasReleas() && interation.isDone()){
 				interationsTemp.add(interation);
