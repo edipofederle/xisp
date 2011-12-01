@@ -144,8 +144,7 @@ public class StoriesController {
 		acceptenceTestRepository.add(at);
 		story.setTest(at);
 		repository.add(story);
-		validator.onErrorUsePageOf(StoriesController.class).index(
-				projectSession.getProject());
+		validator.onErrorUsePageOf(StoriesController.class).index(projectSession.getProject());
 		result.redirectTo(StoriesController.class).neww();
 	}
 

@@ -61,6 +61,27 @@ public class ReleaseControllerTest {
 	}
 	
 	@Test
+	public void shouldTestIndex1(){
+		final Project project = givenAProject();
+		final List<Interation> listIterations = new ArrayList<Interation>();
+		Interation i1 = givenAInteration("teste", project);
+		i1.setHasReleas(true);
+		i1.setDone(false);
+		listIterations.add(i1);
+		
+		mockery.checking(new Expectations() {
+			{
+				allowing(sessionProject).getProject();
+				will(returnValue(project));
+				one(interactionRepository).showAllInterations(project);
+				will(returnValue(listIterations));
+				one(releaseRepository).showAll(project);
+			}
+		});
+		controller.index();
+	}
+	
+	@Test
 	public void shouldCreateARelease(){
 		List<Long> listInterationsIds = new ArrayList<Long>();
 		final Project p = givenAProject();

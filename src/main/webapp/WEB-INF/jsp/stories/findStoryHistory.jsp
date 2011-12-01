@@ -18,7 +18,7 @@
 				<td>${h.id }</td>
 				<td>${h.origin }</td>
 				<td>${h.destiny }</td>
-				<td><span class="label success">${h.modifyAd }</span></td>
+				<td><span class="label success"> <fmt:formatDate pattern="dd-MM-yyyy" value="${h.modifyAd }" /></span></td>
 			</tr>
 		</c:forEach>
 	</tbody>

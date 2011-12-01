@@ -298,7 +298,7 @@ public class ProjectsController {
 				"Gerenciador de Projetos eXtremeProgramming - Xisp",
 				"Ola " + _participante.getName()
 						+ " voce foi adicionado no projeto "
-						+ lproject.getName());
+						+ lproject.getName() + ". Acesse http://localhost:8080/xisp/login/login");
 	}
 
 }
