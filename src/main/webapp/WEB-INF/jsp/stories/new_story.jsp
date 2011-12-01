@@ -1,9 +1,27 @@
 <%@ include file="../../../header.jsp" %> 
+<style type="text/css">
+Form input.submit { margin-left: 253px; }
+#formProject label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+}
 
+</style>
 <script>
 $(document).ready(function(){
-	$("#name").puts("Nome da Estoria");
-	$("#description").puts("Sua Estorias de Usuario");
+	
+	$("#formProject").validate({
+		rules: {
+			description: "required",
+			acceptsTest: "required"
+			},
+		
+		messages: {
+			description: "Preencha este campo",
+			acceptsTest: "Preencha este campo"
+		}
+	});
 	
 	//Submit Form 
 	$("form").submit(function() {
@@ -78,7 +96,7 @@ $(document).ready(function(){
 	
 	<br /><br/>
 	<label><fmt:message key="stoy.form.story"/></label>
-	<textarea name="story.description" id="description" rows="10" cols="100" class="required xxlarge" class="formDescStory" ></textarea>
+	<textarea name="story.description" id="description" rows="10" cols="100" class="required xxlarge" class="formDescStory required" ></textarea>
 	<br /><br/>
 	
 	<label><fmt:message key="story.test"/><label>

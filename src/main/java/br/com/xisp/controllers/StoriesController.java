@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.validator.Validations;
 import br.com.xisp.auxajax.ResultChangeStory;
 import br.com.xisp.auxajax.Status;
 import br.com.xisp.models.AcceptenceTest;
@@ -310,4 +311,6 @@ public class StoriesController {
 		else
 			result.include("storyContent", story.getName());
 	}
+	
+
 }
