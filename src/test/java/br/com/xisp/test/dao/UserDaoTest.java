@@ -86,21 +86,6 @@ public class UserDaoTest {
 		Assert.assertNull(notFound);
 	}
 	
-	@Test
-	public void shouldReturnUsersWithoutProjects(){
-		Project project = givenAProject();
-		pdao.add(project);
-		User owner = givenAnUserOwnerOf(project);
-		User participant = givenAnUserParticipanteOf(project);
-		User user = givenAUserWihtoutProject("pedro");
-
-		List<User> users = dao.usersWithoutProjects(project);
-
-		assertThat(users, hasItem(user));
-		assertThat(users, not(hasItem(owner)));
-		assertThat(users, not(hasItem(participant)));
-	}
-	
 	private Project givenAProject() {
 		Project project = new Project();
 		project.setId(1L);
