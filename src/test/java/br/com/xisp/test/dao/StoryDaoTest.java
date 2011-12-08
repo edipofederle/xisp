@@ -3,6 +3,7 @@ package br.com.xisp.test.dao;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,7 @@ public class StoryDaoTest {
 	}
 
 	@Test
-	public void testShouldPersisteStoryOneFeature() {
+	public void testShouldPersisteStoryOneFeature() throws SQLException, Exception {
 		Story story = givenAStory("Create a Crud for Users", givenAProject(), Status.IN_DEV, givenAType());
 		Story storyFound = storydao.find("Create a Crud for Users");
 		assertThat(storyFound, is(story));
@@ -61,8 +62,7 @@ public class StoryDaoTest {
 	}
 	
 	@Ignore
-	//TODO Verificar esse test
-	public void testShouldReturnAllFinishedStoriesFromProject(){
+	public void testShouldReturnAllFinishedStoriesFromProject() throws SQLException, Exception{
 		Project p = givenAProject();
 		givenFiveStories(p, Status.FINISHED);
 		givenAStory("Story of Sea", p, Status.READY_FOR_TEST, givenAType());
@@ -71,7 +71,7 @@ public class StoryDaoTest {
 	}
 
 	@Test
-	public void testShouldChangeStatusStory(){
+	public void testShouldChangeStatusStory() throws SQLException, Exception{
 		Story s = givenAStory("My Story", givenAProject(), Status.IN_DEV, givenAType());
 		s.setStatus(Status.READY_FOR_TEST);
 		storydao.update(s);
@@ -79,14 +79,14 @@ public class StoryDaoTest {
 	}
 	
 	@Test
-	public void testShouldFinishStory(){
+	public void testShouldFinishStory() throws SQLException, Exception{
 		Story s = givenAStory("My Second Story", givenAProject(), Status.IN_DEV, givenAType());
 		s.markAsCompleted();
 		storydao.update(s);
 		Assert.assertEquals(Status.FINISHED, storydao.find(s.getName()).getStatus());
 	}
 
-	private void givenFiveStories(Project project, Status status) {
+	private void givenFiveStories(Project project, Status status) throws SQLException, Exception {
 		for (int i = 0; i < 5; i++)
 			givenAStory("Story " + i, project, status, givenAType());
 	}
@@ -111,7 +111,7 @@ public class StoryDaoTest {
 		return user;
 	}
 	
-	private Story givenAStory(String name, Project project, Status status, TypeStory type) {
+	private Story givenAStory(String name, Project project, Status status, TypeStory type) throws SQLException, Exception {
 		Story story = new Story();
 		story.setCreatedBy(givenAUser());
 		story.setName(name);

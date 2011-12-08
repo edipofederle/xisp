@@ -3,6 +3,7 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import br.com.caelum.vraptor.Delete;
@@ -94,10 +95,12 @@ public class ProjectsController {
 	 * newProject em caso de falha. Este metodo adiciona um projeto.
 	 * 
 	 * @param project
+	 * @throws Exception 
+	 * @throws SQLException 
 	 */
 	@Path("/projects")
 	@Post
-	public void add(final Project project) {
+	public void add(final Project project) throws SQLException, Exception {
 		validateProject(project);
 		validator.onErrorUsePageOf(ProjectsController.class).newProject();
 		project.setOwner(this.currentUser);

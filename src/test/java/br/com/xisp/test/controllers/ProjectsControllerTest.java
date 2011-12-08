@@ -1,5 +1,6 @@
 package br.com.xisp.test.controllers;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.jmock.Expectations;
@@ -92,7 +93,7 @@ public class ProjectsControllerTest {
 	}
 
 	@Test
-	public void shouldAddAValidProject() {
+	public void shouldAddAValidProject() throws SQLException, Exception {
 		Project project = givenAProject();
 		willAddTheProject(project);
 
@@ -171,7 +172,7 @@ public class ProjectsControllerTest {
 	}
 
 	@Test
-	public void shouldShowAProject() {
+	public void shouldShowAProject() throws Exception {
 		Project project = givenValidProject();
 		willShowAProject(project);
 		controller.index();
@@ -252,7 +253,7 @@ public class ProjectsControllerTest {
 
 	}
 
-	private void willAddTheProject(final Project project) {
+	private void willAddTheProject(final Project project) throws Exception {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).add(project);
@@ -272,7 +273,7 @@ public class ProjectsControllerTest {
 		});
 	}
 
-	private void willNotAddTheProject(final Project project) {
+	private void willNotAddTheProject(final Project project) throws Exception {
 		mockery.checking(new Expectations() {
 			{
 				never(repo).add(project);
@@ -288,7 +289,7 @@ public class ProjectsControllerTest {
 		});
 	}
 
-	private Project givenValidProject() {
+	private Project givenValidProject() throws Exception {
 		Project project = new Project();
 		project.setName("Meu Projeto");
 		project.setClient(givenAClient());

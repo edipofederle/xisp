@@ -1,5 +1,7 @@
 package br.com.xisp.test.controllers;
 
+import java.sql.SQLException;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
@@ -36,7 +38,7 @@ public class UsersControllerTest {
 	}
 	
 	@Test
-	public void shouldAddAValidUSer(){
+	public void shouldAddAValidUSer() throws SQLException, Exception{
 		User user = givenAValidUser();
 		willAddUser(user);
 		willValidateDuplication(user);
@@ -44,7 +46,7 @@ public class UsersControllerTest {
 	}
 	
 	@Test
-	public void shoulNotAddInvalidUser(){
+	public void shoulNotAddInvalidUser() throws SQLException, Exception{
 		User user = givenAInvalidUser();
 		willNotAddUser(user);
 		willValidateDuplication(user);
@@ -60,7 +62,7 @@ public class UsersControllerTest {
 	}
 	
 	@Test
-	public void shouldNotCreateADuplicateUser(){
+	public void shouldNotCreateADuplicateUser() throws SQLException, Exception{
 		User user = givenAValidUser();
 		willAddUser(user);
 		willValidateDuplication(user);
@@ -170,7 +172,7 @@ public class UsersControllerTest {
 		return user;
 	}
 
-	private void willAddUser(final User user) {
+	private void willAddUser(final User user) throws Exception {
 		mockery.checking(new Expectations() {
 			{one(dao).add(user); }
 		});
@@ -184,7 +186,7 @@ public class UsersControllerTest {
 	}
 	
 
-	private void willNotAddUser(final User user) {
+	private void willNotAddUser(final User user) throws Exception {
 		mockery.checking(new Expectations() {
 			{never(dao).add(user);}
 		});

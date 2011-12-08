@@ -1,5 +1,6 @@
 package br.com.xisp.controllers;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class ReleasesController {
 
 	@Path("/releases/create")
 	@Post
-	public void create(List<Long> iteracao, Relyase release) {
+	public void create(List<Long> iteracao, Relyase release) throws SQLException, Exception {
 		List<Interation> listInterations = new ArrayList<Interation>();
 		this.releaseRepository.add(release);
 		for (Long id : iteracao) {

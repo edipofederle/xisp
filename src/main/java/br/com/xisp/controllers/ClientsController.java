@@ -1,5 +1,7 @@
 package br.com.xisp.controllers;
 
+import java.sql.SQLException;
+
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -37,7 +39,7 @@ public class ClientsController {
 	
 	@Path("/clients")
 	@Post
-	public void add(final Client client) {
+	public void add(final Client client) throws SQLException, Exception {
 		validateClient(client);
 		validator.onErrorUsePageOf(ClientsController.class).neww();
 		repo.add(client);

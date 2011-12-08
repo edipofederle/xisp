@@ -53,7 +53,7 @@ public class InterationControllerTest {
 	}
 	
 	@Test
-	public void shouldCreateInteration(){
+	public void shouldCreateInteration() throws Exception{
 		final Interation interationOne = givenAInteration("One Interation", project);
 		willCreateANewInteration(interationOne);
 		mockery.checking(new Expectations() {

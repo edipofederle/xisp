@@ -1,6 +1,7 @@
 package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class UsersController {
 	
 	@Path("/users")
 	@Post
-	public void add(final User user) {
+	public void add(final User user) throws SQLException, Exception {
 		validator.checking(new Validations() {
 			{
 				that(!user.getName().isEmpty(), "erro", "validacao.user.name");

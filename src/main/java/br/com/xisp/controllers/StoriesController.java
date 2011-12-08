@@ -2,9 +2,12 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -13,7 +16,6 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
-import br.com.caelum.vraptor.validator.Validations;
 import br.com.xisp.auxajax.ResultChangeStory;
 import br.com.xisp.auxajax.Status;
 import br.com.xisp.models.AcceptenceTest;
@@ -57,6 +59,8 @@ public class StoriesController {
 	private HistoryStoryRepository historyStoryRepository;
 	private User currentUser;
 	private final Validator validator;
+	
+	static Logger logger = Logger.getLogger(StoriesController.class);  
 
 	public StoriesController(StoryRepository repository,
 			ProjectRepository repositoryProject,
@@ -142,11 +146,36 @@ public class StoriesController {
 		story.setCreatedBy(this.currentUser);
 		AcceptenceTest at = new AcceptenceTest();
 		at.setTest(story.getAcceptsTest());
-		acceptenceTestRepository.add(at);
+		
+		boolean hasError = false;
+		
+		try {
+			acceptenceTestRepository.add(at);
+		} catch (SQLException e) {
+			logger.error("Erro de sql ao salvar testes de aceitacao para estoria " + story.getId() + "." + e.getMessage());
+			hasError = true;
+		} catch (Exception e) {
+			logger.error("Erro geral ao salvar testes de aceitacao para estoria " + story.getId() + "." + e.getMessage());
+			hasError = true;
+		}
 		story.setTest(at);
-		repository.add(story);
+		try {
+			repository.add(story);
+		} catch (SQLException e) {
+			logger.error("Erro de sql ao salvar estoria para estoria " + story.getId() + "." + e.getMessage());
+			hasError = true;
+		} catch (Exception e) {
+			logger.error("Erro gerak ao salvar estoria para estoria " + story.getId() + "." + e.getMessage());
+			hasError = true;
+		}
 		validator.onErrorUsePageOf(StoriesController.class).index(projectSession.getProject());
-		result.redirectTo(StoriesController.class).neww();
+		if(!hasError){
+			result.include("success", true);
+			result.include("sucessoEstoria", "Estoria " + story.getName() +  " foi cadastrada com sucesso");
+			result.redirectTo(StoriesController.class).neww();
+		}else{
+			result.forwardTo(ErrorsController.class).index();
+		}
 	}
 
 	/**

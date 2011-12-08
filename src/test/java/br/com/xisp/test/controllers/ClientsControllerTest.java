@@ -1,5 +1,7 @@
 package br.com.xisp.test.controllers;
 
+import java.sql.SQLException;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
@@ -35,7 +37,7 @@ public class ClientsControllerTest {
 	}
 	
 	@Test
-	public void shoulNotAddInvalidClient(){
+	public void shoulNotAddInvalidClient() throws SQLException, Exception{
 		Client client = givenInvalidClient();
 		willNotAddClient(client);
 	    try {
@@ -47,7 +49,7 @@ public class ClientsControllerTest {
 	    }
 	}
 	
-	private void willNotAddClient(final Client client) {
+	private void willNotAddClient(final Client client) throws Exception {
 		mockery.checking(new Expectations() {
 			{
 				never(repo).add(client);
@@ -63,7 +65,7 @@ public class ClientsControllerTest {
 	}
 
 	@Test
-	public void shouldAddNewClient(){
+	public void shouldAddNewClient() throws SQLException, Exception{
 		Client client = givenAClient();
 		willAddAClient(client);
 		controller.add(client);
@@ -128,7 +130,7 @@ public class ClientsControllerTest {
 	}
 	
 
-	private void willAddTheClient(final Client client) {
+	private void willAddTheClient(final Client client) throws Exception {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).add(client);
@@ -161,7 +163,7 @@ public class ClientsControllerTest {
 		});
 	}
 
-	private void willAddAClient(final Client client) {
+	private void willAddAClient(final Client client) throws Exception {
 		mockery.checking(new Expectations() {
 			{
 				one(repo).add(client);

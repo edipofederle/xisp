@@ -82,7 +82,7 @@ public class ReleaseControllerTest {
 	}
 	
 	@Test
-	public void shouldCreateARelease(){
+	public void shouldCreateARelease() throws Exception{
 		List<Long> listInterationsIds = new ArrayList<Long>();
 		final Project p = givenAProject();
 		final Interation i = givenAInteration("Teste",p);

@@ -1,5 +1,6 @@
 package br.com.xisp.test.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -29,7 +30,7 @@ public class HistoryStoryDaoTest {
 	}
 	
 	@Test
-	public void shouldTestShouldReturnHistoryForStory(){
+	public void shouldTestShouldReturnHistoryForStory() throws SQLException, Exception{
 		Story s  = givenAStory();
 		History h = givenAHistory();
 		h.setStory(s);
@@ -44,7 +45,7 @@ public class HistoryStoryDaoTest {
 		return history;
 	}
 	
-	private Story givenAStory(){
+	private Story givenAStory() throws SQLException, Exception{
 		Story story = new Story();
 		story.setName("Name Story");
 		story.setDescription("Description for User Stories");

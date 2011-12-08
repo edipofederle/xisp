@@ -2,6 +2,7 @@ package br.com.xisp.controllers;
 import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,7 +71,7 @@ public class InterationsController {
 	
 	@Path("/interations")
 	@Post
-	public void save(Interation interation){
+	public void save(Interation interation) throws SQLException, Exception{
 		Project project = projectSession.getProject();
 		interation.setProject(project);
 		

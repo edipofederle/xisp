@@ -43,6 +43,14 @@ $(document).ready(function(){
 
 <h2><fmt:message key="story.create"/><small> </small></h2>
 
+
+<c:if test="${success }">
+	<div class="alert-message success">
+		<a href="#" class="close"> X </a>
+		<p> ${sucessoEstoria }</p>
+	</div>
+</c:if>
+
 <div id="form_new_story">
 <form action="${pageContext.request.contextPath}/stories" method="post" class="form-stacked" id="formProject"> 
 	<label><fmt:message key="stoy.form.name"/></label>

@@ -1,5 +1,12 @@
 <style type="text/css">
 #cleanform label.error, #cleanform input.submit { margin-left: 253px; }
+Form input.submit { margin-left: 253px; }
+#formProject label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+}
+
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -26,7 +33,6 @@
 			<label><fmt:message key="project.form.name"/></label>
 			<input type="text" name="project.name" id="name" class="required xlarge" value="${project.name }"/>
 			<br /><br/>
-				<a href="#" class="newClientLink">Cadastrar um Cliente</a><br/>
 				<select name="project.client.id" id="project.client.id">
 					<c:if test="${empty project.listaClients }">
 						<c:forEach items="${clients }" var="client">

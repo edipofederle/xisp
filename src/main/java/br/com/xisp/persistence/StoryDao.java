@@ -3,6 +3,7 @@ package br.com.xisp.persistence;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -17,6 +18,7 @@ public class StoryDao implements StoryRepository {
 	
 	//Sessao atual do hibernate
 	private final Session session;
+	static Logger logger = Logger.getLogger(StoryDao.class);  
 
 	public StoryDao(Session session) {
 		this.session = session;
@@ -26,8 +28,8 @@ public class StoryDao implements StoryRepository {
 		return (Story) session.get(Story.class, id);
 	}
 
-	public void add(Story story) {
-		this.session.save(story);
+	public void add(Story story) throws SQLException, Exception  {
+			this.session.save(story);
 	}
 
 	public void update(Story t) {

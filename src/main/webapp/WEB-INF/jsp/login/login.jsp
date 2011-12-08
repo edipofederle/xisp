@@ -55,13 +55,14 @@
 
 h2.loginTitle{
 	font-family:Verdana;
-		background: #F2F6FD;
-		font-weight: bold;
-		font-size: 16px;
-		color:#36393D;
-		letter-spacing: -1px;
-		padding: 15px;
-		border-bottom: 1px solid #EFEFEF;
+	background: #F2F6FD;
+	font-weight: bold;
+	font-size: 20px;
+	color:#36393D;
+	letter-spacing: -1px;
+	padding: 15px;
+	border-bottom: 1px solid #EFEFEF;
+	margin-top:-15px;
 }
 
 .btn {
@@ -125,6 +126,9 @@ h2.loginTitle{
 .btn.primary:hover {
   color: #fff;
 }
+img.logoTop{
+	padding-top:-10px;
+}
 </style>
 
 <head>
@@ -152,7 +156,7 @@ h2.loginTitle{
 		});
 	</script>
 </head>
-<h2 class="loginTitle">XISP</h2><Br />
+<h2 class="loginTitle">XISP - Gerenciador de Projeto eXtreme Programming</h2><Br />
 <div id="content-login">
 	<div id="align-login">
 		
