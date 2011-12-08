@@ -113,7 +113,7 @@ public class StoriesController {
 		try {
 			listTypes = this.typestoryRepository.findAll();
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error("Erro ao carregar tipos de estoria de usuario");
 		}
 		// Carrega Todas as Iteracoes de um dado Projecto
 		try {
@@ -125,8 +125,7 @@ public class StoriesController {
 			}
 			listUsers = this.userRepository.showAll();
 		} catch (Exception e) {
-			// TODO Logar
-			// TODO Redirect
+			logger.error("Erro ao caregar Iteracoe nao finalizadas");
 		}
 
 		if (listIterations.size() == 0 || listIterations.equals(null)) {
@@ -168,7 +167,6 @@ public class StoriesController {
 			logger.error("Erro gerak ao salvar estoria para estoria " + story.getId() + "." + e.getMessage());
 			hasError = true;
 		}
-		validator.onErrorUsePageOf(StoriesController.class).index(projectSession.getProject());
 		if(!hasError){
 			result.include("success", true);
 			result.include("sucessoEstoria", "Estoria " + story.getName() +  " foi cadastrada com sucesso");

@@ -74,9 +74,9 @@ $(document).ready(function(){
 
 	<label><fmt:message key="stoy.form.compl"/></label>
 	<select name="story.complexity" id="story.complexity">
-		<option value="LOW">Baixa</option>
-		<option value="MEDIUM">Media</option>
-		<option value="HIGH">Alta</option>
+		<option value="BAIXA">Baixa</option>
+		<option value="MEDIA">Media</option>
+		<option value="ALTA">Alta</option>
 	</select>
 	<br /><br />
 	

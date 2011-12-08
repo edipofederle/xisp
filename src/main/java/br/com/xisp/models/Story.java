@@ -59,7 +59,7 @@ public class Story {
 	private String acceptsTest;
 	
 	public static enum Complexity{
-		LOW, MEDIUM, HIGH
+		BAIXA, MEDIA, ALTA
 	}
 	
 	@ManyToOne
