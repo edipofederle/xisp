@@ -161,6 +161,7 @@
 	<div class="topbar">
       <div class="topbar-inner">
         <div class="container-fluid">
+        <a href="${pageContext.request.contextPath}/projects/index">Home</img></a>
           <a class="brand" href="${pageContext.request.contextPath}/stories/board">XISP <span class="projectTop">${currentProject.name }</span> -  <span class="iterationTop">${currentInteration.name}</span> </a>
            <p class="pull-right" style="color: white;">${currentUser.email } <a href="${pageContext.request.contextPath}/login/logout">Sair</a></p>
            <ul class="nav">
@@ -182,8 +183,7 @@
 	       		</select>
        		<input type="submit" name="submit" class="usarProject" value="Usar"/>
 			</form>
-
-
+			
           </ul>
         </div>
       </div>

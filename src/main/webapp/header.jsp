@@ -140,7 +140,13 @@ b.days{
 	<div class="topbar">
       <div class="topbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="${pageContext.request.contextPath}/stories/board">XISP <span class="projectTop">${currentProject.name }</span> -  <span class="iterationTop">${currentInteration.name}</span> </a>
+        <c:if test="${currentProject.name != null }">
+        	<a class="brand" href="${pageContext.request.contextPath}/stories/board">XISP <span class="projectTop">${currentProject.name }</span> -  <span class="iterationTop">${currentInteration.name}</span> </a>
+        </c:if>
+        <c:if test="${currentProject.name == null }">
+        	<a class="brand" href="#">XISP</a>
+        </c:if>
+        
            <p class="pull-right" style="color: white;">${currentUser.email } <b><a href="${pageContext.request.contextPath}/login/logout"><fmt:message key="xisp.logout"/></a></b></p>
        	  <c:if test="currentProject.id">
        	  <ul class="nav">
