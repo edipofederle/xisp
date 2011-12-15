@@ -34,7 +34,7 @@
 				<td>${client.endereco }</td>
 				<td>
 					<c:forEach items="${client.projects }" var="cp">
-						<a href="${pageContext.request.contextPath}/projects/${ project.id }">${cp.name }</a><br />
+						<a href="${pageContext.request.contextPath}/projects/${ cp.id }">${cp.name }</a><br />
 					</c:forEach>
 				</td>
 				<td>

@@ -44,7 +44,8 @@
             <li><a href="${pageContext.request.contextPath}/stories/${currentProject.id }/index"><fmt:message key="projects.userstories"/></a></li>
             <li><a href="${pageContext.request.contextPath}/interations/index"><fmt:message key="projects.iterations"/></a></li>
             <li><a href="${pageContext.request.contextPath}/users/index"><fmt:message key="projects.users"/></a></li>
-              <li><a href="${pageContext.request.contextPath}/releases/index">Releases</a></li>
+            <li><a href="${pageContext.request.contextPath}/releases/index">Releases</a></li>
+            <li><a href="${pageContext.request.contextPath}/clients/index">Clientes</a></li>
           </ul>
         </div>
       </div>
