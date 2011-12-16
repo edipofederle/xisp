@@ -17,7 +17,7 @@ public class MailerImpl implements Mailer {
 			email.setDebug(true);
 			email.setHostName("smtp.gmail.com");
 			//Autenticar com outra conta
-			email.setAuthentication("edipofederle", "senha");
+			email.setAuthentication("edipofederle", "luis@federle");
 			email.setSSL(true);
 			email.addTo(to);
 			email.setFrom("edipofederle@gmail.com"); 
